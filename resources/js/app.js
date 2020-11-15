@@ -25,8 +25,8 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/',
-            name: 'index',
+            path: '/mypage',
+            name: 'mypage',
             component: MypageComponent
         },
         {

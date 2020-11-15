@@ -39197,7 +39197,7 @@ var render = function() {
         [
           _c(
             "router-link",
-            { staticClass: "navbar-brand", attrs: { to: { name: "index" } } },
+            { staticClass: "navbar-brand", attrs: { to: { name: "mypage" } } },
             [
               _c("h5", { staticClass: "navbar-brand mr-5 p-0" }, [
                 _vm._v("pdr-memo")
@@ -57602,8 +57602,8 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // app.blade.phpに
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: [{
-    path: '/',
-    name: 'index',
+    path: '/mypage',
+    name: 'mypage',
     component: _components_MypageComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/records/do/create',
@@ -58336,15 +58336,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/ReviewEditComponent.vue ***!
   \*********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ReviewEditComponent_vue_vue_type_template_id_6ac2fa00___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReviewEditComponent.vue?vue&type=template&id=6ac2fa00& */ "./resources/js/components/ReviewEditComponent.vue?vue&type=template&id=6ac2fa00&");
 /* harmony import */ var _ReviewEditComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReviewEditComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ReviewEditComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ReviewEditComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ReviewEditComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -58374,7 +58373,7 @@ component.options.__file = "resources/js/components/ReviewEditComponent.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/ReviewEditComponent.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

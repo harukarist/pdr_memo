@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
     <div class="container">
       <!-- サイト名 -->
-      <router-link v-bind:to="{ name: 'index' }" class="navbar-brand">
+      <router-link v-bind:to="{ name: 'mypage' }" class="navbar-brand">
         <h5 class="navbar-brand mr-5 p-0">pdr-memo</h5>
       </router-link>
       <!-- <a class="navbar-brand" href="">pdr-memo </a> -->
