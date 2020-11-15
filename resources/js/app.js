@@ -5,8 +5,62 @@
  */
 
 require('./bootstrap');
+import VueRouter from "vue-router";
+import DoCreateComponent from "./components/DoCreateComponent";
+import HeaderComponent from "./components/HeaderComponent";
+import PrepCreateComponent from "./components/PrepCreateComponent";
+import PrepEditComponent from "./components/PrepEditComponent";
+import RecordListComponent from "./components/RecordListComponent";
+import ReviewCreateComponent from "./components/ReviewCreateComponent";
+import ReviewEditComponent from "./components/ReviewEditComponent";
+import TaskListComponent from "./components/TaskListComponent";
 
 window.Vue = require('vue');
+Vue.use(VueRouter);
+
+// app.blade.phpにrouter-viewコンポーネントを配置
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: '/records/do/create',
+            name: 'do.create',
+            component: DoCreateComponent
+        },
+        {
+            path: '/records/prep/create',
+            name: 'prep.create',
+            component: PrepCreateComponent
+        },
+        {
+            path: '/records/prep/:recordId/edit',
+            name: 'prep.edit',
+            component: PrepEditComponent,
+            props: true
+        },
+        {
+            path: '/records',
+            name: 'record.list',
+            component: RecordListComponent
+        },
+        {
+            path: '/records/review/create',
+            name: 'review.create',
+            component: ReviewCreateComponent
+        },
+        {
+            path: '/records/review/:recordId/edit',
+            name: 'review.edit',
+            component: ReviewEditComponent,
+            props: true
+        },
+        {
+            path: '/tasks',
+            name: 'task.list',
+            component: TaskListComponent
+        },
+    ]
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +74,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('header-component', HeaderComponent);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +84,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router
 });

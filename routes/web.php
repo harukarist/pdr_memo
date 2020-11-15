@@ -11,13 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+// 初回アクセス時はLaravel側でリクエストを受けてapp.blade.phpを表示
+// 2回目以降はフロント側のVueRouterでルーティング
+Route::get('/{any}', function () {
+    return view('layouts.app');
+})->where('any', '.*');
 
 Auth::routes();
 

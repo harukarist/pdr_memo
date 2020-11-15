@@ -1,5 +1,73 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+.progressbar {
+  margin: 20px auto;
+  padding: 0;
+  counter-reset: step;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.progressbar__wrapper {
+  margin: 20px auto;
+}
+
+.progressbar li {
+  list-style-type: none;
+  float: left;
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+  line-height: 30px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-right: 20px;
+}
+
+.progressbar li:before {
+  width: 30px;
+  height: 30px;
+  content: counter(step);
+  counter-increment: step;
+  line-height: 30px;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: #eee;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.progressbar li:first-child:after {
+  content: none;
+}
+
+.progressbar li.active {
+  color: #3490dc;
+  font-weight: bold;
+}
+
+.progressbar li.active:before {
+  background-color: #3490dc;
+  color: #fff;
+}
+
+.progressbar li.active + li:after {
+  background-color: #3490dc;
+}
+
+.c-navbar__link:hover {
+  text-decoration: none;
+}
+
+.c-navbar__item {
+  margin-right: 10px;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
