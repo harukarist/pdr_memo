@@ -76,7 +76,7 @@
 
         <main class="py-4">
             @yield('content')
-            {{-- <example-component></example-component> --}}
+            {{-- resources/js/app.jsでRouterViewを指定 --}}
             <router-view></router-view>
         </main>
     </div>

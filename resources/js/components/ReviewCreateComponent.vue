@@ -40,7 +40,7 @@
     </section>
 
     <!-- Review入力フォーム -->
-    <form method="head" action="/records/prep/create">
+    <form method="head" action="/records/prep/create2">
       <!-- Reviewテキストエリア -->
       <div class="form-group">
         <label for="review">Review</label>

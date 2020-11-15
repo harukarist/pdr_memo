@@ -8,7 +8,9 @@ require('./bootstrap');
 import VueRouter from "vue-router";
 import DoCreateComponent from "./components/DoCreateComponent";
 import HeaderComponent from "./components/HeaderComponent";
+import MypageComponent from "./components/MypageComponent";
 import PrepCreateComponent from "./components/PrepCreateComponent";
+import PrepCreateComponent2 from "./components/PrepCreateComponent2";
 import PrepEditComponent from "./components/PrepEditComponent";
 import RecordListComponent from "./components/RecordListComponent";
 import ReviewCreateComponent from "./components/ReviewCreateComponent";
@@ -23,6 +25,11 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            path: '/',
+            name: 'index',
+            component: MypageComponent
+        },
+        {
             path: '/records/do/create',
             name: 'do.create',
             component: DoCreateComponent
@@ -31,6 +38,11 @@ const router = new VueRouter({
             path: '/records/prep/create',
             name: 'prep.create',
             component: PrepCreateComponent
+        },
+        {
+            path: '/records/prep/create2',
+            name: 'prep.create2',
+            component: PrepCreateComponent2
         },
         {
             path: '/records/prep/:recordId/edit',

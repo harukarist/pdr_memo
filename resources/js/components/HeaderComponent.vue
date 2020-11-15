@@ -2,7 +2,11 @@
   <!-- ナビバー -->
   <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="#">pdr-memo </a>
+      <!-- サイト名 -->
+      <router-link v-bind:to="{ name: 'index' }" class="navbar-brand">
+        <h5 class="navbar-brand mr-5 p-0">pdr-memo</h5>
+      </router-link>
+      <!-- <a class="navbar-brand" href="">pdr-memo </a> -->
 
       <!-- ハンバーガーメニュー -->
       <button
@@ -18,21 +22,21 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Left Side Of Navbar -->
+        <!-- メニューリンク -->
         <ul class="navbar-nav mr-auto">
+          <router-link
+            v-bind:to="{ name: 'prep.create' }"
+            class="c-navbar__link"
+          >
+            <li class="c-navbar__item nav-item nav-link">タスクを実行</li>
+          </router-link>
           <router-link
             v-bind:to="{ name: 'record.list' }"
             class="c-navbar__link"
           >
             <li class="c-navbar__item nav-item nav-link">これまでの記録</li>
           </router-link>
-          <router-link
-            v-bind:to="{ name: 'prep.create' }"
-            class="c-navbar__link"
-          >
-            <li class="c-navbar__item nav-item nav-link">タスクを実行する</li>
-          </router-link>
-          <li class="c-navbar__item nav-item nav-link">タスクを選ぶ</li>
+          <!-- <li class="c-navbar__item nav-item nav-link">タスクを選ぶ</li> -->
         </ul>
 
         <!-- Right Side Of Navbar -->
@@ -55,9 +59,6 @@
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="navbarDropdown"
             >
-              <a class="dropdown-item" href="#">menu1</a>
-              <a class="dropdown-item" href="#">menu2</a>
-              <a class="dropdown-item" href="#">menu3</a>
               <a
                 class="dropdown-item"
                 href="http://127.0.0.1:8000/logout"
@@ -66,18 +67,6 @@
               >
                 ログアウト
               </a>
-              <form
-                id="logout-form"
-                action="http://127.0.0.1:8000/logout"
-                method="POST"
-                style="display: none"
-              >
-                <input
-                  type="hidden"
-                  name="_token"
-                  value="hK6Mkl639IXtXzy8Kl73qjFPcZvV9FoeE68jrzQC"
-                />
-              </form>
             </div>
           </li>
         </ul>

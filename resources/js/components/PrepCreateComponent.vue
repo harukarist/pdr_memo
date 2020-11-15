@@ -2,14 +2,14 @@
 <template>
   <div class="container">
     <!-- ガイド -->
-    <section class="p-guide__text mx-1 my-3">
+    <!-- <section class="p-guide__text mx-1 my-3">
       <p>
         以下の内容を記録しました。おめでとう！<br />
         少し休憩したら、次の準備を始めましょう。
       </p>
-    </section>
+    </section> -->
     <!-- 個別の記録 -->
-    <article class="p-record bg-white border p-2 mb-5">
+    <!-- <article class="p-record bg-white border p-2 mb-5">
       <div class="p-record__title-wrapper mb-3">
         <a href="#" class="badge badge-success mr-1">Output</a>
         <h6 class="p-record__title d-inline mb-0 align-middle">サンプル</h6>
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-    </article>
+    </article> -->
 
     <h5 class="mb-4">準備をする</h5>
     <!-- プログレスバー -->
