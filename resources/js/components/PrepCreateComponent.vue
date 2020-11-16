@@ -109,7 +109,6 @@
               type="radio"
               name="category"
               id="category-a"
-              checked
             />
             <label class="form-check-label" for="category-a">
               <h5><span class="badge badge-primary mr-1">Input</span></h5>

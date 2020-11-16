@@ -11,6 +11,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /_memo
+.vscode
 public/sample-prep.html
 public/sample-prep2.html
 public/sample-review.html
