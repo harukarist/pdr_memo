@@ -36,15 +36,16 @@
         @foreach ($preps as $prep)
         <!-- 個別の記録 -->
         <article class="p-record bg-white border p-0 mb-2">
-          <div class="p-record__title-wrapper p-2 mb-1">
+          <div class="p-record__title-wrapper p-3 mb-1">
             <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
             <h6 class="p-record__title d-inline mb-0 align-middle">
               {{ $prep->task->task_name }}</h6>
               <small><a href="#" class="badge badge-secondary ml-1">{{ $prep->task->project->project_name }}</a></small>
           </div>
           <!-- PDR -->
-          <div class="p-record__details row mx-0 my-2">
-            <div class="p-record__item-wrapper col-sm">
+          <div class="p-record__details row justify-content-around mx-0 my-2">
+            {{-- Prep --}}
+            <div class="p-record__item-wrapper col-md-4">
               <div class="text-secondary clearfix">
                 <span class="p-record__item-title float-left mb-0">Prep</span>
                 <router-link
@@ -63,7 +64,12 @@
                 </div>
               </div>
             </div>
-            <div class="p-record__item-wrapper col-sm">
+            {{-- Do --}}
+            <div class="p-record__item-wrapper col-auto">
+              <button type="submit" class="btn btn-primary">Do！</button>
+            </div>
+            {{-- Review --}}
+            <div class="p-record__item-wrapper col-md-6">
               @foreach ($prep->reviews as $review)
               <div class="p-record__review-wrapper mb-2">
                 <div class="text-secondary clearfix">

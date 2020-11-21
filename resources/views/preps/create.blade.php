@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     
-    <h5 class="mb-4">準備をする</h5>
+    <h5 class="mb-4">計画を立てる</h5>
     <!-- プログレスバー -->
     <div class="progressbar__wrapper">
       <ul class="progressbar">
@@ -106,7 +106,7 @@
 
       <!-- 送信 -->
       <div class="text-center">
-        <button type="submit" class="btn btn-info">Do!</button>
+        <button type="submit" class="btn btn-primary">計画を登録！</button>
       </div>
     </form>
   </div>

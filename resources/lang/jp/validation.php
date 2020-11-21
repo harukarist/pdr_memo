@@ -148,6 +148,8 @@ return [
         'category_name' => 'カテゴリー',
         'category_id' => 'カテゴリー',
         'project_name' => 'プロジェクト名',
+        'task_id' => 'タスク',
+        'prep_text' => '準備',
     ],
 
 ];

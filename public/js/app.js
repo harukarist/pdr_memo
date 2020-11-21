@@ -39109,7 +39109,7 @@ var staticRenderFns = [
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-info", attrs: { type: "submit" } },
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
               [_vm._v("Review!")]
             )
           ])
@@ -40096,7 +40096,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "text-center" }, [
           _c(
             "button",
-            { staticClass: "btn btn-info", attrs: { type: "submit" } },
+            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
             [_vm._v("Do!")]
           )
         ])
@@ -40426,7 +40426,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "text-center" }, [
           _c(
             "button",
-            { staticClass: "btn btn-info", attrs: { type: "submit" } },
+            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
             [_vm._v("Do!")]
           )
         ])
@@ -40722,9 +40722,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-center" }, [
-      _c("button", { staticClass: "btn btn-info", attrs: { type: "submit" } }, [
-        _vm._v("記録する！")
-      ])
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("記録する！")]
+      )
     ])
   }
 ]
@@ -41981,7 +41983,7 @@ var staticRenderFns = [
           _c("div", { staticClass: "text-center" }, [
             _c(
               "button",
-              { staticClass: "btn btn-info", attrs: { type: "submit" } },
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
               [_vm._v("完了！")]
             )
           ])
@@ -42275,9 +42277,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-center" }, [
-      _c("button", { staticClass: "btn btn-info", attrs: { type: "submit" } }, [
-        _vm._v("修正する")
-      ])
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("修正する")]
+      )
     ])
   }
 ]

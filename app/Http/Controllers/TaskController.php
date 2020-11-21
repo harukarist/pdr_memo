@@ -65,8 +65,9 @@ class TaskController extends Controller
             'task' => $task,
         ]);
     }
-    // タスク削除処理
-    public function delete(int $id, int $task_id)
+
+    // タスク編集処理
+    public function edit(int $id, int $task_id, EditTask $request)
     {
         // リクエストのIDからタスクデータを取得
         $task = Task::find($task_id);
@@ -81,5 +82,17 @@ class TaskController extends Controller
         return redirect()->route('tasks.index', [
             'project_id' => $task->project_id,
         ]);
+    }
+
+    // タスク削除処理
+    public function delete(int $id, int $task_id)
+    {
+        // リクエストで受け取ったIDのタスクをソフトデリート
+        Task::find($task_id)->delete();
+
+        // 削除対象のタスクが属するプロジェクトのタスク一覧にリダイレクト
+        return redirect()->route('tasks.index', [
+            'project_id' => $id,
+        ])->with('flash_message', __('タスクを削除しました'));
     }
 }

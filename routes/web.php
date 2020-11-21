@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@showEditForm')->name('tasks.edit');
     // タスク編集処理
     Route::post('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@edit');
+    // タスク削除処理
+    Route::get('/projects/{project_id}/tasks/{task_id}/delete', 'TaskController@delete')->name('tasks.delete');
 
     // RecordController
     // 記録一覧画面

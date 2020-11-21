@@ -4,9 +4,13 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
+    // ソフトデリート用のトレイトを追加
+    use SoftDeletes;
+
     // ステータスの定義
     const STATUS = [
         1 => ['status_name' => '未着手', 'status_class' => 'badge-danger'],

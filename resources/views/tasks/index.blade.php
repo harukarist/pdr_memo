@@ -46,6 +46,7 @@
                     </td>
                     <td>{{ $task->formatted_due_date }}</td>
                     <td><a href="{{ route('tasks.edit', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">編集</a></td>
+                    <td><a href="{{ route('tasks.delete', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">削除</a></td>
                   </tr>
                 @endforeach
               </tbody>

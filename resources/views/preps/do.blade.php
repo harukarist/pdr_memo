@@ -49,7 +49,7 @@
   <form method="head" action="/records/review/create">
     <div class="text-center">
       <p>完了しましたか？</p>
-      <button type="submit" class="btn btn-info">Review!</button>
+      <button type="submit" class="btn btn-primary">Review!</button>
     </div>
   </form>
 </div>

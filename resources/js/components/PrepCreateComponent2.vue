@@ -156,8 +156,8 @@
 
       <!-- 送信 -->
       <div class="text-center">
-        <button type="submit" class="btn btn-info">Do!</button>
-        <!-- <input type="submit" class="btn btn-info">Do!</input> -->
+        <button type="submit" class="btn btn-primary">Do!</button>
+        <!-- <input type="submit" class="btn btn-primary">Do!</input> -->
       </div>
     </form>
   </div>
