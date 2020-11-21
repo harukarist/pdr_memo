@@ -13,7 +13,8 @@ class PrepsTableSeeder extends Seeder
      */
     public function run()
     {
-        $record = DB::table('records')->first();
+        $user = DB::table('users')->first();
+        $task = DB::table('tasks')->first();
         $category = DB::table('categories')->first();
 
         foreach (range(1, 3) as $num) {
@@ -21,7 +22,8 @@ class PrepsTableSeeder extends Seeder
                 'prep_text' => "Prepテキスト{$num}",
                 'unit_time' => 30,
                 'estimated_steps' => $num,
-                'record_id' => $record->id,
+                'task_id' => $task->id,
+                'user_id' => $user->id,
                 'category_id' => $category->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

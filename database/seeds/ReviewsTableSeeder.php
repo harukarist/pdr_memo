@@ -13,7 +13,7 @@ class ReviewsTableSeeder extends Seeder
      */
     public function run()
     {
-        $record = DB::table('records')->first();
+        $prep = DB::table('preps')->first();
         $category = DB::table('categories')->first();
 
         foreach (range(1, 3) as $num) {
@@ -24,7 +24,7 @@ class ReviewsTableSeeder extends Seeder
                 'try_text' => "tryテキスト{$num}",
                 'actual_time' => 35,
                 'step_counter' => $num,
-                'record_id' => $record->id,
+                'prep_id' => $prep->id,
                 'category_id' => $category->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

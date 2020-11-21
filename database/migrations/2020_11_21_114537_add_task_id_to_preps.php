@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRecordsTable extends Migration
+class AddTaskIdToPreps extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('records', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
-            $table->dateTime('target_date');
+        Schema::table('preps', function (Blueprint $table) {
+            // カラム追加
             $table->bigInteger('task_id')->unsigned();
             // 外部キーを設定
-            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('task_id')->references('id')->on('tasks');
-            $table->timestamps();
         });
     }
 
@@ -32,6 +28,11 @@ class CreateRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('records');
+        Schema::table('preps', function (Blueprint $table) {
+            // 外部キー制約を解除
+            $table->dropForeign(['task_id']);
+            // カラム削除
+            $table->dropColumn('task_id');
+        });
     }
 }

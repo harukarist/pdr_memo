@@ -32,22 +32,12 @@ Route::group(['middleware' => 'auth'], function () {
     // RecordController
     // 記録一覧画面
     Route::get('/records', 'RecordController@index')->name('records.index');
-    // 予定作成画面表示
-    Route::get('/records/create', 'RecordController@showCreateForm')->name('records.create');
-    // 予定登録
-    Route::post('/records/create', 'RecordController@create');
-    // 予定編集画面
-    Route::get('/records/{record_id}/edit', 'RecordController@showEditForm')->name('records.edit');
-    // 予定編集処理
-    Route::post('/records/{record_id}/edit', 'RecordController@edit');
-    // 予定削除処理
-    Route::post('/records/{record_id}/delete', 'RecordController@delete')->name('records.delete');
 
     // PrepController
     // Prep作成画面表示
     Route::get('/preps/create', 'PrepController@showCreateForm')->name('preps.create');
     // Prep登録
-    Route::post('/preps/post', 'PrepController@create')->name('preps.post');
+    Route::post('/preps/create', 'PrepController@create');
     // Prep編集画面
     Route::get('/preps/{prep_id}/edit', 'PrepController@showEditForm')->name('preps.edit');
     // Prep編集処理

@@ -53,8 +53,16 @@ class Task extends Model
     // }
 
     // リレーション
-    public function records()
+    public function project()
     {
-        return $this->hasMany('App\Record');
+        return $this->belongsTo('App\Project');
+    }
+    public function preps()
+    {
+        return $this->hasMany('App\Prep');
+    }
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');
     }
 }

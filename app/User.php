@@ -41,16 +41,27 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Project');
     }
-    public function records()
+    public function tasks()
     {
-        return $this->hasMany('App\Record');
+        return $this->hasManyThrough('App\Task', 'App\Project');
+    }
+    public function preps()
+    {
+        return $this->hasMany('App\Prep');
+    }
+    public function reviews()
+    {
+        return $this->hasManyThrough('App\Review', 'App\Prep');
     }
     public function categories()
     {
         return $this->hasMany('App\Category');
     }
-    public function tasks()
-    {
-        return $this->hasManyThrough('App\Task', 'App\Project');
-    }
+    // public function reviews()
+    // {
+    //     return $this->hasManyThrough('App\Task', 'App\Project', 'user_id')
+    //         ->rightJoin('preps', 'tasks.id', '=', 'preps.task_id')
+    //         ->rightJoin('reviews', 'preps.id', '=', 'reviews.prep_id')
+    //         ->select('preps.*', 'reviews.*', 'tasks.*', 'projects.*');
+    // }
 }

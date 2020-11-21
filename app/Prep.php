@@ -7,16 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Prep extends Model
 {
     // ロックをかけないカラム
-    protected $fillable = ['prep_text', 'unit_time','estimated_steps','category_id'];
+    // protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id'];
 
     // リレーション
-    public function record()
+    public function task()
     {
-        return $this->belongsTo('App\Record');
+        return $this->belongsTo('App\Task');
     }
-    // リレーション
     public function category()
     {
         return $this->belongsTo('App\Category');
+    }
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRecordIdToPreps extends Migration
+class AddPrepIdToReviews extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddRecordIdToPreps extends Migration
      */
     public function up()
     {
-        Schema::table('preps', function (Blueprint $table) {
+        Schema::table('reviews', function (Blueprint $table) {
             // カラム追加
-            $table->bigInteger('record_id')->unsigned();
+            $table->bigInteger('prep_id')->unsigned();
             // 外部キーを設定
-            $table->foreign('record_id')->references('id')->on('records');
+            $table->foreign('prep_id')->references('id')->on('preps');
         });
     }
 
@@ -28,11 +28,11 @@ class AddRecordIdToPreps extends Migration
      */
     public function down()
     {
-        Schema::table('preps', function (Blueprint $table) {
+        Schema::table('reviews', function (Blueprint $table) {
             // 外部キー制約を解除
-            $table->dropForeign(['record_id']);
+            $table->dropForeign(['prep_id']);
             // カラム削除
-            $table->dropColumn('record_id');
+            $table->dropColumn('prep_id');
         });
     }
 }

@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     // リレーション
-    public function record()
+    public function prep()
     {
-        return $this->belongsTo('App\Record');
+        return $this->belongsTo('App\Prep');
+    }
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
     }
 }

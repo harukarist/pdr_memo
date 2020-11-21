@@ -32,18 +32,19 @@
           <p class="d-inline mb-0 align-middle mr-2">0.5h</p>
         </div>
          --}}
-        @foreach ($records as $record)
+
+        @foreach ($preps as $prep)
         <!-- 個別の記録 -->
         <article class="p-record bg-white border p-0 mb-2">
           <div class="p-record__title-wrapper p-2 mb-1">
             <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
             <h6 class="p-record__title d-inline mb-0 align-middle">
-              {{ $record->task->task_name }}</h6>
+              {{ $prep->task->task_name }}</h6>
+              <small><a href="#" class="badge badge-secondary ml-1">{{ $prep->task->project->project_name }}</a></small>
           </div>
           <!-- PDR -->
           <div class="p-record__details row mx-0 my-2">
             <div class="p-record__item-wrapper col-sm">
-              @forelse($record->preps as $prep)
               <div class="text-secondary clearfix">
                 <span class="p-record__item-title float-left mb-0">Prep</span>
                 <router-link
@@ -58,15 +59,12 @@
                 <p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p>
                 <div class="p-record__item-detail">
                   <p class="mb-1 text-secondary d-inline">予定：<strong>{{ $prep->unit_time }}分 × {{ $prep->estimated_steps }}ステップ</strong></p>
-                  <a href="#" class="badge badge-secondary ml-1">{{ $prep->category->category_name }}</a>
+                  {{-- <a href="#" class="badge badge-secondary ml-1">{{ $review->category->category_name }}</a> --}}
                 </div>
               </div>
-              @empty
-                <p></p>
-              @endforelse
             </div>
             <div class="p-record__item-wrapper col-sm">
-              @forelse($record->reviews as $review)
+              @foreach ($prep->reviews as $review)
               <div class="p-record__review-wrapper mb-2">
                 <div class="text-secondary clearfix">
                   <span class="p-record__item-title float-left mb-0">Review</span>
@@ -83,7 +81,7 @@
                   </p>
                   <div class="p-record__item-detail mb-2">
                     <p class="text-secondary d-inline">実際：<strong>{{ $review->actual_time }}分</strong> <small>/ステップ{{ $review->step_counter }}</small></p>
-                    <a href="#" class="badge badge-secondary ml-1">{{ $prep->category->category_name }}</a>
+                    <a href="#" class="badge badge-secondary ml-1">{{ $review->category->category_name }}</a>
                   </div>
                   <div class="p-record__item-kpt border p-1">
                     <p class="mb-1">
@@ -98,15 +96,14 @@
                   </div>
                 </div>
               </div>
-
-              @empty
-              <p></p>
-            @endforelse
+              @endforeach
             </div>
           </div>
         </article>
         @endforeach
       </section>
+
+
 
     </div>
   </div>
