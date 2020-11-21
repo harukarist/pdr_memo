@@ -20,7 +20,7 @@ class PrepController extends Controller
         $categories = Auth::user()->categories()->get();
         $unit_times = ['5', '15', '30', '45', '60'];
         $estimated_steps = [1, 2, 3, 4, 5];
-        
+
         return view('preps.create', compact('tasks', 'categories', 'unit_times', 'estimated_steps'));
     }
 
@@ -32,6 +32,7 @@ class PrepController extends Controller
         $prep->unit_time = $request->unit_time;
         $prep->estimated_steps = $request->estimated_steps;
         $prep->category_id = $request->category_id;
+        $prep->task_id = $request->task_id;
         Auth::user()->preps()->save($prep);
         // Auth::user()->preps()->save($prep->fill($request->all()));
 

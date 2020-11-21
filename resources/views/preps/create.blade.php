@@ -71,13 +71,14 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="estimated_step">×ステップ数</label>
-            <select id="estimated_step" class="form-control @error('unit_time') is-invalid @enderror" name="estimated_step">
-              @foreach($estimated_steps as $estimated_step)
-              <option value="{{ $estimated_step }}" @if(old('estimated_step')== $estimated_step) selected @endif>{{ $estimated_step }}回</option>
+            <label for="estimated_steps">×ステップ数</label>
+            <select id="estimated_steps" class="form-control @error('estimated_steps') is-invalid @enderror" name="estimated_steps">
+              <option value="1" @empty(old('estimated_steps')) selected @endempty>1 回</option>
+              @foreach($estimated_steps as $step)
+              <option value="{{ $step }}" @if(old('estimated_steps')== $step) selected @endif>{{ $step }}回</option>
               @endforeach
             </select>
-            @error('estimated_step')
+            @error('estimated_steps')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
             </span>
