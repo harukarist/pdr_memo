@@ -29,6 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
+    // 会員登録後のリダイレクト先
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**

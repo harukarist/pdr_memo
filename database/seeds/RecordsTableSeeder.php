@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProjectsTableSeeder extends Seeder
+class RecordsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +14,13 @@ class ProjectsTableSeeder extends Seeder
     public function run()
     {
         $user = DB::table('users')->first();
-        $names = ['PDRメモアプリ制作', '読書', '仕事'];
-
-        foreach ($names as $name) {
-            DB::table('projects')->insert([
-                'project_name' => $name,
+        $task = DB::table('tasks')->first();
+        
+        foreach (range(1, 3) as $num) {
+            DB::table('records')->insert([
                 'user_id' => $user->id,
+                'target_date' => Carbon::now(),
+                'task_id' => $task->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

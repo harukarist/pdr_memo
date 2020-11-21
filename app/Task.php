@@ -9,11 +9,12 @@ class Task extends Model
 {
     // ステータスの定義
     const STATUS = [
-        1 => ['name' => '未着手', 'class' => 'badge-danger'],
-        2 => ['name' => '着手中', 'class' => 'badge-info'],
-        3 => ['name' => '完了', 'class' => ''],
+        1 => ['status_name' => '未着手', 'status_class' => 'badge-danger'],
+        2 => ['status_name' => '着手中', 'status_class' => 'badge-info'],
+        3 => ['status_name' => '完了', 'status_class' => ''],
     ];
 
+    // アクセサでモデルクラスのデータを加工する
     // ステータスの返却
     public function getStatusNameAttribute()
     {
@@ -26,7 +27,7 @@ class Task extends Model
         }
 
         // 配列からステータス値をキーに探索して値を返す
-        return self::STATUS[$status]['name'];
+        return self::STATUS[$status]['status_name'];
     }
 
     // ステータスに対応するクラスの返却
@@ -41,7 +42,7 @@ class Task extends Model
         }
 
         // 配列からステータス値をキーに探索して値を返す
-        return self::STATUS[$status]['class'];
+        return self::STATUS[$status]['status_class'];
     }
 
     // 期限日の整形
@@ -50,4 +51,10 @@ class Task extends Model
     //     return Carbon::createFromFormat('Y-m-d', $this->attributes['due_date'])
     //         ->format('Y/m/d');
     // }
+
+    // リレーション
+    public function records()
+    {
+        return $this->hasMany('App\Record');
+    }
 }

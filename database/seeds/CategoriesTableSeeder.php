@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProjectsTableSeeder extends Seeder
+class CategoriesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,11 +14,11 @@ class ProjectsTableSeeder extends Seeder
     public function run()
     {
         $user = DB::table('users')->first();
-        $names = ['PDRメモアプリ制作', '読書', '仕事'];
-
+        $names = ['Input', 'Output', 'Etc'];
+        
         foreach ($names as $name) {
-            DB::table('projects')->insert([
-                'project_name' => $name,
+            DB::table('categories')->insert([
+                'category_name' => $name,
                 'user_id' => $user->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // ログインユーザのプロジェクトを1件取得
+        $project = Auth::user()->projects()->first();
+
+        if (is_null($project)) {
+            return view('home');
+        }
+        return redirect()->route('tasks.index', [
+            'project_id' => $project->id
+        ]);
     }
 }

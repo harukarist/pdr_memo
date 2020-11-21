@@ -15,7 +15,11 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('category_name');
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
+            // 外部キーを設定
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

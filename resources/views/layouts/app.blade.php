@@ -1,6 +1,6 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -17,67 +17,56 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    @yield('styles')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        {{-- Header --}}
-        <header-component></header-component>
-        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <header>
+            {{-- スマホではハンバーガーアイコン表示 navbar-expand-sm--}}
+            <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
+                {{-- サイト名 --}}
+                <a class="navbar-brand mr-5 p-0" href="/">PDR-memo</a>
+
+                {{-- ハンバーガーメニュー --}}
+                <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
+                    <div class="navbar-nav">
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                        {{-- 未ログイン --}}
+                            <a class="c-navbar__link navbar-item" href="{{ route('login') }}">ログイン</a>
+                            ｜
+                            <a class="c-navbar__link navbar-item" href="{{ route('register') }}">ユーザー登録</a>
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                        {{-- ログイン後 --}}
+                            <p class="c-navbar__item nav-item">こんにちは, {{ Auth::user()->name }}さん</p>
+                            ｜
+                            <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link">タスクリスト</a>
+                            <a href="{{ route('preps.create') }}" class="c-navbar__item nav-item nav-link">計画を立てる</a>
+                            <a href="{{ route('records.index') }}" class="c-navbar__item nav-item nav-link">これまでの記録</a>
+                            <a href="#" id="js-logout" class="c-navbar__link navbar-item nav-link" onclick="event.preventDefault();
+                            document.getElementById('js-logout-form').submit();">ログアウト</a>
+                            <form id="js-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                            </form>
                         @endguest
-                    </ul>
+                    </div>
                 </div>
-            </div>
-        </nav> --}}
-
+            </nav>
+        </header>
         <main class="py-4">
             @yield('content')
-            {{-- resources/js/app.jsでRouterViewを指定 --}}
-            <router-view></router-view>
+            {{-- Router View resources/js/app.jsで指定 --}}
+            {{-- <router-view></router-view> --}}
         </main>
     </div>
 </body>

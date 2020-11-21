@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('content')
   <div class="container p-3">
@@ -6,7 +6,7 @@
       {{-- プロジェクト一覧 --}}
       <div class="col col-md-4">
         <div class="card">
-          <div class="card-header">Project</div>
+          <div class="card-header">プロジェクト</div>
           <div class="card-body">
             <div class="list-group mb-2">
               {{-- プロジェクトIDが一致する場合はactiveクラスを出力 --}}
@@ -25,13 +25,13 @@
       {{-- タスク一覧 --}}
       <div class="col col-md-8">
         <div class="card">
-          <div class="card-header">Task</div>
+          <div class="card-header">タスク</div>
           <div class="card-body">
             <table class="table">
               <thead>
               <tr>
                 <th>タイトル</th>
-                <th>状態</th>
+                <th>ステータス</th>
                 <th>期限</th>
                 <th></th>
               </tr>
@@ -45,7 +45,7 @@
                       <span class="badge {{ $task->status_class }}">{{ $task->status_name }}</span>
                     </td>
                     <td>{{ $task->formatted_due_date }}</td>
-                    <td><a href="#">編集</a></td>
+                    <td><a href="{{ route('tasks.edit', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">編集</a></td>
                   </tr>
                 @endforeach
               </tbody>
