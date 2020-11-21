@@ -55,6 +55,7 @@ class TaskController extends Controller
             'project_id' => $current_project->id,
         ]);
     }
+
     // タスク編集画面を表示
     public function showEditForm(int $id, int $task_id)
     {
@@ -88,11 +89,12 @@ class TaskController extends Controller
     public function delete(int $id, int $task_id)
     {
         // リクエストで受け取ったIDのタスクをソフトデリート
-        Task::find($task_id)->delete();
+        // Task::find($task_id)->delete();
+        Task::destroy($task_id);
 
         // 削除対象のタスクが属するプロジェクトのタスク一覧にリダイレクト
         return redirect()->route('tasks.index', [
             'project_id' => $id,
-        ])->with('flash_message', __('タスクを削除しました'));
+        ])->with('flash_message', 'タスクを削除しました');
     }
 }

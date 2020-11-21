@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Prep extends Model
 {
+    // ソフトデリート用のトレイトを追加
+    use SoftDeletes;
+
     // ロックをかけないカラム
     // protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id'];
 
