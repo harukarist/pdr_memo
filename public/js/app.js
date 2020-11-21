@@ -1990,11 +1990,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
   }
 });
 
@@ -39035,7 +39033,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
+    return _c("div", { staticClass: "container-fluid" }, [
       _c("h5", { staticClass: "mb-4" }, [_vm._v("実行する")]),
       _vm._v(" "),
       _c("div", { staticClass: "progressbar__wrapper text-center" }, [
@@ -39146,7 +39144,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
+    return _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-md-8" }, [
           _c("div", { staticClass: "card" }, [
@@ -39155,9 +39153,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
+              _vm._v("I'm an example component.")
             ])
           ])
         ])
@@ -39192,7 +39188,7 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "container" },
+        { staticClass: "container-fluid" },
         [
           _c(
             "router-link",
@@ -39352,7 +39348,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c("h5", { staticClass: "mb-4" }, [_vm._v("マイページ")]),
     _vm._v(" "),
     _c("div", { staticClass: "c-contents__wrapper" }, [
@@ -39949,7 +39945,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
+    return _c("div", { staticClass: "container-fluid" }, [
       _c("h5", { staticClass: "mb-4" }, [_vm._v("準備をする")]),
       _vm._v(" "),
       _c("div", { staticClass: "progressbar__wrapper" }, [
@@ -40125,7 +40121,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _vm._m(0),
     _vm._v(" "),
     _c("article", { staticClass: "p-record bg-white border p-2 mb-5" }, [
@@ -40455,7 +40451,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c("h5", { staticClass: "mb-4" }, [_vm._v("活動記録を編集する")]),
     _vm._v(" "),
     _c(
@@ -40751,7 +40747,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c("h5", { staticClass: "mb-4" }, [_vm._v("これまでの記録")]),
     _vm._v(" "),
     _c("div", { staticClass: "c-contents__wrapper" }, [
@@ -41864,7 +41860,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
+    return _c("div", { staticClass: "container-fluid" }, [
       _c("h5", { staticClass: "mb-4" }, [_vm._v("振り返る")]),
       _vm._v(" "),
       _c("div", { staticClass: "progressbar__wrapper" }, [
@@ -42013,7 +42009,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c("h5", { staticClass: "mb-4" }, [_vm._v("活動記録を編集する")]),
     _vm._v(" "),
     _c(

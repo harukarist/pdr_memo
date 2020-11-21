@@ -5,17 +5,20 @@
 @endsection
 
 @section('content')
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col col-md-offset-3 col-md-6">
         <nav class="panel panel-default">
           <div class="panel-heading">タスクを追加する</div>
           <div class="panel-body">
+            {{-- バリデーションエラー --}}
             @if($errors->any())
               <div class="alert alert-danger">
-                @foreach($errors->all() as $message)
-                  <p>{{ $message }}</p>
-                @endforeach
+                <ul class="m-0">
+                  @foreach($errors->all() as $message)
+                    <li>{{ $message }}</li>
+                  @endforeach
+                </ul>
               </div>
             @endif
             <form action="{{ route('tasks.create', ['project_id' => $project_id]) }}" method="POST">

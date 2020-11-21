@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <h5 class="mb-4">マイページ</h5>
     <!-- 記録一覧 -->
     <div class="c-contents__wrapper">

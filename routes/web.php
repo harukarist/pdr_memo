@@ -14,12 +14,19 @@
 Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
     Route::get('/', 'HomeController@index')->name('home');
-    // タスク一覧画面表示
+    // タスク一覧
     Route::get('/projects/{project_id}/tasks', 'TaskController@index')->name('tasks.index');
-    // プロジェクト作成画面表示
+
+    // プロジェクト作成
     Route::get('/projects/create', 'ProjectController@showCreateForm')->name('projects.create');
-    // プロジェクト作成処理
     Route::post('/projects/create', 'ProjectController@create');
+    // プロジェクト編集
+    Route::get('/projects/{project_id}/edit', 'ProjectController@showEditForm')->name('projects.edit');
+    Route::post('/projects/{project_id}/edit', 'ProjectController@edit');
+    // プロジェクト削除
+    Route::get('/projects/{project_id}/delete', 'ProjectController@delete')->name('projects.delete');
+
+
     // タスク登録画面画面表示
     Route::get('/projects/{project_id}/tasks/create', 'TaskController@showCreateForm')->name('tasks.create');
     // タスク作成処理

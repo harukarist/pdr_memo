@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <h5 class="mb-4">活動記録を編集する</h5>
 
     <button

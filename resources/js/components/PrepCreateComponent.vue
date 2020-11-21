@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <!-- ガイド -->
     <!-- <section class="p-guide__text mx-1 my-3">
       <p>

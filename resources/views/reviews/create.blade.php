@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
   <h5 class="mb-4">振り返る</h5>
 
   <!-- プログレスバー -->

@@ -1,7 +1,8 @@
+
 @extends('layouts.app')
 
 @section('content')
-  <div class="container p-3">
+  <div class="container-fluid p-3">
     <div class="row">
       {{-- プロジェクト一覧 --}}
       <div class="col col-md-4">
@@ -17,7 +18,7 @@
               @endforeach
             </div>
             <a href="{{ route('projects.create') }}" class="btn btn-outline-secondary btn-block">
-              プロジェクトを追加する
+              プロジェクトを追加・変更
             </a>
           </div>
         </div>

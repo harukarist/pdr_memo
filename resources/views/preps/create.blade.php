@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
+  <div class="container-fluid">
     
     <h5 class="mb-4">計画を立てる</h5>
     <!-- プログレスバー -->
@@ -19,7 +19,7 @@
       <!-- タスク名 -->
       <div class="form-group">
         <label for="task_id">タスクを選ぶ</label>
-        <select id="task_id" class="form-control @error('task_id') is-invalid @enderror" name="task_id" autofocus>
+        <select id="task_id" class="form-control @error('task_id') is-invalid @enderror" name="task_id">
           <option value="" @empty(old('task_id')) selected @endempty>選択してください</option>
           @forelse($tasks as $index => $task)
             <option value="{{ $task->id }}" @if(old('task_id') == $task->id) selected @endif>{{ $task->task_name }}</option>

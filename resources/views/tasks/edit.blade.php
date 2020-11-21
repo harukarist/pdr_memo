@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col col-md-offset-3 col-md-6">
         <nav class="panel panel-default">
@@ -26,7 +26,7 @@
               <div class="form-group">
                 <label for="task_name">タスク名</label>
                 {{-- 直前の入力値がない場合はテーブルの値を表示 --}}
-                <input type="text" class="form-control" name="task_name" id="task_name"
+                <input type="text" class="form-control @error('task_name') is-invalid @enderror" name="task_name" id="task_name"
                        value="{{ old('task_name') ?? $task->task_name }}" />
               </div>
               <div class="form-group">

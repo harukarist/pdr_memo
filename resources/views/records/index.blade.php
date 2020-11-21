@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container p-3">
+  <div class="container-fluid p-3">
     <h5 class="mb-4">これまでの記録</h5>
     <!-- 記録一覧 -->
     <div class="c-contents__wrapper">
