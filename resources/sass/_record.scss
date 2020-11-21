@@ -4,8 +4,9 @@
     margin: 0;
   }
   &__item-title {
-  border-left: 3px solid #ddd;
+  border-left: 3px solid $blue;
   padding-left: 5px;
+  color: $blue;
   }
   &__item-text{
     padding: 10px 5px;

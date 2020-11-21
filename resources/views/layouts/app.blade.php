@@ -7,14 +7,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Title -->
+    <title>{{ config('app.name', 'PDR-memo') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     @yield('styles')
@@ -63,6 +63,12 @@
                 </div>
             </nav>
         </header>
+        {{-- フラッシュメッセージ --}}
+        @if (session('flash_message'))
+            <div class="alert alert-primary text-center" role="alert">
+                {{ session('flash_message') }}
+            </div>
+        @endif
         <main class="py-4">
             @yield('content')
             {{-- Router View resources/js/app.jsで指定 --}}

@@ -65,8 +65,8 @@ class TaskController extends Controller
             'task' => $task,
         ]);
     }
-    // タスク編集処理
-    public function edit(int $id, int $task_id, EditTask $request)
+    // タスク削除処理
+    public function delete(int $id, int $task_id)
     {
         // リクエストのIDからタスクデータを取得
         $task = Task::find($task_id);
