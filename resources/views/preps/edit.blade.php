@@ -17,6 +17,16 @@
   {{-- 削除ボタン --}}
   <form action="{{ route('preps.delete', ['prep_id' => $editing_prep->id]) }}" method="post">
     @csrf
+    {{-- バリデーションエラー --}}
+    @if($errors->any())
+    <div class="alert alert-danger">
+      <ul class="m-0">
+        @foreach($errors->all() as $message)
+          <li>{{ $message }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
   <button type="button" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modal1">
     この計画を削除する
   </button>
@@ -30,7 +40,7 @@
           </button>
         </div>
         <div class="modal-body">
-          記録された内容は編集画面から変更できます。本当にこの計画を削除しますか？
+          計画を削除すると、振り返りデータも一緒に削除されます。計画は編集画面から変更できます。本当にこの計画を削除しますか？
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -56,22 +66,12 @@
           <a href="{{ route('home') }}">タスクを登録してください</a>
         @endforelse
       </select>
-      @error('task_id')
-      <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-      </span>
-      @enderror
     </div>
 
     <!-- Prepテキストエリア -->
     <div class="form-group">
       <label for="prep_text">必要な準備をする</label>
       <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text">{{ old('prep_text') ?? $editing_prep->prep_text }}</textarea>
-      @error('prep_text')
-      <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-      </span>
-      @enderror
       <span id="help-prep" class="form-text text-muted">
         <ul>
           <li>これから何をする？</li>
@@ -85,49 +85,39 @@
 
     <!-- 予定時間 -->
       <div class="form-inline mb-4">
-        <div class="form-group">
+        <div class="form-group col-6">
           <label for="unit_time">単位時間</label>
           <select id="unit_time" class="form-control @error('unit_time') is-invalid @enderror" name="unit_time">
             @foreach($unit_times as $unit_time)
               <option value="{{ $unit_time }}" @if(old('unit_time') == $unit_time || $editing_prep->unit_time == $unit_time) selected @endif>{{ $unit_time }} 分</option>
             @endforeach
           </select>
-          @error('unit_time')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
         </div>
-        <div class="form-group">
-          <label for="estimated_steps">×ステップ数</label>
+        <div class="form-group col-6">
+          <label for="estimated_steps">ステップ数</label>
           <select id="estimated_steps" class="form-control @error('estimated_steps') is-invalid @enderror" name="estimated_steps">
             @foreach($estimated_steps as $step)
             <option value="{{ $step }}" @if(old('estimated_steps')== $step || $editing_prep->estimated_steps == $step) selected @endif>{{ $step }}回</option>
             @endforeach
           </select>
-          @error('estimated_steps')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
         </div>
       </div>
 
     <!-- カテゴリー -->
     <div class="form-group">
       <label for="category_id">カテゴリー</label>
-      <select id="category_id" class="form-control @error('category_id') is-invalid @enderror" name="category_id">
-        @forelse($categories as $category)
-          <option value="{{ $category->id }}" @if(old('category_id')== $category->id || $editing_prep->category_id == $category->id) selected @endif>{{ $category->category_name }}</option>
-        @empty
+      <div class="pl-1">
+        <div class="form-check form-check-inline">
+          @forelse($categories as $category)
+            <input type="radio" class="form-check-input" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $editing_prep->category_id == $category->id) checked @endif>
+            <label class="form-check-label pr-4" for="{{ $category->id }}">
+              <h4 class="c-form__category badge badge-primary p-1 ">{{ $category->category_name }}</h4>
+            </label>
+          @empty
           カテゴリーの登録はまだありません。
-        @endforelse
-      </select>
-      @error('category_id')
-      <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-      </span>
-      @enderror
+          @endforelse
+        </div>
+      </div>
     </div>
 
     <!-- 送信 -->
