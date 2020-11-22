@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container-fluid">
+  <div class="container">
     <h5 class="mb-4">振り返る</h5>
 
     <!-- プログレスバー -->

@@ -17,7 +17,7 @@ class AddTaskIdToPreps extends Migration
             // カラム追加
             $table->bigInteger('task_id')->unsigned();
             // 外部キーを設定
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks');
         });
     }
 

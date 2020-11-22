@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container-fluid p-3">
+  <div class="container-fluid">
     <div class="row">
       {{-- プロジェクト一覧 --}}
       <div class="col col-md-4">

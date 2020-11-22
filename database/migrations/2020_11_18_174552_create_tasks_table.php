@@ -21,7 +21,7 @@ class CreateTasksTable extends Migration
             $table->integer('status')->default(1);
             $table->timestamps();
             // 外部キーの設定
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
   <div class="row justify-content-center">
     <div class="col-sm-8">
       <h5 class="c-heading__title">プロジェクトの編集</h5>

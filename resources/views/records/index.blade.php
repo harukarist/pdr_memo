@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container-fluid p-3">
+  <div class="container">
     <h5 class="mb-4">これまでの記録</h5>
     <!-- 記録一覧 -->
     <div class="c-contents__wrapper">
@@ -62,14 +62,14 @@
             </div>
             {{-- Do --}}
             <div class="p-record__item-wrapper col-auto">
-              <button type="submit" class="btn btn-primary">Do！</button>
+              <a href="{{ route('preps.do', ['prep_id' => $prep->id ]) }}" class="btn btn-primary my-3">Do！</a>
             </div>
             {{-- Review --}}
             <div class="p-record__item-wrapper col-md-6">
               @foreach ($prep->reviews as $review)
               <div class="p-record__review-wrapper mb-2">
                 <div class="text-secondary clearfix">
-                  <span class="p-record__item-title float-left mb-0">Review</span>
+                  <span class="p-record__item-title float-left mb-0">Review-{{ $review->step_counter }}</span>
                   <router-link
                     v-bind:to="{ name: 'review.edit', params: { recordId: 1 } }"
                   >
@@ -82,20 +82,28 @@
                     {!! nl2br(e($review->review_text)) !!}
                   </p>
                   <div class="p-record__item-detail mb-2">
-                    <p class="text-secondary d-inline">実際：<strong>{{ $review->actual_time }}分</strong> <small>/ステップ{{ $review->step_counter }}</small></p>
+                    <p class="text-secondary d-inline">実際：<strong>{{ $review->actual_time }}分</strong></p>
                     <a href="#" class="badge badge-secondary ml-1">{{ $review->category->category_name }}</a>
                   </div>
+                  @if($review->good_text || $review->problem_text || $review->try_text)
                   <div class="p-record__item-kpt border p-1">
+                    @isset($review->good_text)
                     <p class="mb-1">
                       Good/Keep：{!! nl2br(e($review->good_text)) !!}
                     </p>
+                    @endisset
+                    @isset($review->problem_text)
                     <p class="mb-1">
                       Problem：{!! nl2br(e($review->problem_text)) !!}
                     </p>
+                    @endisset
+                    @isset($review->try_text)
                     <p class="mb-1">
                       Try：{!! nl2br(e($review->try_text)) !!}
                     </p>
+                    @endisset
                   </div>
+                  @endif
                 </div>
               </div>
               @endforeach

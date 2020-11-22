@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container">
     <h5 class="mb-4">これまでの記録</h5>
     <!-- 記録一覧 -->
     <div class="c-contents__wrapper">

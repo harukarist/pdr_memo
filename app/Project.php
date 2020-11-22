@@ -10,6 +10,15 @@ class Project extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
+    // リレーション先のレコードも論理削除
+    protected static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($project) {
+            $project->tasks()->delete();
+        });
+    }
+
     // Taskモデルへのリレーション
     public function tasks()
     {

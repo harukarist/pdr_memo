@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container-fluid">
-    
+  <div class="container">
     <h5 class="mb-4">計画を立てる</h5>
     <!-- プログレスバー -->
     <div class="progressbar__wrapper">
@@ -13,48 +12,60 @@
       </ul>
     </div>
 
-    <!-- Prep入力フォーム -->
-    <form method="POST" action="{{ route('preps.create') }}">
-      @csrf
-      <!-- タスク名 -->
-      <div class="form-group">
-        <label for="task_id">タスクを選ぶ</label>
-        <select id="task_id" class="form-control @error('task_id') is-invalid @enderror" name="task_id">
-          <option value="" @empty(old('task_id')) selected @endempty>選択してください</option>
-          @forelse($tasks as $index => $task)
-            <option value="{{ $task->id }}" @if(old('task_id') == $task->id) selected @endif>{{ $task->task_name }}</option>
-          @empty
-            <a href="{{ route('home') }}">タスクを登録してください</a>
-          @endforelse
-        </select>
-        @error('task_id')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-      </div>
-
-      <!-- Prepテキストエリア -->
-      <div class="form-group">
-        <label for="prep_text">必要な準備をする</label>
-        <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text">{{ old('prep_text') }}</textarea>
-        @error('prep_text')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-        <span id="help-prep" class="form-text text-muted">
-          <ul>
-            <li>これから何をする？</li>
-            <li>その理由、目標、目的は？</li>
-            <li>どのようなプロセスで行う？</li>
-            <li>必要なリソースは？</li>
-            <li>他に関わる人は？</li>
+    <section>
+      <!-- Prep入力フォーム -->
+      <form method="POST" action="{{ route('preps.create') }}">
+        @csrf
+        {{-- バリデーションエラー --}}
+        @if($errors->any())
+        <div class="alert alert-danger">
+          <ul class="m-0">
+            @foreach($errors->all() as $message)
+              <li>{{ $message }}</li>
+            @endforeach
           </ul>
-        </span>
-      </div>
+        </div>
+        @endif
 
-      <!-- 予定時間 -->
+        <!-- タスク名 -->
+        <div class="form-group">
+          <label for="task_id">タスクを選ぶ</label>
+          <select id="task_id" class="form-control @error('task_id') is-invalid @enderror" name="task_id">
+            <option value="" @empty(old('task_id')) selected @endempty>選択してください</option>
+            @forelse($tasks as $index => $task)
+              <option value="{{ $task->id }}" @if(old('task_id') == $task->id) selected @endif>{{ $task->task_name }}</option>
+            @empty
+              <a href="{{ route('home') }}">タスクを登録してください</a>
+            @endforelse
+          </select>
+          @error('task_id')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+          @enderror
+        </div>
+
+        <!-- Prepテキストエリア -->
+        <div class="form-group">
+          <label for="prep_text">必要な準備をする</label>
+          <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text">{{ old('prep_text') }}</textarea>
+          @error('prep_text')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+          @enderror
+          <span id="help-prep" class="form-text text-muted">
+            <ul>
+              <li>これから何をする？</li>
+              <li>その理由、目標、目的は？</li>
+              <li>どのようなプロセスで行う？</li>
+              <li>必要なリソースは？</li>
+              <li>他に関わる人は？</li>
+            </ul>
+          </span>
+        </div>
+
+        <!-- 予定時間・ステップ数 -->
         <div class="form-inline mb-4">
           <div class="form-group">
             <label for="unit_time">単位時間</label>
@@ -86,28 +97,29 @@
           </div>
         </div>
 
-      <!-- カテゴリー -->
-      <div class="form-group">
-        <label for="category_id">カテゴリー</label>
-        <select id="category_id" class="form-control @error('category_id') is-invalid @enderror" name="category_id">
-          <option value="" @empty(old('category_id')) selected @endempty>選択してください</option>
-          @forelse($categories as $category)
-            <option value="{{ $category->id }}" @if(old('category_id')== $category->id) selected @endif>{{ $category->category_name }}</option>
-          @empty
-            カテゴリーの登録はまだありません。
-          @endforelse
-        </select>
-        @error('category_id')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-      </div>
+        <!-- カテゴリー -->
+        <div class="form-group">
+          <label for="category_id">カテゴリー</label>
+          <select id="category_id" class="form-control @error('category_id') is-invalid @enderror" name="category_id">
+            <option value="" @empty(old('category_id')) selected @endempty>選択してください</option>
+            @forelse($categories as $category)
+              <option value="{{ $category->id }}" @if(old('category_id')== $category->id) selected @endif>{{ $category->category_name }}</option>
+            @empty
+              カテゴリーの登録はまだありません。
+            @endforelse
+          </select>
+          @error('category_id')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+          @enderror
+        </div>
 
-      <!-- 送信 -->
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary">計画を登録！</button>
-      </div>
-    </form>
+        <!-- 送信 -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">計画を登録！</button>
+        </div>
+      </form>
+    </section>
   </div>
 @endsection

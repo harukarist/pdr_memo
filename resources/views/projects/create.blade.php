@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container-fluid">
+  <div class="container">
     <section class="row justify-content-center">
       <div class="col-sm-8">
         <h5 class="c-heading__title">プロジェクトの編集</h5>
@@ -40,6 +40,18 @@
             @isset($edit_project)
             <form action="{{ route('projects.edit', ['project_id' => $edit_project->id]) }}" method="post">
               @csrf
+
+      {{-- バリデーションエラー --}}
+      @if($errors->any())
+      <div class="alert alert-danger">
+        <ul class="m-0">
+          @foreach($errors->all() as $message)
+            <li>{{ $message }}</li>
+          @endforeach
+        </ul>
+      </div>
+      @endif
+
               <div class="form-group">
                 <label for="project_name">プロジェクト名の編集</label>
                 <div class="form-row">

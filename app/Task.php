@@ -11,6 +11,15 @@ class Task extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
+    // リレーション先のレコードも論理削除
+    protected static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($task) {
+            $task->preps()->delete();
+        });
+    }
+
     // ステータスの定義
     const STATUS = [
         1 => ['status_name' => '未着手', 'status_class' => 'badge-danger'],
@@ -68,15 +77,5 @@ class Task extends Model
     public function reviews()
     {
         return $this->hasMany('App\Review');
-    }
-
-    // リレーション先のレコードも論理削除
-    public static function boot()
-    {
-        parent::boot();
-
-        static::deleted(function ($project) {
-            $project->posts()->delete();
-        });
     }
 }

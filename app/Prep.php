@@ -10,6 +10,15 @@ class Prep extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
+    // リレーション先のレコードも論理削除
+    protected static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($prep) {
+            $prep->reviews()->delete();
+        });
+    }
+
     // ロックをかけないカラム
     protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id', 'task_id'];
 

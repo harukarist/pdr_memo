@@ -25,11 +25,11 @@ class ProjectController extends Controller
     public function create(CreateProject $request)
     {
         // Projectモデルのインスタンスを作成する
-        $projects = new Project();
+        $project = new Project();
         // フォームに入力された内容を代入
-        $projects->project_name = $request->project_name;
+        $project->project_name = $request->project_name;
         // ログインユーザーに紐づけて保存
-        Auth::user()->projects()->save($projects);
+        Auth::user()->project()->save($projects);
 
         // そのプロジェクトのタスク一覧画面にリダイレクト
         return redirect()->route('projects.create')->with('flash_message', 'プロジェクトを作成しました');

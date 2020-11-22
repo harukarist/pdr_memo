@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class AddForeignToPreps extends Migration
+class ResetForeignToPreps extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +18,8 @@ class AddForeignToPreps extends Migration
             //外部キーの削除
             $table->dropForeign(['task_id']);
             // 外部キーをcascadeオプションありで設定する
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

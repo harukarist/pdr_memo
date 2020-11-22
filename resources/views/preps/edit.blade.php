@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
 
   <h5 class="mb-4">計画を修正する</h5>
 

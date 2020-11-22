@@ -29,24 +29,18 @@ class PrepController extends Controller
     public function create(CreatePrep $request)
     {
         $prep = new Prep();
-        $prep->prep_text = $request->prep_text;
-        $prep->unit_time = $request->unit_time;
-        $prep->estimated_steps = $request->estimated_steps;
-        $prep->category_id = $request->category_id;
-        $prep->task_id = $request->task_id;
-        Auth::user()->preps()->save($prep);
-        // Auth::user()->preps()->save($prep->fill($request->all()));
+        Auth::user()->preps()->save($prep->fill($request->all()));
 
-        // // 選択中のプロジェクトに紐づくタスクを作成
+        // 一覧画面にリダイレクト
         return redirect()->route('records.index');
     }
 
     // Prep編集画面を表示
-    public function showEditForm(int $id)
+    public function showEditForm(int $prep_id)
     {
         // ログインユーザーに紐づく該当IDのPrepを取得
-        // $editing_prep = Prep::find($id);
-        $editing_prep = Auth::user()->preps()->find($id);
+        // $editing_prep = Prep::find($prep_id);
+        $editing_prep = Auth::user()->preps()->find($prep_id);
 
         // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
         $tasks = Auth::user()->tasks()->get();
@@ -58,14 +52,12 @@ class PrepController extends Controller
     }
 
     // Prep編集処理
-    public function edit(int $id, EditPrep $request)
+    public function edit(int $prep_id, EditPrep $request)
     {
         // リクエストのIDからPrepデータを取得
-        $editing_prep = Auth::user()->preps()->find($id);
+        $editing_prep = Auth::user()->preps()->find($prep_id);
 
         // 該当のPrepデータをフォームの入力値で書き換えて保存
-        // $editing_prep->prep_text = $request->prep_text;
-        // $editing_prep->save();
         Auth::user()->preps()->save($editing_prep->fill($request->all()));
 
         // 編集対象のPrepが属するPrepのPrep一覧にリダイレクト
@@ -76,11 +68,21 @@ class PrepController extends Controller
     public function delete(int $prep_id)
     {
         // リクエストで受け取ったIDのPrepを削除
-        // Auth::user()->preps()->delete($id);
-        // Prep::find($id)->delete();
-        Prep::destroy($prep_id);
+        Auth::user()->preps()->find($prep_id)->delete();
+        // Prep::find($prep_id)->delete();
+        // Prep::destroy($prep_id);
 
         // 削除対象のPrepが属するPrepのPrep一覧にリダイレクト
         return redirect()->route('records.index')->with('flash_message', 'Prepを削除しました');
+    }
+
+    // Do画面表示
+    public function showDoForm(int $prep_id)
+    {
+        // ログインユーザーに紐づく該当IDのPrepを取得
+        $do_prep = Auth::user()->preps()->find($prep_id);
+
+        // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
+        return view('preps.do', compact('do_prep'));
     }
 }

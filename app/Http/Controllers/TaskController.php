@@ -43,6 +43,7 @@ class TaskController extends Controller
     // タスク作成処理
     public function create(int $id, CreateTask $request)
     {
+        // 選択されたプロジェクトIDのデータを取得
         $current_project = Project::find($id);
 
         $task = new Task();

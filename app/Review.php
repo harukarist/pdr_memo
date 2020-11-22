@@ -10,6 +10,9 @@ class Review extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
+    // ロックをかけないカラム
+    protected $fillable = ['review_text', 'good_text', 'problem_text', 'try_text', 'actual_time', 'step_counter', 'category_id', 'prep_id'];
+
     // リレーション
     public function prep()
     {

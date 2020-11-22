@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container">
     <h5 class="mb-4">実行する</h5>
 
     <!-- プログレスバー -->

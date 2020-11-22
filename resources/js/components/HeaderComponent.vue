@@ -1,7 +1,7 @@
 <template>
   <!-- ナビバー -->
   <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
-    <div class="container-fluid">
+    <div class="container">
       <!-- サイト名 -->
       <router-link v-bind:to="{ name: 'mypage' }" class="navbar-brand">
         <h5 class="navbar-brand mr-5 p-0">PDR-memo</h5>

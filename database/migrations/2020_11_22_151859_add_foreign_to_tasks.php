@@ -15,7 +15,8 @@ class AddForeignToTasks extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             // 外部キーをcascadeオプションありで設定する
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')
+            ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

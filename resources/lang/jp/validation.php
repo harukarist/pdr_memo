@@ -90,7 +90,7 @@ return [
     'numeric'              => ':attributeには、数字を指定してください。',
     'present'              => ':attributeが存在していません。',
     'regex'                => ':attributeに正しい形式を指定してください。',
-    'required'             => ':attributeは必ず指定してください。',
+    'required'             => ':attributeは必ず入力してください。',
     'required_if'          => ':otherが:valueの場合、:attributeも指定してください。',
     'required_unless'      => ':otherが:valuesでない場合、:attributeを指定してください。',
     'required_with'        => ':valuesを指定する場合は、:attributeも指定してください。',
@@ -150,6 +150,9 @@ return [
         'project_name' => 'プロジェクト名',
         'task_id' => 'タスク',
         'prep_text' => '準備',
+        'review_text' => '振り返り',
+        'actual_time' => '実際の時間',
+        'step_counter' => 'ステップ数',
     ],
 
 ];

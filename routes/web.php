@@ -14,9 +14,20 @@
 Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
     Route::get('/', 'HomeController@index')->name('home');
+
+    // TaskController
     // タスク一覧
     Route::get('/projects/{project_id}/tasks', 'TaskController@index')->name('tasks.index');
+    // タスク作成
+    Route::get('/projects/{project_id}/tasks/create', 'TaskController@showCreateForm')->name('tasks.create');
+    Route::post('/projects/{project_id}/tasks/create', 'TaskController@create');
+    // タスク編集
+    Route::get('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@showEditForm')->name('tasks.edit');
+    Route::post('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@edit');
+    // タスク削除
+    Route::get('/projects/{project_id}/tasks/{task_id}/delete', 'TaskController@delete')->name('tasks.delete');
 
+    // ProjectController
     // プロジェクト作成
     Route::get('/projects/create', 'ProjectController@showCreateForm')->name('projects.create');
     Route::post('/projects/create', 'ProjectController@create');
@@ -26,22 +37,9 @@ Route::group(['middleware' => 'auth'], function () {
     // プロジェクト削除
     Route::get('/projects/{project_id}/delete', 'ProjectController@delete')->name('projects.delete');
 
-
-    // タスク登録画面画面表示
-    Route::get('/projects/{project_id}/tasks/create', 'TaskController@showCreateForm')->name('tasks.create');
-    // タスク作成処理
-    Route::post('/projects/{project_id}/tasks/create', 'TaskController@create');
-    // タスク編集画面
-    Route::get('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@showEditForm')->name('tasks.edit');
-    // タスク編集処理
-    Route::post('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@edit');
-    // タスク削除処理
-    Route::get('/projects/{project_id}/tasks/{task_id}/delete', 'TaskController@delete')->name('tasks.delete');
-
     // RecordController
     // 記録一覧画面
     Route::get('/records', 'RecordController@index')->name('records.index');
-
 
     // PrepController
     // Prep作成
@@ -54,7 +52,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/preps/{prep_id}/delete', 'PrepController@delete')->name('preps.delete');
     // Do
     Route::get('/preps/{prep_id}/do', 'PrepController@showDoForm')->name('preps.do');
-    Route::post('/preps/{prep_id}/do', 'PrepController@done');
+    Route::post('/preps/{prep_id}/done', 'PrepController@done');
+
+    // ReviewController
+    // Review作成
+    Route::get('/preps/{prep_id}/reviews/create', 'ReviewController@showCreateForm')->name('reviews.create');
+    Route::post('/preps/{prep_id}/reviews/create', 'ReviewController@create');
+    // Review編集
+    Route::get('/preps/{prep_id}/reviews/{review_id}/edit', 'ReviewController@showEditForm')->name('reviews.edit');
+    Route::post('/preps/{prep_id}/reviews/{review_id}/edit', 'ReviewController@edit');
+    // Prep削除
+    Route::post('/preps/{prep_id}/reviews/{review_id}/delete', 'ReviewController@delete')->name('reviews.delete');
 });
 
 // 会員登録・ログイン・ログアウト・パスワード再設定
