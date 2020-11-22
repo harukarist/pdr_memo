@@ -82,7 +82,7 @@
                     {!! nl2br(e($review->review_text)) !!}
                   </p>
                   <div class="p-record__item-detail mb-2">
-                    <p class="text-secondary d-inline">実際：<strong>{{ $review->actual_time }}分</strong></p>
+                    <p class="text-secondary d-inline">Time：<strong>{{ $review->actual_time }}分</strong></p>
                     <a href="#" class="badge badge-secondary ml-1">{{ $review->category->category_name }}</a>
                   </div>
                   @if($review->good_text || $review->problem_text || $review->try_text)
