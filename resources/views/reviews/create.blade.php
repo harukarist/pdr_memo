@@ -12,7 +12,14 @@
     </ul>
   </div>
   <!-- ガイド -->
-  <section class="p-2 mb-2">
+  <section class="mb-4">
+    {{-- タスク名 --}}
+    <div class="bg-white border p-3 mb-3">
+      <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
+      <h6 class="p-record__title d-inline mb-0 align-middle">
+        {{ $done_prep->task->task_name }}</h6>
+        <small class="pl-2"> - {{ $done_prep->task->project->project_name }}</small>
+    </div>
     <div class="text-center">
     <p class="p-guide__text">{{ $review_count }}回目おつかれさまでした！結果を振り返ってみましょう。</p>
     </div>
@@ -68,7 +75,7 @@
         <div class="form-group col-6">
           <label for="actual_time" class="pr-2">実際に行った時間</label>
           <div class="input-group">
-            <input type="text" class="form-control @error('actual_time') is-invalid @enderror" id="actual_time" name="actual_time" value="{{ old('actual_time') ?? $done_prep->unit_time }}" />
+            <input type="tel" class="form-control @error('actual_time') is-invalid @enderror" id="actual_time" name="actual_time" value="{{ old('actual_time') ?? $done_prep->unit_time }}" />
             <div class="input-group-append">
               <span class="input-group-text">分間</span>
             </div>
@@ -77,7 +84,7 @@
         <div class="form-group col-6">
           <label for="step_counter" class="pr-2">ステップ数</label>
           <div class="input-group">
-            <input type="text" class="form-control @error('step_counter') is-invalid @enderror" id="step_counter" name="step_counter" value="{{ old('step_counter') ?? $review_count }}" />
+            <input type="tel" class="form-control @error('step_counter') is-invalid @enderror" id="step_counter" name="step_counter" value="{{ old('step_counter') ?? $review_count }}" />
             <div class="input-group-append">
               <span class="input-group-text">回目</span>
             </div>
@@ -155,7 +162,7 @@
                 {!! nl2br(e($review->review_text)) !!}
               </p>
               <div class="p-record__item-detail mb-2">
-                <p class="text-secondary d-inline">実際：<strong>{{ $review->actual_time }}分</strong> <small>/ステップ{{ $review->step_counter }}</small></p>
+                <p class="text-secondary d-inline">Time：<strong>{{ $review->actual_time }}分</strong> <small>/ステップ{{ $review->step_counter }}</small></p>
                 <a href="#" class="badge badge-secondary ml-1">{{ $review->category->category_name }}</a>
               </div>
               <div class="p-record__item-kpt border p-1">
