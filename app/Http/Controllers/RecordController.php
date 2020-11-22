@@ -11,7 +11,7 @@ class RecordController extends Controller
     // 記録一覧表示
     public function index()
     {
-        $preps = Auth::user()->preps()->orderBy('id', 'desc')->get();
+        $preps = Auth::user()->preps()->orderBy('updated_at', 'desc')->paginate(10);
 
         // ログインユーザーに紐づく記録データを取得
         // $reviews = Auth::user()->tasks()->orderBy('created_at', 'desc')->paginate(10);
@@ -20,5 +20,4 @@ class RecordController extends Controller
 
         return view('records.index', compact('preps'));
     }
-
 }
