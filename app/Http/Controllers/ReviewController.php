@@ -19,8 +19,8 @@ class ReviewController extends Controller
         // ログインユーザーに紐づくカテゴリーを入力フォーム用に取得
         $categories = Auth::user()->categories()->get();
 
-        // 該当Prepに紐づくReviewの個数をカウント
-        $review_count = $done_prep->reviews->count() + 1;
+        // 該当Prepに紐づくReview回数の最大値を取得
+        $review_count = $done_prep->reviews->max('step_counter') + 1;
 
         return view('reviews.create', compact('done_prep', 'categories', 'review_count'));
     }
