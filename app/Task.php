@@ -69,4 +69,14 @@ class Task extends Model
     {
         return $this->hasMany('App\Review');
     }
+
+    // リレーション先のレコードも論理削除
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($project) {
+            $project->posts()->delete();
+        });
+    }
 }

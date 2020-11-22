@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Project;
-use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
-// CreateProjectを継承
-class EditProject extends CreateProject
+class EditReview extends CreateReview
 {
     /**
      * Determine if the user is authorized to make this request.

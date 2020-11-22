@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Project;
-use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
-// CreateProjectを継承
-class EditProject extends CreateProject
+class CreateReview extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +23,11 @@ class EditProject extends CreateProject
      */
     public function rules()
     {
-        return parent::rules();
+        return [
+            'review_text' => 'required|max:255',
+            'actual_time' => 'required',
+            'step_counter' => 'required',
+            'category_id' => 'required',
+        ];
     }
 }

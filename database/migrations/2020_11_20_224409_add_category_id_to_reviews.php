@@ -17,7 +17,7 @@ class AddCategoryIdToReviews extends Migration
             // カラム追加
             $table->bigInteger('category_id')->unsigned();
             // 外部キーを設定
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

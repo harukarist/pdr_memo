@@ -25,7 +25,7 @@ class EditTask extends CreateTask
    */
   public function rules()
   {
-    // CreateTaskのルールを継承
+    // 親のルールを継承
     $rule = parent::rules();
 
     // array_keys()でステータスの配列を取得し、Ruleクラスのinメソッドでルールの文字列 in(1, 2, 3)を生成

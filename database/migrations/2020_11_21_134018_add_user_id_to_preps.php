@@ -18,7 +18,7 @@ class AddUserIdToPreps extends Migration
             $table->bigInteger('user_id')->unsigned();
 
             // 外部キーを設定する
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

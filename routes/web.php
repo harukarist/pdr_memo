@@ -42,20 +42,18 @@ Route::group(['middleware' => 'auth'], function () {
     // 記録一覧画面
     Route::get('/records', 'RecordController@index')->name('records.index');
 
+
     // PrepController
-    // Prep作成画面表示
+    // Prep作成
     Route::get('/preps/create', 'PrepController@showCreateForm')->name('preps.create');
-    // Prep登録
     Route::post('/preps/create', 'PrepController@create');
-    // Prep編集画面
+    // Prep編集
     Route::get('/preps/{prep_id}/edit', 'PrepController@showEditForm')->name('preps.edit');
-    // Prep編集処理
     Route::post('/preps/{prep_id}/edit', 'PrepController@edit');
-    // Prep削除処理
+    // Prep削除
     Route::post('/preps/{prep_id}/delete', 'PrepController@delete')->name('preps.delete');
-    // Do画面
+    // Do
     Route::get('/preps/{prep_id}/do', 'PrepController@showDoForm')->name('preps.do');
-    // Do送信処理
     Route::post('/preps/{prep_id}/do', 'PrepController@done');
 });
 

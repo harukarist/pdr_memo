@@ -17,7 +17,7 @@ class AddPrepIdToReviews extends Migration
             // カラム追加
             $table->bigInteger('prep_id')->unsigned();
             // 外部キーを設定
-            $table->foreign('prep_id')->references('id')->on('preps');
+            $table->foreign('prep_id')->references('id')->on('preps')->onDelete('cascade');
         });
     }
 

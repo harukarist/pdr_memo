@@ -19,7 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
             // 外部キーを設定
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

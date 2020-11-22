@@ -11,7 +11,7 @@ class Prep extends Model
     use SoftDeletes;
 
     // ロックをかけないカラム
-    // protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id'];
+    protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id', 'task_id'];
 
     // リレーション
     public function task()

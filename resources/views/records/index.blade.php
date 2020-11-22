@@ -40,7 +40,7 @@
             <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
             <h6 class="p-record__title d-inline mb-0 align-middle">
               {{ $prep->task->task_name }}</h6>
-              <small><a href="#" class="badge badge-secondary ml-1">{{ $prep->task->project->project_name }}</a></small>
+              <small class="pl-2"> - {{ $prep->task->project->project_name }}</small>
           </div>
           <!-- PDR -->
           <div class="p-record__details row justify-content-around mx-0 my-2">
@@ -48,11 +48,7 @@
             <div class="p-record__item-wrapper col-md-4">
               <div class="text-secondary clearfix">
                 <span class="p-record__item-title float-left mb-0">Prep</span>
-                <router-link
-                  v-bind:to="{ name: 'prep.edit', params: { recordId: 1 } }"
-                >
-                  <span class="float-right mb-0 ml-2 small">編集</span>
-                </router-link>
+                <a href="{{ route('preps.edit', ['prep_id' => $prep->id ]) }}"><span class="float-right mb-0 ml-2 small">編集</span></a>
                 <span class="float-right mb-0 small">{{ $prep->created_at }}</span>
               </div>
               <div class="p-record__item-text ml-1">
@@ -60,7 +56,7 @@
                 <p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p>
                 <div class="p-record__item-detail">
                   <p class="mb-1 text-secondary d-inline">予定：<strong>{{ $prep->unit_time }}分 × {{ $prep->estimated_steps }}ステップ</strong></p>
-                  {{-- <a href="#" class="badge badge-secondary ml-1">{{ $review->category->category_name }}</a> --}}
+                  <a href="#" class="badge badge-secondary ml-1">{{ $prep->category->category_name }}</a>
                 </div>
               </div>
             </div>
