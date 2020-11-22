@@ -13,6 +13,9 @@ class Review extends Model
     // ロックをかけないカラム
     protected $fillable = ['review_text', 'good_text', 'problem_text', 'try_text', 'actual_time', 'step_counter', 'category_id', 'prep_id'];
 
+    // 更新時に親の更新日時も更新
+    protected $touches = ['prep'];
+
     // リレーション
     public function prep()
     {
