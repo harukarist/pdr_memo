@@ -19,8 +19,8 @@ class PrepController extends Controller
         // ログインユーザーに紐づくタスク、カテゴリーを取得
         $tasks = Auth::user()->tasks()->get();
         $categories = Auth::user()->categories()->get();
-        $unit_times = ['5', '15', '30', '45', '60'];
-        $estimated_steps = [1, 2, 3, 4, 5];
+        $unit_times = ['5', '15', '45', '60'];
+        $estimated_steps = [2, 3, 4, 5];
 
         return view('preps.create', compact('tasks', 'categories', 'unit_times', 'estimated_steps'));
     }
@@ -45,8 +45,8 @@ class PrepController extends Controller
         // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
         $tasks = Auth::user()->tasks()->get();
         $categories = Auth::user()->categories()->get();
-        $unit_times = ['5', '15', '30', '45', '60'];
-        $estimated_steps = [1, 2, 3, 4, 5];
+        $unit_times = ['5', '15', '45', '60'];
+        $estimated_steps = [2, 3, 4, 5];
 
         return view('preps.edit', compact('editing_prep', 'tasks', 'categories', 'unit_times', 'estimated_steps'));
     }
@@ -82,7 +82,10 @@ class PrepController extends Controller
         // ログインユーザーに紐づく該当IDのPrepを取得
         $do_prep = Auth::user()->preps()->find($prep_id);
 
+        // 該当Prepに紐づくReviewの個数をカウント
+        $review_count = $do_prep->reviews->max('step_counter') + 1;
+
         // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
-        return view('preps.do', compact('do_prep'));
+        return view('preps.do', compact('do_prep', 'review_count'));
     }
 }
