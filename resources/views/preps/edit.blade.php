@@ -103,7 +103,7 @@
           @forelse($categories as $category)
             <input type="radio" class="form-check-input" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $editing_prep->category_id == $category->id) checked @endif>
             <label class="form-check-label pr-4" for="{{ $category->id }}">
-              <h4 class="c-form__category badge badge-primary p-1 ">{{ $category->category_name }}</h4>
+              <h4 class="c-form__category badge badge-pill badge-light p-1">{{ $category->category_name }}</h4>
             </label>
           @empty
           カテゴリーの登録はまだありません。

@@ -63,19 +63,19 @@
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="category" id="category-a" checked />
           <label class="form-check-label" for="category-a">
-            <h5><span class="badge badge-primary mr-1">Input</span></h5>
+            <h5><span class="badge badge-pill badge-light mr-1">Input</span></h5>
           </label>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="category" id="category-b" />
           <label class="form-check-label" for="category-b">
-            <h5><span class="badge badge-success mr-1">Output</span></h5>
+            <h5><span class="badge badge-pill badge-light mr-1">Output</span></h5>
           </label>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="category" id="category-c" />
           <label class="form-check-label" for="category-c">
-            <h5><span class="badge badge-secondary mr-1">Etc</span></h5>
+            <h5><span class="badge badge-pill badge-light mr-1">Etc</span></h5>
           </label>
         </div>
       </div>
