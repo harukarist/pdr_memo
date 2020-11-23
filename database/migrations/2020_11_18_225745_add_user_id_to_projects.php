@@ -15,10 +15,11 @@ class AddUserIdToProjects extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             // ユーザーIDカラムを追加
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->after('project_name');
 
             // 外部キーを設定する
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
