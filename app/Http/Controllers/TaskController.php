@@ -61,7 +61,8 @@ class TaskController extends Controller
     public function showEditForm(int $id, int $task_id)
     {
         // 該当のタスクIDのデータを取得し、ビューテンプレートに返却
-        $task = Task::find($task_id);
+        // $task = Task::find($task_id);
+        $task = Auth::user()->tasks()->find($task_id);
 
         return view('tasks.edit', [
             'task' => $task,
@@ -72,7 +73,8 @@ class TaskController extends Controller
     public function edit(int $id, int $task_id, EditTask $request)
     {
         // リクエストのIDからタスクデータを取得
-        $task = Task::find($task_id);
+        // $task = Task::find($task_id);
+        $task = Auth::user()->tasks()->find($task_id);
 
         // 該当のタスクデータをフォームの入力値で書き換えて保存
         $task->task_name = $request->task_name;

@@ -70,11 +70,7 @@
               <div class="p-record__review-wrapper mb-2">
                 <div class="text-secondary clearfix">
                   <span class="p-record__item-title float-left mb-0">Review-{{ $review->step_counter }}</span>
-                  <router-link
-                    v-bind:to="{ name: 'review.edit', params: { recordId: 1 } }"
-                  >
-                    <span class="float-right mb-0 ml-2 small">編集</span>
-                  </router-link>
+                  <a href="{{ route('reviews.edit', ['prep_id' => $review->prep_id,'review_id'=>$review->id ]) }}"><span class="float-right mb-0 ml-2 small">編集</span></a>
                   <span class="float-right mb-0 small">{{ $review->created_at }}</span>
                 </div>
                 <div class="p-record__item-text ml-1">
