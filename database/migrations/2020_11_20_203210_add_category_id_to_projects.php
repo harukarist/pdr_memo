@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCategoryIdToPreps extends Migration
+class AddCategoryIdToProjects extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddCategoryIdToPreps extends Migration
      */
     public function up()
     {
-        Schema::table('preps', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             // カラム追加
-            $table->bigInteger('category_id')->unsigned()->after('estimated_steps');
+            $table->bigInteger('category_id')->unsigned()->after('user_id');
             // 外部キーを設定
             $table->foreign('category_id')->references('id')->on('categories')
             ->onUpdate('cascade')->onDelete('restrict');
@@ -29,7 +29,7 @@ class AddCategoryIdToPreps extends Migration
      */
     public function down()
     {
-        Schema::table('preps', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             // 外部キー制約を解除
             $table->dropForeign(['category_id']);
             // カラム削除

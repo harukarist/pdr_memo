@@ -15,9 +15,10 @@ class AddCategoryIdToReviews extends Migration
     {
         Schema::table('reviews', function (Blueprint $table) {
             // カラム追加
-            $table->bigInteger('category_id')->unsigned();
+            $table->bigInteger('category_id')->unsigned()->after('step_counter');
             // 外部キーを設定
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')
+            ->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
