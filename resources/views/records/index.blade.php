@@ -5,34 +5,6 @@
     <h5 class="mb-4">これまでの記録</h5>
     <!-- 記録一覧 -->
     <div class="c-contents__wrapper">
-      <!-- 総合計時間 -->
-      {{-- <section class="p-total-time__wrapper mb-5">
-        <h3 class="p-total-time__title ml-1">
-          合計時間<small>（2019/11/1〜）</small>
-        </h3>
-        <div class="p-total-time__detail mb-3 ml-2">
-          <a href="#" class="badge badge-primary mr-1">Input</a>
-          <p class="d-inline mb-0 align-middle mr-2">424.5h</p>
-          <a href="#" class="badge badge-success mr-1">Output</a>
-          <p class="d-inline mb-0 align-middle mr-2">193h</p>
-          <a href="#" class="badge badge-secondary mr-1">Etc</a>
-          <p class="d-inline mb-0 align-middle mr-2">144.5h</p>
-        </div>
-      </section> --}}
-
-      <!-- 1日の合計 -->
-      {{-- <section class="p-daily__wrapper mb-5">
-        <h4 class="p-daily__title ml-1">2020/11/20</h4>
-        <div class="p-daily__details mb-3 ml-2">
-          <a href="#" class="badge badge-primary mr-1">Input</a>
-          <p class="d-inline mb-0 align-middle mr-2">1h</p>
-          <a href="#" class="badge badge-success mr-1">Output</a>
-          <p class="d-inline mb-0 align-middle mr-2">2h</p>
-          <a href="#" class="badge badge-secondary mr-1">Etc</a>
-          <p class="d-inline mb-0 align-middle mr-2">0.5h</p>
-        </div>
-         --}}
-
         @foreach ($preps as $prep)
         <!-- 個別の記録 -->
         <article class="p-record bg-white border p-0 mb-2">
@@ -56,7 +28,7 @@
                 <p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p>
                 <div class="p-record__item-detail">
                   <p class="mb-1 text-secondary d-inline">予定：<strong>{{ $prep->unit_time }}分 × {{ $prep->estimated_steps }}ステップ</strong></p>
-                  <a href="#" class="badge badge-secondary ml-1">{{ $prep->category->category_name }}</a>
+                  <span class="badge badge-secondary ml-1">{{ $prep->category->category_name }}</span>
                 </div>
               </div>
             </div>
@@ -79,7 +51,7 @@
                   </p>
                   <div class="p-record__item-detail mb-2">
                     <p class="text-secondary d-inline">Time：<strong>{{ $review->actual_time }}分</strong></p>
-                    <a href="#" class="badge badge-secondary ml-1">{{ $review->category->category_name }}</a>
+                    <span class="badge badge-secondary ml-1">{{ $review->category->category_name }}</span>
                   </div>
                   @if($review->good_text || $review->problem_text || $review->try_text)
                   <div class="p-record__item-kpt border p-1">
