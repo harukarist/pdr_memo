@@ -31,7 +31,7 @@ const router = new VueRouter({
         },
         {
             path: '/records/do/create',
-            name: 'do.create',
+            name: 'preps.do',
             component: DoCreateComponent
         },
         {

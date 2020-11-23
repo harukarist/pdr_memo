@@ -57601,7 +57601,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     component: _components_MypageComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/records/do/create',
-    name: 'do.create',
+    name: 'preps.do',
     component: _components_DoCreateComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
     path: '/records/prep/create',
