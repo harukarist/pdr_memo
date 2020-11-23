@@ -28,13 +28,11 @@
   </section>
 
   <section class="mb-5">
-    <!-- Reviewへ進むボタン -->
-    <form method="head" action="/records/review/create">
+    <!-- Doneボタン -->
       <div class="text-center">
         <p>完了しましたか？</p>
-        <a href="{{ route('reviews.create', ['prep_id' => $do_prep->id ]) }}" class="btn btn-primary">完了！</a>
+        <a href="{{ route('preps.done', ['prep_id' => $do_prep->id ]) }}" class="btn btn-primary">完了！</a>
       </div>
-    </form>
   </section>
 
 </div>

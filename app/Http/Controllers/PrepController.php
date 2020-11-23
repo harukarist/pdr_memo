@@ -82,10 +82,23 @@ class PrepController extends Controller
         // ログインユーザーに紐づく該当IDのPrepを取得
         $do_prep = Auth::user()->preps()->find($prep_id);
 
+        // 該当タスクのステータスを着手中に変更
+        $do_prep->task()->update(['status' => 2]);
+
         // 該当Prepに紐づくReviewの個数をカウント
         $review_count = $do_prep->reviews->max('step_counter') + 1;
 
         // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
         return view('preps.do', compact('do_prep', 'review_count'));
+    }
+
+    // Do完了処理
+    public function done(int $prep_id)
+    {
+        // 該当タスクの実行カウンタを1インクリメント
+        Prep::find($prep_id)->task()->increment('done_count');
+
+        // 削除対象のPrepが属するPrepのPrep一覧にリダイレクト
+        return redirect()->route('reviews.create', ['prep_id' => $prep_id])->with('flash_message', '計画を1つ達成しました！振り返りを行いましょう！');
     }
 }
