@@ -38,4 +38,45 @@ class ReviewController extends Controller
         // 一覧画面にリダイレクト
         return redirect()->route('records.index');
     }
+
+    // review編集画面を表示
+    public function showEditForm(int $prep_id, int $review_id)
+    {
+        // ログインユーザーに紐づく該当IDのreviewを取得
+        // $editing_review = Review::find($review_id);
+        $editing_review = Auth::user()->preps()->find($prep_id)->reviews()->find($review_id);
+
+        // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
+        $tasks = Auth::user()->tasks()->get();
+        $categories = Auth::user()->categories()->get();
+        $unit_times = ['5', '15', '45', '60'];
+        $estimated_steps = [2, 3, 4, 5];
+
+        return view('reviews.edit', compact('editing_review', 'tasks', 'categories', 'unit_times', 'estimated_steps'));
+    }
+
+    // review編集処理
+    public function edit(int $review_id, Editreview $request)
+    {
+        // リクエストのIDからreviewデータを取得
+        $editing_review = Auth::user()->reviews()->find($review_id);
+
+        // 該当のreviewデータをフォームの入力値で書き換えて保存
+        Auth::user()->reviews()->save($editing_review->fill($request->all()));
+
+        // 編集対象のreviewが属するreviewのreview一覧にリダイレクト
+        return redirect()->route('records.index')->with('flash_message', 'reviewを変更しました');
+    }
+
+    // review削除処理
+    public function delete(int $review_id)
+    {
+        // リクエストで受け取ったIDのreviewを削除
+        Auth::user()->reviews()->find($review_id)->delete();
+        // review::find($review_id)->delete();
+        // review::destroy($review_id);
+
+        // 削除対象のreviewが属するreviewのreview一覧にリダイレクト
+        return redirect()->route('records.index')->with('flash_message', 'reviewを削除しました');
+    }
 }

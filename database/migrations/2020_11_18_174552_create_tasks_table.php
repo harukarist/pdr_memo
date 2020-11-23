@@ -19,6 +19,7 @@ class CreateTasksTable extends Migration
             $table->bigInteger('project_id')->unsigned();
             $table->date('due_date')->nullable();
             $table->integer('status')->default(1);
+            $table->integer('done')->default(0);
             $table->timestamps();
             // 外部キーの設定
             $table->foreign('project_id')->references('id')->on('projects');
