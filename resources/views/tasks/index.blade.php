@@ -4,19 +4,20 @@
 @section('content')
   <div class="container-fluid">
     <div class="row">
-      {{-- プロジェクト一覧 --}}
       <div class="col col-md-4">
         <div class="card">
           <div class="card-header">プロジェクト</div>
           <div class="card-body">
-            <div class="list-group mb-2">
+            <ul class="list-group mb-2">
+              {{-- プロジェクト一覧 --}}
               {{-- プロジェクトIDが一致する場合はactiveクラスを出力 --}}
               @foreach($projects as $project)
-              <a href="{{ route('tasks.index', ['project_id' => $project->id]) }}" class="list-group-item  {{ $current_project_id === $project->id ? 'active' : '' }}">
+              <a href="{{ route('tasks.index', ['project_id' => $project->id]) }}" class="list-group-item list-group-item-action {{ $current_project_id === $project->id ? 'active' : '' }}">
                 {{ $project->project_name }}
+                <span class="badge badge-pill badge-light float-right">{{ $project->category->category_name }}</span>
               </a>
               @endforeach
-            </div>
+            </ul>
             <a href="{{ route('projects.create') }}" class="btn btn-outline-secondary btn-block">
               プロジェクトを追加・変更
             </a>

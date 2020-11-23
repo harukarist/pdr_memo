@@ -10,6 +10,9 @@ class Project extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
+    // ロックをかけないカラム
+    protected $fillable = ['project_name', 'category_id'];
+
     // リレーション先のレコードも論理削除
     protected static function boot()
     {
@@ -19,9 +22,13 @@ class Project extends Model
         });
     }
 
-    // Taskモデルへのリレーション
+    // リレーション
     public function tasks()
     {
         return $this->hasMany('App\Task');
+    }
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
     }
 }

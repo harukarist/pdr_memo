@@ -12,19 +12,39 @@
           <form action="{{ route('projects.edit', ['project_id' => $edit_project->id]) }}" method="post">
             @method('PATCH')
             @csrf
+              {{-- バリデーションエラー --}}
+              @if($errors->any())
+              <div class="alert alert-danger">
+                <ul class="m-0">
+                  @foreach($errors->all() as $message)
+                    <li>{{ $message }}</li>
+                  @endforeach
+                </ul>
+              </div>
+              @endif
             <div class="form-group">
               <div class="form-row ">
                 <div class="col-7 col-md-8">
                   {{-- 直前の入力値がない場合はテーブルの値を表示 --}}
                   <input type="text" class="form-control @error('project_name') is-invalid @enderror" name="project_name" id="project_name" value="{{ old('project_name') ?? $edit_project->project_name }}" placeholder="プロジェクト名" />                    
-                  @error('project_name')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
                 </div>
                 <div class="col-auto">
                   <button type="submit" class="btn btn-primary">変更する</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="category_id">カテゴリー</label>
+              <div class="pl-1">
+                <div class="form-check form-check-inline">
+                  @forelse($categories as $category)
+                    <input type="radio" class="form-check-input" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $edit_project->category_id == $category->id) checked @endif>
+                    <label class="form-check-label pr-4" for="{{ $category->id }}">
+                      <h4 class="c-form__category badge badge-pill badge-light p-1">{{ $category->category_name }}</h4>
+                    </label>
+                  @empty
+                  カテゴリーの登録はまだありません。
+                  @endforelse
                 </div>
               </div>
             </div>

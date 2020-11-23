@@ -26,7 +26,8 @@ class CreateProject extends FormRequest
     {
         return [
             // 入力必須
-            'project_name' => 'required|max:255'
+            'project_name' => 'required|max:255',
+            'category_id' => 'required'
         ];
     }
 }

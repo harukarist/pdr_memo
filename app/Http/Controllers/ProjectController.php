@@ -14,10 +14,11 @@ class ProjectController extends Controller
     // プロジェクト作成画面
     public function showCreateForm()
     {
-        // ログインユーザーに紐づくプロジェクトを取得
+        // ログインユーザーに紐づくプロジェクト、カテゴリーを取得
         $projects = Auth::user()->projects()->get();
+        $categories = Auth::user()->categories()->get();
 
-        return view('projects.create', compact('projects'));
+        return view('projects.create', compact('projects', 'categories'));
     }
 
     // プロジェクトの作成
@@ -26,10 +27,8 @@ class ProjectController extends Controller
     {
         // Projectモデルのインスタンスを作成する
         $project = new Project();
-        // フォームに入力された内容を代入
-        $project->project_name = $request->project_name;
         // ログインユーザーに紐づけて保存
-        Auth::user()->projects()->save($project);
+        Auth::user()->projects()->save($project->fill($request->all()));
 
         // そのプロジェクトのタスク一覧画面にリダイレクト
         return redirect()->route('tasks.index', ['project_id' => $project->id])->with('flash_message', 'プロジェクトを作成しました');
@@ -40,12 +39,13 @@ class ProjectController extends Controller
     {
         // 該当のプロジェクトIDのデータを取得し、ビューテンプレートに返却
         $edit_project = Auth::user()->projects()->find($id);
+        $categories = Auth::user()->categories()->get();
 
         // ログインユーザーに紐づくプロジェクトを取得
         if ($edit_project) {
             $projects = Auth::user()->projects()->get();
 
-            return view('projects.edit', compact('edit_project', 'projects'));
+            return view('projects.edit', compact('edit_project', 'projects','categories'));
         } else {
             return redirect()->route('home');
         }
@@ -58,8 +58,7 @@ class ProjectController extends Controller
         $project = Auth::user()->projects()->find($id);
 
         // 該当のプロジェクトデータをフォームの入力値で書き換えて保存
-        $project->project_name = $request->project_name;
-        $project->save();
+        Auth::user()->projects()->save($project->fill($request->all()));
 
         // 編集対象のプロジェクトが属するプロジェクトのプロジェクト一覧にリダイレクト
         return redirect()->route('projects.edit', ['project_id' => $id])->with('flash_message', 'プロジェクトを変更しました');

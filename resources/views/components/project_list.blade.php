@@ -8,6 +8,7 @@
             @foreach($projects as $project)
               <tr>
                 <td>{{ $project->project_name }}</td>
+                <td><p class="badge badge-pill badge-light float-right">{{ $project->category->category_name }}</p></td>
                 <td>
                     <a href="{{ route('projects.edit', ['project_id' => $project->id]) }}" class="btn btn-primary">編集</a>
                 <td>
