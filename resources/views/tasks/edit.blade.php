@@ -22,6 +22,7 @@
                 action="{{ route('tasks.edit', ['project_id' => $task->project_id, 'task_id' => $task->id]) }}"
                 method="POST"
             >
+              @method('PATCH')
               @csrf
               <div class="form-group">
                 <label for="task_name">タスク名</label>

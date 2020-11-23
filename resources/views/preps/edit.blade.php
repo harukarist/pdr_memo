@@ -16,6 +16,7 @@
 
   {{-- 削除ボタン --}}
   <form action="{{ route('preps.delete', ['prep_id' => $editing_prep->id]) }}" method="post">
+    @method(‘DELETE’)
     @csrf
   <button type="button" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modal1">
     この計画を削除する
@@ -46,6 +47,7 @@
   <!-- Prep入力フォーム -->
   <form action="{{ route('preps.edit', ['prep_id' => $editing_prep->id]) }}" method="post">
     @csrf
+    @method(‘PATCH’)
     <!-- タスク名 -->
     <div class="form-group">
       <label for="task_id">タスクを選ぶ</label>

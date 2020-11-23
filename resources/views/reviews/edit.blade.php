@@ -40,6 +40,8 @@
 
   <!-- Prep/Review入力フォーム -->
   <form method="head" action="/records">
+    @method('PATCH')
+    @csrf
     <!-- レコードID -->
     <div class="form-group row clearfix">
       <label for="id" class="col-auto col-form-label">ID</label>
