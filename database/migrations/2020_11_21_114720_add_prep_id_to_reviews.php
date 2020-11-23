@@ -15,7 +15,7 @@ class AddPrepIdToReviews extends Migration
     {
         Schema::table('reviews', function (Blueprint $table) {
             // カラム追加
-            $table->bigInteger('prep_id')->unsigned();
+            $table->bigInteger('prep_id')->unsigned()->after('id');
             // 外部キーを設定
             $table->foreign('prep_id')->references('id')->on('preps');
         });

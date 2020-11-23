@@ -15,7 +15,7 @@ class CreatePrepsTable extends Migration
     {
         Schema::create('preps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('prep_text');
+            $table->string('prep_text')->nullable()->default('');
             $table->integer('unit_time');
             $table->integer('estimated_steps');
             $table->timestamps();

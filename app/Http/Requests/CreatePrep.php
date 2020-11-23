@@ -24,9 +24,9 @@ class CreatePrep extends FormRequest
     public function rules()
     {
         return [
-            'prep_text' => 'required|max:255',
-            'unit_time' => 'required',
-            'estimated_steps' => 'required',
+            'prep_text' => 'max:255',
+            'unit_time' => 'required|min:0|numeric|digits_between:1, 3',
+            'estimated_steps' => 'required|min:0|numeric|digits_between:1, 3',
             'category_id' => 'min:1|numeric',
             'task_id' => 'required|min:1|numeric',
         ];

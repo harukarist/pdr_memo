@@ -15,7 +15,7 @@ class AddTaskIdToPreps extends Migration
     {
         Schema::table('preps', function (Blueprint $table) {
             // カラム追加
-            $table->bigInteger('task_id')->unsigned();
+            $table->bigInteger('task_id')->unsigned()->after('id');
             // 外部キーを設定
             $table->foreign('task_id')->references('id')->on('tasks');
         });

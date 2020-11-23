@@ -27,6 +27,9 @@ class Task extends Model
         3 => ['status_name' => '完了', 'status_class' => ''],
     ];
 
+    // ロックをかけないカラム
+    protected $fillable = ['task_name', 'project_id', 'due_date', 'status'];
+
     // アクセサでモデルクラスのデータを加工する
     // ステータスの返却
     public function getStatusNameAttribute()

@@ -15,10 +15,10 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('review_text');
-            $table->string('good_text')->nullable();
-            $table->string('problem_text')->nullable();
-            $table->string('try_text')->nullable();
+            $table->string('review_text')->nullable()->default('');
+            $table->string('good_text')->nullable()->default('');
+            $table->string('problem_text')->nullable()->default('');
+            $table->string('try_text')->nullable()->default('');
             $table->integer('actual_time');
             $table->integer('step_counter');
             $table->timestamps();
