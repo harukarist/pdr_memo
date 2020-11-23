@@ -17,16 +17,6 @@
   {{-- 削除ボタン --}}
   <form action="{{ route('preps.delete', ['prep_id' => $editing_prep->id]) }}" method="post">
     @csrf
-    {{-- バリデーションエラー --}}
-    @if($errors->any())
-    <div class="alert alert-danger">
-      <ul class="m-0">
-        @foreach($errors->all() as $message)
-          <li>{{ $message }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
   <button type="button" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modal1">
     この計画を削除する
   </button>
