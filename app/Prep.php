@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,7 +21,16 @@ class Prep extends Model
     }
 
     // ロックをかけないカラム
-    protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id', 'task_id'];
+    protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id'];
+
+    // 更新時に親の更新日時も更新
+    protected $touches = ['task'];
+
+    // 日付のフォーマット
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format("m/d H:i");
+    }
 
     // リレーション
     public function task()

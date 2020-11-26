@@ -11,15 +11,6 @@ class Task extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
-    // リレーション先のレコードも論理削除
-    protected static function boot()
-    {
-        parent::boot();
-        self::deleting(function ($task) {
-            $task->preps()->delete();
-        });
-    }
-
     // ステータスの定義
     const STATUS = [
         1 => ['status_name' => '未着手', 'status_class' => 'badge-danger'],
@@ -29,6 +20,15 @@ class Task extends Model
 
     // ロックをかけないカラム
     protected $fillable = ['task_name', 'project_id', 'due_date', 'status'];
+
+    // リレーション先のレコードも論理削除
+    protected static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($task) {
+            $task->preps()->delete();
+        });
+    }
 
     // アクセサでモデルクラスのデータを加工する
     // ステータスの返却
@@ -61,6 +61,11 @@ class Task extends Model
         return self::STATUS[$status]['status_class'];
     }
 
+    // 日付のフォーマット
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format("m/d H:i");
+    }
     // 期限日の整形
     // public function getFormattedDueDateAttribute()
     // {
@@ -76,9 +81,5 @@ class Task extends Model
     public function preps()
     {
         return $this->hasMany('App\Prep');
-    }
-    public function reviews()
-    {
-        return $this->hasMany('App\Review');
     }
 }

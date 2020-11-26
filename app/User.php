@@ -57,11 +57,5 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Category');
     }
-    // public function reviews()
-    // {
-    //     return $this->hasManyThrough('App\Task', 'App\Project', 'user_id')
-    //         ->rightJoin('preps', 'tasks.id', '=', 'preps.task_id')
-    //         ->rightJoin('reviews', 'preps.id', '=', 'reviews.prep_id')
-    //         ->select('preps.*', 'reviews.*', 'tasks.*', 'projects.*');
-    // }
+
 }
