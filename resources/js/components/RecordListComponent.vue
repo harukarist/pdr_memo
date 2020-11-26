@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h5 class="mb-4">これまでの記録</h5>
+    <h5 class="mb-4">計画・振り返り</h5>
     <!-- 記録一覧 -->
     <div class="c-contents__wrapper">
       <!-- 総合計時間 -->
@@ -32,9 +32,11 @@
 
         <!-- 個別の記録 -->
         <article class="p-record bg-white border p-0 mb-2">
-          <div class="p-record__title-wrapper p-2 mb-1">
+          <div class="p-guide__task-name-wrapper p-2 mb-1">
             <a href="#" class="badge badge-success mr-1">Output</a>
-            <h6 class="p-record__title d-inline mb-0 align-middle">サンプル</h6>
+            <h6 class="p-guide__task-name d-inline mb-0 align-middle">
+              サンプル
+            </h6>
           </div>
           <!-- PDR -->
           <div class="p-record__details row mx-0 my-2 border-bottom">
@@ -196,9 +198,11 @@
 
         <!-- 個別の記録 -->
         <article class="p-record bg-white border p-0 mb-2">
-          <div class="p-record__title-wrapper p-2 mb-1">
+          <div class="p-guide__task-name-wrapper p-2 mb-1">
             <a href="#" class="badge badge-success mr-1">Output</a>
-            <h6 class="p-record__title d-inline mb-0 align-middle">サンプル</h6>
+            <h6 class="p-guide__task-name d-inline mb-0 align-middle">
+              サンプル
+            </h6>
           </div>
           <!-- PDR -->
           <div class="p-record__details row mx-0 my-2 border-bottom">

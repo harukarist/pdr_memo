@@ -39238,7 +39238,7 @@ var render = function() {
                       _c(
                         "li",
                         { staticClass: "c-navbar__item nav-item nav-link" },
-                        [_vm._v("これまでの記録")]
+                        [_vm._v("計画・振り返り")]
                       )
                     ]
                   )
@@ -40748,7 +40748,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h5", { staticClass: "mb-4" }, [_vm._v("これまでの記録")]),
+    _c("h5", { staticClass: "mb-4" }, [_vm._v("計画・振り返り")]),
     _vm._v(" "),
     _c("div", { staticClass: "c-contents__wrapper" }, [
       _vm._m(0),

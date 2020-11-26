@@ -34,17 +34,15 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="category_id">カテゴリー</label>
+              <label for="category_id">メインカテゴリー</label>
               <div class="pl-1">
                 <div class="form-check form-check-inline">
-                  @forelse($categories as $category)
-                    <input type="radio" class="form-check-input" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $edit_project->category_id == $category->id) checked @endif>
-                    <label class="form-check-label pr-4" for="{{ $category->id }}">
-                      <h4 class="c-form__category badge badge-pill badge-light p-1">{{ $category->category_name }}</h4>
+                  @foreach($categories as $category)
+                    <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $edit_project->category_id == $category['id']) checked @endif>
+                    <label class="form-check-label pr-4" for="{{ $category['id'] }}">
+                      <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
                     </label>
-                  @empty
-                  カテゴリーの登録はまだありません。
-                  @endforelse
+                  @endforeach
                 </div>
               </div>
             </div>

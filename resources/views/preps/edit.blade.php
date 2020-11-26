@@ -6,7 +6,7 @@
   <h5 class="mb-4">計画を修正する</h5>
 
   <!-- プログレスバー -->
-  <div class="progressbar__wrapper">
+  <div class="progressbar__wrapper text-center">
     <ul class="progressbar">
       <li class="active">Prep</li>
       <li class="">Do</li>
@@ -14,38 +14,54 @@
     </ul>
   </div>
 
+  <!-- ガイド -->
+  <section class="mb-4">
+    {{-- タスク名 --}}
+    <div class="border p-3 mb-3">
+      <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
+      <h6 class="p-guide__task-name d-inline mb-0 align-middle">
+        {{ $current_task->task_name }}</h6>
+        <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
+    </div>
+  </section>
+
+
   {{-- 削除ボタン --}}
-  <form action="{{ route('preps.delete', ['prep_id' => $editing_prep->id]) }}" method="post">
-    @method('DELETE')
-    @csrf
-  <button type="button" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modal1">
-    この計画を削除する
-  </button>
-  <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="label1">この計画を削除しますか？</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          計画を削除すると、振り返りデータも一緒に削除されます。計画は編集画面から変更できます。本当にこの計画を削除しますか？
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">
-            No
-          </button>
-          <button type="submit" class="btn btn-danger">Yes</button>
+  <div class="p-delete text-right">
+    <form action="{{ route('preps.delete', ['project_id' => $current_task->project_id, 'task_id'=> $current_task->id,'prep_id'=>$editing_prep->id ]) }}" method="post">
+      @method('DELETE')
+      @csrf
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modal1">
+      この計画を削除する
+    </button>
+    <div class="modal fade text-left" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="label1">この計画を削除しますか？</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            計画を削除すると、振り返りデータも一緒に削除されます。計画は編集画面から変更できます。本当にこの計画を削除しますか？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              No
+            </button>
+            <button type="submit" class="btn btn-danger">Yes</button>
+          </div>
         </div>
       </div>
     </div>
+    </form>
   </div>
-  </form>
+
+      
 
   <!-- Prep入力フォーム -->
-  <form action="{{ route('preps.edit', ['prep_id' => $editing_prep->id]) }}" method="post">
+  <form action="{{ route('preps.edit', ['project_id' => $current_task->project_id, 'task_id'=> $current_task->id, 'prep_id'=>$editing_prep->id ]) }}" method="post">
     @csrf
     @method('PATCH')
     {{-- バリデーションエラー --}}
@@ -58,18 +74,6 @@
       </ul>
     </div>
     @endif
-
-    <!-- タスク名 -->
-    <div class="form-group">
-      <label for="task_id">タスクを選ぶ</label>
-      <select id="task_id" class="form-control @error('task_id') is-invalid @enderror" name="task_id">
-        @forelse($tasks as $index => $task)
-          <option value="{{ $task->id }}" @if(old('task_id') == $task->id || $editing_prep->task_id == $task->id) selected @endif>{{ $task->task_name }}</option>
-        @empty
-          <a href="{{ route('home') }}">タスクを登録してください</a>
-        @endforelse
-      </select>
-    </div>
 
     <!-- Prepテキストエリア -->
     <div class="form-group">
@@ -107,22 +111,20 @@
       </div>
 
     <!-- カテゴリー -->
-    <div class="form-group">
-      <label for="category_id">カテゴリー</label>
-      <div class="pl-1">
+    <div class="form-group form-inline mb-3">
+      <label for="category_id" class="mb-0">カテゴリー</label>
+      <div class="pl-3">
         <div class="form-check form-check-inline">
           @forelse($categories as $category)
-            <input type="radio" class="form-check-input" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $editing_prep->category_id == $category->id) checked @endif>
-            <label class="form-check-label pr-4" for="{{ $category->id }}">
-              <h4 class="c-form__category badge badge-pill badge-light p-1">{{ $category->category_name }}</h4>
+            <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $editing_prep->category_id == $category['id']) checked @endif>
+            <label class="form-check-label pr-4" for="{{ $category['id'] }}">
+              <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
             </label>
           @empty
-          カテゴリーの登録はまだありません。
           @endforelse
         </div>
       </div>
     </div>
-
     <!-- 送信 -->
     <div class="text-center">
       <button type="submit" class="btn btn-primary">計画を修正</button>

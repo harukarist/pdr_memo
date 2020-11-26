@@ -18,9 +18,11 @@
     <!-- Prep入力内容の表示 -->
     <section class="p-prep__wrapper mb-5">
       <article class="p-record bg-white border p-2 mb-2">
-        <div class="p-record__title-wrapper mb-3">
+        <div class="p-guide__task-name-wrapper mb-3">
           <a href="#" class="badge badge-success mr-1">Output</a>
-          <h6 class="p-record__title d-inline mb-0 align-middle">サンプル</h6>
+          <h6 class="p-guide__task-name d-inline mb-0 align-middle">
+            サンプル
+          </h6>
         </div>
         <div class="p-record__details row">
           <div class="col-sm mb-2 mb-sm-1">

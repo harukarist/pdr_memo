@@ -34,7 +34,7 @@
             v-bind:to="{ name: 'record.list' }"
             class="c-navbar__link"
           >
-            <li class="c-navbar__item nav-item nav-link">これまでの記録</li>
+            <li class="c-navbar__item nav-item nav-link">計画・振り返り</li>
           </router-link>
           <!-- <li class="c-navbar__item nav-item nav-link">タスクを選ぶ</li> -->
         </ul>

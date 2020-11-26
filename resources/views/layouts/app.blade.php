@@ -48,11 +48,10 @@
                             <a class="c-navbar__link navbar-item" href="{{ route('register') }}">ユーザー登録</a>
                         @else
                         {{-- ログイン後 --}}
-                            <p class="c-navbar__item nav-item">こんにちは, {{ Auth::user()->name }}さん</p>
-                            ｜
+                            {{-- <p class="c-navbar__item nav-item">こんにちは, {{ Auth::user()->name }}さん</p> --}}
+                            {{-- ｜ --}}
                             <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link">タスクリスト</a>
-                            <a href="{{ route('preps.create') }}" class="c-navbar__item nav-item nav-link">計画を立てる</a>
-                            <a href="{{ route('records.index') }}" class="c-navbar__item nav-item nav-link">これまでの記録</a>
+
                             <a href="#" id="js-logout" class="c-navbar__link navbar-item nav-link" onclick="event.preventDefault();
                             document.getElementById('js-logout-form').submit();">ログアウト</a>
                             <form id="js-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

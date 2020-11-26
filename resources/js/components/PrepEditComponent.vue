@@ -12,7 +12,7 @@
       この記録を削除する
     </button>
     <div
-      class="modal fade"
+      class="modal fade text-left"
       id="modal1"
       tabindex="-1"
       role="dialog"

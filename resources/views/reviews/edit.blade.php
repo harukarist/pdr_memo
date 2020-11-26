@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h5 class="mb-4">振り返りを編集</h5>
+  <h5 class="mb-4">振り返りを編集する</h5>
   <!-- プログレスバー -->
   <div class="progressbar__wrapper">
     <ul class="progressbar">
@@ -12,40 +12,77 @@
     </ul>
   </div>
 
-   {{-- 削除ボタン --}}
-   <form action="{{ route('reviews.delete', ['prep_id'=>$editing_review->prep_id, 'review_id' => $editing_review->id]) }}" method="post">
-    @method('DELETE')
-    @csrf
-  <button type="button" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modal1">
-    この振り返りを削除する
-  </button>
-  <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="label1">この振り返りを削除しますか？</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+  <!-- ガイド -->
+  <section class="mb-4">
+    {{-- タスク名 --}}
+    <div class="border bg-white p-3 mb-3">
+      <div class="p-guide__wrapper d-flex">
+        <div class="p-guide__checkbox mr-2">
+          @if($current_task->status == 3)
+          <i class="far fa-check-square icon-checkbox" aria-hidden="true"></i>
+          @else
+          <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
+          @endif
         </div>
-        <div class="modal-body">
-          振り返りを削除すると、記録した実績時間も削除されます。<br>
-          振り返りは編集画面から変更できます。本当にこの振り返りを削除しますか？
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">
-            No
-          </button>
-          <button type="submit" class="btn btn-danger">Yes</button>
+        <div class="p-guide__contents text-justify p-0">
+          <div class="p-guide__taskname">
+            <h6 class="d-inline align-middle">
+              {{ $current_task->task_name }}</h6>
+            <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
+          </div>
+          <div class="p-guide__prep-detail py-2">
+            <small>
+              <mark class="mr-2">
+              {{ $editing_review->prep->unit_time }}分 × 
+              {{ $editing_review->prep->estimated_steps }}ステップ
+              </mark>
+              <span class="badge badge-light">{{ $editing_review->prep->category->category_name }}</span>
+            </small>
+          </div>
+          <div class="p-guide__prep-text">
+              {{ $editing_review->prep->prep_text }}
+          </div>
         </div>
       </div>
     </div>
+  </section>
+
+   {{-- 削除ボタン --}}
+   <div class="p-delete text-right">
+    <form action="{{ route('reviews.delete', ['project_id' => $current_task->project_id, 'task_id'=> $current_task->id,'prep_id'=>$editing_review->prep_id, 'review_id' => $editing_review->id]) }}" method="post">
+      @method('DELETE')
+      @csrf
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3 text-right" data-toggle="modal" data-target="#modal1">
+      この振り返りを削除する
+    </button>
+    <div class="modal fade text-left" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="label1">この振り返りを削除しますか？</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            振り返りを削除すると、記録した実績時間も削除されます。<br>
+            振り返りは編集画面から変更できます。本当にこの振り返りを削除しますか？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              No
+            </button>
+            <button type="submit" class="btn btn-danger">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
   </div>
-  </form>
 
   <section class="mb-4">
     <!-- Review入力フォーム -->
-    <form method="POST" action="{{ route('reviews.edit', ['prep_id'=>$editing_review->prep_id, 'review_id' => $editing_review->id ]) }}">
+    <form method="POST" action="{{ route('reviews.edit', ['project_id' => $current_task->project_id, 'task_id'=> $current_task->id,'prep_id'=>$editing_review->prep_id, 'review_id' => $editing_review->id ]) }}">
       @csrf
       @method('PATCH')
 
@@ -110,20 +147,27 @@
           </div>
         </div>
       </div>
-
-      <!-- カテゴリー -->
-      <div class="form-group">
-        <label for="category_id">カテゴリー</label>
-        <div class="pl-1">
-          <div class="form-check form-check-inline">
-            @forelse($categories as $category)
-              <input type="radio" class="form-check-input" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $editing_review->category_id == $category->id) checked @endif>
-              <label class="form-check-label pr-4" for="{{ $category->id }}">
-                <h4 class="c-form__category badge badge-pill badge-light p-1 ">{{ $category->category_name }}</h4>
-              </label>
-            @empty
-            @endforelse
+      <div class="form-inline row mb-4">
+        <!-- カテゴリー -->
+        <div class="form-group form-inline col-auto mb-3">
+          <label for="category_id" class="mb-0">カテゴリー</label>
+          <div class="pl-3">
+            <div class="form-check form-check-inline">
+              @forelse($categories as $category)
+                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $editing_review->category_id == $category['id']) checked @endif>
+                <label class="form-check-label pr-4" for="{{ $category['id'] }}">
+                  <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
+                </label>
+              @empty
+              @endforelse
+            </div>
           </div>
+        </div>
+
+        {{-- タスクを完了に切り替え --}}
+        <div class="form-check col-auto mb-4 ml-4">
+          <input class="form-check-input" type="checkbox" name="task_completed" id="task_completed">
+          <label class="form-check-label" for="task_completed">タスクを完了済みにする</label>
         </div>
       </div>
 

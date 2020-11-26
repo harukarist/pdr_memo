@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="container">
-    <h5 class="mb-4">計画を立てる</h5>
+    <h5 class="mb-4">準備する</h5>
     <!-- プログレスバー -->
     <div class="progressbar__wrapper">
       <ul class="progressbar">
@@ -11,10 +11,35 @@
         <li class="">Review</li>
       </ul>
     </div>
+    <!-- ガイド -->
+    <section class="mb-4">
+      {{-- タスク名 --}}
+      <div class="border bg-white p-3 mb-3">
+        <div class="p-guide__wrapper d-flex">
+          <div class="p-guide__checkbox mr-2">
+            @if($current_task->status == 3)
+            <i class="far fa-check-square icon-checkbox" aria-hidden="true"></i>
+            @else
+            <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
+            @endif
+          </div>
+          <div class="p-guide__contents text-justify p-0">
+            <div class="p-guide__taskname">
+              <h6 class="d-inline align-middle">
+                {{ $current_task->task_name }}</h6>
+              <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+      <p class="p-guide__text">タスク実行の準備をしましょう！</p>
+      </div>
+    </section>
 
     <section>
       <!-- Prep入力フォーム -->
-      <form method="POST" action="{{ route('preps.create') }}">
+      <form method="POST" action="{{ route('preps.create', ['project_id' => $current_task->project_id,'task_id' => $current_task->id]) }}">
         @csrf
         {{-- バリデーションエラー --}}
         @if($errors->any())
@@ -26,19 +51,6 @@
           </ul>
         </div>
         @endif
-
-        <!-- タスク名 -->
-        <div class="form-group">
-          <label for="task_id">タスクを選ぶ</label>
-          <select id="task_id" class="form-control @error('task_id') is-invalid @enderror" name="task_id">
-            <option value="" @empty(old('task_id')) selected @endempty>選択してください</option>
-            @forelse($tasks as $index => $task)
-              <option value="{{ $task->id }}" @if(old('task_id') == $task->id) selected @endif>{{ $task->task_name }}</option>
-            @empty
-              <a href="{{ route('home') }}">タスクを登録してください</a>
-            @endforelse
-          </select>
-        </div>
 
         <!-- Prepテキストエリア -->
         <div class="form-group">
@@ -78,17 +90,16 @@
         </div>
 
         <!-- カテゴリー -->
-        <div class="form-group">
-          <label for="category_id">カテゴリー</label>
-          <div class="pl-1">
+        <div class="form-group form-inline mb-3">
+          <label for="category_id" class="mb-0">カテゴリー</label>
+          <div class="pl-3">
             <div class="form-check form-check-inline">
               @forelse($categories as $category)
-                <input type="radio" class="form-check-input" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id) checked @endif>
-                <label class="form-check-label pr-4" for="{{ $category->id }}">
-                  <h4 class="c-form__category badge badge-pill badge-light p-1 ">{{ $category->category_name }}</h4>
+                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $current_task->project->category_id == $category['id'] ) checked @endif>
+                <label class="form-check-label pr-4" for="{{ $category['id'] }}">
+                  <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
                 </label>
               @empty
-              カテゴリーの登録はまだありません。
               @endforelse
             </div>
           </div>

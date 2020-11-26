@@ -8,9 +8,9 @@
   <div class="container">
     <div class="row">
       <div class="col col-md-offset-3 col-md-6">
-        <nav class="panel panel-default">
-          <div class="panel-heading">タスクを追加する</div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header">タスクを追加する</div>
+          <div class="card-body">
             {{-- バリデーションエラー --}}
             @if($errors->any())
               <div class="alert alert-danger">
@@ -36,7 +36,7 @@
               </div>
             </form>
           </div>
-        </nav>
+        </div>
       </div>
     </div>
   </div>
