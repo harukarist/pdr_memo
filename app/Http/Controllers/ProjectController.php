@@ -11,12 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+    // ステータスの定義
+    const CATEGORY = [
+        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-primary'],
+        2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-success'],
+        3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-secondary'],
+    ];
+
     // プロジェクト作成画面
     public function showCreateForm()
     {
         // ログインユーザーに紐づくプロジェクト、カテゴリーを取得
         $projects = Auth::user()->projects()->get();
-        $categories = Auth::user()->categories()->get();
+        // $categories = Auth::user()->categories()->get();
+
+        $categories = self::CATEGORY;
 
         return view('projects.create', compact('projects', 'categories'));
     }
@@ -35,41 +44,43 @@ class ProjectController extends Controller
     }
 
     // プロジェクト編集画面を表示
-    public function showEditForm(int $id)
+    public function showEditForm(int $project_id)
     {
         // 該当のプロジェクトIDのデータを取得し、ビューテンプレートに返却
-        $edit_project = Auth::user()->projects()->find($id);
-        $categories = Auth::user()->categories()->get();
+        $edit_project = Auth::user()->projects()->find($project_id);
+        // $categories = Auth::user()->categories()->get();
+
+        $categories = self::CATEGORY;
 
         // ログインユーザーに紐づくプロジェクトを取得
         if ($edit_project) {
             $projects = Auth::user()->projects()->get();
 
-            return view('projects.edit', compact('edit_project', 'projects','categories'));
+            return view('projects.edit', compact('edit_project', 'projects', 'categories'));
         } else {
             return redirect()->route('home');
         }
     }
 
     // プロジェクト編集処理
-    public function edit(int $id, EditProject $request)
+    public function edit(int $project_id, EditProject $request)
     {
         // リクエストのIDからプロジェクトデータを取得
-        $project = Auth::user()->projects()->find($id);
+        $project = Auth::user()->projects()->find($project_id);
 
         // 該当のプロジェクトデータをフォームの入力値で書き換えて保存
         Auth::user()->projects()->save($project->fill($request->all()));
 
         // 編集対象のプロジェクトが属するプロジェクトのプロジェクト一覧にリダイレクト
-        return redirect()->route('projects.edit', ['project_id' => $id])->with('flash_message', 'プロジェクトを変更しました');
+        return redirect()->route('projects.edit', ['project_id' => $project_id])->with('flash_message', 'プロジェクトを変更しました');
     }
 
     // プロジェクト削除処理
-    public function delete(int $id)
+    public function delete(int $project_id)
     {
         // リクエストで受け取ったIDのプロジェクトを削除
-        // Project::find($id)->delete();
-        Project::destroy($id);
+        // Project::find($project_id)->delete();
+        Project::destroy($project_id);
 
         // 削除対象のプロジェクトが属するプロジェクトのプロジェクト一覧にリダイレクト
         return redirect()->route('home')->with('flash_message', 'プロジェクトを削除しました');
