@@ -23,6 +23,9 @@ class EditReview extends CreateReview
      */
     public function rules()
     {
-        return parent::rules();
+        // 親のルールを継承
+        $rule = parent::rules();
+
+        return $rule;
     }
 }
