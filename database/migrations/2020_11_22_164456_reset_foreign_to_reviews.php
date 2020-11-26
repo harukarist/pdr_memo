@@ -18,7 +18,7 @@ class ResetForeignToReviews extends Migration
             $table->dropForeign(['prep_id']);
             // 外部キーをcascadeオプションありで設定する
             $table->foreign('prep_id')->references('id')->on('preps')
-                ->onDelete('cascade')->onUpdate('cascade');
+                ->onUpdate('cascade')->onDelete('restrict');
         });
     }
 

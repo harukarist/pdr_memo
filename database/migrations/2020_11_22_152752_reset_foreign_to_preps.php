@@ -19,7 +19,7 @@ class ResetForeignToPreps extends Migration
             $table->dropForeign(['task_id']);
             // 外部キーをcascadeオプションありで設定する
             $table->foreign('task_id')->references('id')->on('tasks')
-                ->onDelete('cascade')->onUpdate('cascade');
+                ->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
