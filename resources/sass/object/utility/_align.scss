@@ -1,0 +1,16 @@
+.u-align {
+  &--center {
+    text-align: center;
+  }
+  &--left {
+    text-align-last: left;
+  }
+  &--right {
+    text-align: right;
+  }
+}
+.u-vertical {
+  &--middle {
+    vertical-align: middle;
+  }
+}

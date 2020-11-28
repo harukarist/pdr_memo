@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
+  <div class="container py-4">
     <h5 class="mb-4">準備する</h5>
     <!-- プログレスバー -->
     <div class="progressbar__wrapper">
@@ -17,7 +17,7 @@
       <div class="border bg-white p-3 mb-3">
         <div class="p-guide__wrapper d-flex">
           <div class="p-guide__checkbox mr-2">
-            @if($current_task->status == 3)
+            @if($current_task->status == 4)
             <i class="far fa-check-square icon-checkbox" aria-hidden="true"></i>
             @else
             <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
@@ -62,6 +62,7 @@
               <li>その理由、目標、目的は？</li>
               <li>どのようなプロセスで行う？</li>
               <li>必要なリソースは？</li>
+              <li>障害になりそうなことは？</li>
               <li>他に関わる人は？</li>
             </ul>
           </span>

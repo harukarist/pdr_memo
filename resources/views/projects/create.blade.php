@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
+  <div class="container py-4">
     <section class="row justify-content-center">
       <div class="col-sm-8">
         <h5 class="c-heading__title">プロジェクトの作成</h5>

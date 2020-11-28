@@ -1,0 +1,21 @@
+// ==============================
+// mixin
+// ==============================
+
+// メディアクエリのブレークポイントをマップ型変数として設定
+// !default：変数に値が入っていない時のみ適用
+$breakpoints: (
+  'xsmall': 'screen and (max-width: 424px)',
+  'small': 'screen and (max-width: 599px)',
+  'medium': 'screen and (max-width: 768px)',
+  'large': 'screen and (max-width: 1024px)',
+  'xlarge': 'screen and (max-width: 1280px)',
+) !default;
+
+@mixin mq($breakpoint: small) {
+// map-get()でマップ型変数の値を取得（第一引数に変数名、第二引数にマップ型のキー）
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+    // @include mq() 内のSassを読み込む
+  }
+}

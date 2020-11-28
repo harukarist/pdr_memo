@@ -1,0 +1,29 @@
+.p-skills {
+  &__panel {
+    border-radius: 5px;
+    background-color: $bg-color--white;
+    box-shadow: $shadow-color--s; 
+  }
+  &__icon {
+    border-radius: 5px;
+    color: $bg-color--main-dark;
+    background-color: $bg-color--base-dark;
+    font-size: 50px;
+    line-height: 1.5;
+    i {
+      padding: 0 2px;
+      vertical-align: bottom;
+    }
+  }
+  &__item {
+    color: $font-color--main;
+    background-color: $bg-color--base-dark;
+    padding: 0.5em 0 1em 0;
+  }
+  &__text {
+    padding: $space--xl;
+    text-align: left;
+    text-align: justify;
+    text-justify: inter-ideograph;
+  }
+}

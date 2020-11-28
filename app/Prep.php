@@ -24,7 +24,7 @@ class Prep extends Model
     protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id'];
 
     // 更新時に親の更新日時も更新
-    protected $touches = ['task'];
+    // protected $touches = ['task'];
 
     // 日付のフォーマット
     public function getUpdatedAtAttribute($value)

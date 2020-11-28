@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container py-4">
     <h5 class="mb-4">実行する</h5>
 
     <!-- プログレスバー -->

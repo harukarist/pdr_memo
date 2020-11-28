@@ -1,0 +1,43 @@
+.u-mb {
+  &--s{
+    margin-bottom: $space--s;
+  }
+  &--m{
+    margin-bottom: $space--m;
+  }
+  &--l{
+    margin-bottom: $space--l;
+  }
+  &--xl{
+    margin-bottom: $space--xl;
+  }
+  &--xxl{
+    margin-bottom: $space--xxl;
+  }
+  &--xxxl{
+    margin-bottom: $space--xxxl;
+  }
+}
+.u-mt {
+  &--s{
+    margin-top: $space--s;
+  }
+  &--m{
+    margin-top: $space--m;
+  }
+  &--l{
+    margin-top: $space--l;
+  }
+  &--xl{
+    margin-top: $space--xl;
+  }
+  &--xxl{
+    margin-top: $space--xxl;
+  }
+  &--xxxl{
+    margin-top: $space--xxxl;
+  }
+}
+.u-m-0a{
+  margin: 0 auto;
+}

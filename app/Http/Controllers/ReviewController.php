@@ -13,9 +13,9 @@ class ReviewController extends Controller
 {
     // ステータスの定義x
     const CATEGORY = [
-        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-primary'],
-        2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-success'],
-        3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-secondary'],
+        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-light'],
+        2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-light'],
+        3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-light'],
     ];
 
     // Review登録画面を表示
@@ -38,9 +38,9 @@ class ReviewController extends Controller
         // リクエストのIDからprepデータを取得
         $current_prep = Auth::user()->preps()->find($prep_id);
 
-        // 完了済みチェックがonの場合はタスクのステータスを3（完了）に切り替え
+        // 完了済みチェックがonの場合はタスクのステータスを4（完了）に切り替え
         if ($request->task_completed) {
-            Auth::user()->projects()->find($project_id)->tasks()->where('id', $task_id)->update(['status' => 3]);
+            Auth::user()->projects()->find($project_id)->tasks()->where('id', $task_id)->update(['status' => 4]);
         }
 
         // 該当のPrepに紐づくReviewレコードを登録
@@ -70,9 +70,9 @@ class ReviewController extends Controller
         $editing_review = Auth::user()->reviews()->find($review_id);
         $current_prep = Auth::user()->preps()->find($prep_id);
 
-        // 完了済みチェックがonの場合はタスクのステータスを3（完了）に切り替え
+        // 完了済みチェックがonの場合はタスクのステータスを4（完了）に切り替え
         if ($request->task_completed) {
-            Auth::user()->projects()->find($project_id)->tasks()->where('id', $task_id)->update(['status' => 3]);
+            Auth::user()->projects()->find($project_id)->tasks()->where('id', $task_id)->update(['status' => 4]);
         }
 
         // 該当のreviewデータをフォームの入力値で書き換えて保存

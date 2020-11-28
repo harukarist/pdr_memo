@@ -1,0 +1,46 @@
+.c-link {
+  // 下線が中央から伸びるアニメーション
+  &--grow {
+    display: inline-block; // 下線の幅をテキストと合わせる
+    position: relative;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto; // 中央からスタート
+      width: 0;
+      border-bottom: 2px solid $font-color--hover;
+      transition: width .2s ease-in-out;  // widthを変化
+    }
+    &:hover::before {
+      width: 100%;
+    }
+  }
+  // 二重線が中央から伸びるアニメーション
+  &--grow-double {
+    display: inline-block; // 下線の幅をテキストと合わせる
+    position: relative;
+    padding: 5px 0;
+    &::before, &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 0;
+      margin: 0 auto; // 中央寄せ
+      border-bottom: 1px solid $font-color--hover;
+      transition: width .2s ease-in-out;  // widthを変化
+    }
+    &:hover::before, &:hover::after {
+      width: 100%;
+    }
+    &:hover::after {
+      bottom: 5px;
+    }
+  }
+}

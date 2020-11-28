@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-4">
   <h5 class="mb-4">振り返る</h5>
     <!-- プログレスバー -->
     <div class="progressbar__wrapper">
@@ -17,7 +17,7 @@
         <div class="p-guide__wrapper d-flex">
           {{-- チェックボックス --}}
           <div class="p-guide__checkbox mr-2">
-            @if($current_task->status == 3)
+            @if($current_task->status == 4)
             <i class="far fa-check-square icon-checkbox" aria-hidden="true"></i>
             @else
             <i class="far fa-square icon-checkbox" aria-hidden="true"></i>

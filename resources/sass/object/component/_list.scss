@@ -1,0 +1,20 @@
+.c-list {
+  &-row-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__item {
+      padding-left: $space--l;
+      padding-right: $space--l;
+    }
+  }
+  &-column-left {
+    &__wrapper {
+      text-align: center;
+    }
+    &__ul {
+      display: inline-block;
+      text-align: left;
+    }
+  }
+}

@@ -11,9 +11,19 @@
 |
 */
 
+// 初回アクセス時はLaravel側でリクエストを受けてapp.blade.phpを表示
+// 2回目以降はフロント側のVueRouterでルーティング
+// Route::get('/{any}', function () {
+//     return view('layouts.app');
+// })->where('any', '.*');
+
+Route::get('/', function () {
+    return view('guest');
+});
+
 Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/records', 'RecordController@index')->name('record.index');
 
     // TaskController
@@ -69,9 +79,3 @@ Route::group(['middleware' => 'auth'], function () {
 
 // 会員登録・ログイン・ログアウト・パスワード再設定
 Auth::routes();
-
-// // 初回アクセス時はLaravel側でリクエストを受けてapp.blade.phpを表示
-// // 2回目以降はフロント側のVueRouterでルーティング
-// Route::get('/{any}', function () {
-//     return view('layouts.app');
-// })->where('any', '.*');

@@ -1,7 +1,7 @@
 <template>
   <!-- ナビバー -->
   <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
-    <div class="container">
+    <div class="container py-4">
       <!-- サイト名 -->
       <router-link v-bind:to="{ name: 'mypage' }" class="navbar-brand">
         <h5 class="navbar-brand mr-5 p-0">PDR-memo</h5>
@@ -25,16 +25,16 @@
         <!-- メニューリンク -->
         <ul class="navbar-nav mr-auto">
           <router-link
-            v-bind:to="{ name: 'prep.create' }"
+            v-bind:to="{ name: 'task.list', params: { projectId: 1 } }"
             class="c-navbar__link"
           >
-            <li class="c-navbar__item nav-item nav-link">タスクを実行</li>
+            <li class="c-navbar__item nav-item nav-link">タスクリスト</li>
           </router-link>
           <router-link
             v-bind:to="{ name: 'record.list' }"
             class="c-navbar__link"
           >
-            <li class="c-navbar__item nav-item nav-link">計画・振り返り</li>
+            <li class="c-navbar__item nav-item nav-link">計画・振り返り一覧</li>
           </router-link>
           <!-- <li class="c-navbar__item nav-item nav-link">タスクを選ぶ</li> -->
         </ul>

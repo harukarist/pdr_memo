@@ -1,0 +1,64 @@
+.p-works {
+  &__intro {
+    padding: $space--xxl;
+    br {
+      // スマホのみ改行を有効にする
+      display: none;
+      @include mq() {
+        display: block;
+      }
+    }
+  }
+  &__panel {
+    background-color: $bg-color--white;
+    box-shadow: $shadow-color--s; 
+    text-align: left;
+    position: relative;
+  }
+  &__trim {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    // padding-top: 60%;
+  }
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  &__details {
+    padding: $space--l;
+  }
+  &__heading {
+    color: $font-color--heading;
+    padding-bottom: 0.5em;
+  }
+  &__lead {
+    text-align: justify;
+    text-justify: inter-ideograph;
+  }
+  &__foot {
+    padding: $space--m 0 0 0;
+    margin: $space--m 0 0 0;
+    border-top: 1px solid $font-color--gray;
+    position: relative;
+    bottom: 0;
+  }
+  &__site {
+    &::before {
+      font-family: "Font Awesome 5 Free";
+      content: '\f2d2';
+      font-weight: 900;
+      padding-right: 3px;
+    }
+  }
+  &__github {
+    &::before {
+      font-family: "Font Awesome 5 Brands";
+      content: '\f09b';
+      font-weight: 900;
+      padding-right: 3px;
+    }
+  }
+}

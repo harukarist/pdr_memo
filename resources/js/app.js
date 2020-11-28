@@ -6,16 +6,17 @@
 
 require('./bootstrap');
 import VueRouter from "vue-router";
-import DoCreateComponent from "./components/DoCreateComponent";
+import NotFound from "./components/NotFound";
 import HeaderComponent from "./components/HeaderComponent";
-import MypageComponent from "./components/MypageComponent";
-import PrepCreateComponent from "./components/PrepCreateComponent";
-import PrepCreateComponent2 from "./components/PrepCreateComponent2";
-import PrepEditComponent from "./components/PrepEditComponent";
-import RecordListComponent from "./components/RecordListComponent";
-import ReviewCreateComponent from "./components/ReviewCreateComponent";
-import ReviewEditComponent from "./components/ReviewEditComponent";
 import TaskListComponent from "./components/TaskListComponent";
+import RecordListComponent from "./components/RecordListComponent";
+// import DoCreateComponent from "./components/DoCreateComponent";
+// import MypageComponent from "./components/MypageComponent";
+// import PrepCreateComponent from "./components/PrepCreateComponent";
+// import PrepCreateComponent2 from "./components/PrepCreateComponent2";
+// import PrepEditComponent from "./components/PrepEditComponent";
+// import ReviewCreateComponent from "./components/ReviewCreateComponent";
+// import ReviewEditComponent from "./components/ReviewEditComponent";
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
@@ -25,29 +26,9 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/mypage',
-            name: 'mypage',
-            component: MypageComponent
-        },
-        {
-            path: '/records/do/create',
-            name: 'preps.do',
-            component: DoCreateComponent
-        },
-        {
-            path: '/records/prep/create',
-            name: 'prep.create',
-            component: PrepCreateComponent
-        },
-        {
-            path: '/records/prep/create2',
-            name: 'prep.create2',
-            component: PrepCreateComponent2
-        },
-        {
-            path: '/records/prep/:recordId/edit',
-            name: 'prep.edit',
-            component: PrepEditComponent,
+            path: '/projects/:projectId/tasks',
+            name: 'task.list',
+            component: TaskListComponent,
             props: true
         },
         {
@@ -56,21 +37,49 @@ const router = new VueRouter({
             component: RecordListComponent
         },
         {
-            path: '/records/review/create',
-            name: 'review.create',
-            component: ReviewCreateComponent
+            // 404エラーページ
+            path: '*',
+            name: 'notfound',
+            component: NotFound
         },
-        {
-            path: '/records/review/:recordId/edit',
-            name: 'review.edit',
-            component: ReviewEditComponent,
-            props: true
-        },
-        {
-            path: '/tasks',
-            name: 'task.list',
-            component: TaskListComponent
-        },
+        // {
+        //     path: '/mypage',
+        //     name: 'mypage',
+        //     component: MypageComponent
+        // },
+        // {
+        //     path: '/records/do/create',
+        //     name: 'preps.do',
+        //     component: DoCreateComponent
+        // },
+        // {
+        //     path: '/records/prep/create',
+        //     name: 'prep.create',
+        //     component: PrepCreateComponent
+        // },
+        // {
+        //     path: '/records/prep/create2',
+        //     name: 'prep.create2',
+        //     component: PrepCreateComponent2
+        // },
+        // {
+        //     path: '/records/prep/:recordId/edit',
+        //     name: 'prep.edit',
+        //     component: PrepEditComponent,
+        //     props: true
+        // },
+
+        // {
+        //     path: '/records/review/create',
+        //     name: 'review.create',
+        //     component: ReviewCreateComponent
+        // },
+        // {
+        //     path: '/records/review/:recordId/edit',
+        //     name: 'review.edit',
+        //     component: ReviewEditComponent,
+        //     props: true
+        // },
     ]
 });
 

@@ -1,0 +1,25 @@
+.c-grid {
+  $card-margin-right: $space--l;
+  $card-margin-bottom: $space--xl;
+  margin-right: -$card-margin-right; //最終列のネガティブマージン
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  @include mq() {
+    margin-right : 0;
+  }
+  &__panel {
+    float: left;
+    margin-right: $card-margin-right;
+    margin-bottom: $card-margin-bottom;
+    box-sizing: border-box;
+    width: calc(100% / 3 - #{$card-margin-right});
+    @include mq(large) {
+      width: calc(100% / 2 - #{$card-margin-right});
+    }
+    @include mq() {
+      width: 100%;
+      margin: 0 auto 15px auto;
+    }
+  }
+}

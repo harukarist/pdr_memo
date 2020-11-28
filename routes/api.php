@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
+
+// ログインユーザーを返却
+// Route::get('/user', fn() => Auth::user())->name('user');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::get('/projects/{project_id}/tasks', 'TaskController@index');

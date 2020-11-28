@@ -1,0 +1,12 @@
+.u-attr {
+  &__href {
+    &::after {
+      content: attr(href);
+      font-size: $font-size--s;
+    }
+    &--hover:hover::after {
+      content: attr(href);
+      font-size: $font-size--s;
+    }
+  }
+}

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-  <div class="container">
+  <div class="container py-4">
     <div class="row">
       <div class="col col-md-offset-3 col-md-6">
         <div class="card">

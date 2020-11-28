@@ -24,7 +24,7 @@
     <div id="app">
         <header>
             {{-- スマホではハンバーガーアイコン表示 navbar-expand-sm--}}
-            <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
+            <nav class="navbar navbar-expand-sm navbar-light bg-white">
                 {{-- サイト名 --}}
                 <a class="navbar-brand mr-5 p-0" href="/">PDR-memo</a>
 
@@ -68,7 +68,7 @@
                 {{ session('flash_message') }}
             </div>
         @endif
-        <main class="py-4">
+        <main>
             @yield('content')
             {{-- Router View resources/js/app.jsで指定 --}}
             {{-- <router-view></router-view> --}}

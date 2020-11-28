@@ -1,0 +1,21 @@
+.c-form {
+  width: 100%;
+  &--middle {
+    // PCサイトは幅60％
+    width: 60%;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    // スマホサイトは横幅いっぱい
+    @include mq() {
+      width: 100%;
+    }
+  }
+  &__label {
+    border-left: 2px solid $bg-color--accent;
+    color: $font-color--heading;
+    padding-left: $space--m;
+    display: inline-block;
+    margin: 20px 0 0 2px;
+  }
+}

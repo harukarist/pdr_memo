@@ -24,10 +24,10 @@ class CreateReview extends FormRequest
     public function rules()
     {
         return [
-            'review_text' => 'max:191',
-            'good_text' => 'max:191',
-            'problem_text' => 'max:191',
-            'try_text' => 'max:191',
+            'review_text' => 'max:1000',
+            'good_text' => 'max:1000',
+            'problem_text' => 'max:1000',
+            'try_text' => 'max:1000',
             'actual_time' => 'required|min:0|numeric|digits_between:1, 3',
             'step_counter' => 'required|min:1|numeric|digits_between:1, 3',
             'category_id' =>  'required|min:1|numeric',

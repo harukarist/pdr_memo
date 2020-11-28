@@ -1,0 +1,21 @@
+.c-fadein {
+    -webkit-animation: opening 3s ease-in-out;
+    animation: opening 3s ease-in-out;
+}
+@-webkit-keyframes opening {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes opening {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+

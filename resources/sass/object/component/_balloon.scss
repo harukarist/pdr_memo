@@ -1,0 +1,34 @@
+.c-balloon {
+  &__left {
+    $balloon-color: $bg-color--base;
+    box-sizing: border-box;
+    background: $balloon-color;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 530px;
+    padding: $space--xxl;
+    border-radius: 10px;
+    left: 30px;
+    text-align: left;
+    line-height: 1.8;
+    &::before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      left: -20px;
+      top: 50%;
+      border-right: 20px solid $balloon-color;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+    }
+  }
+  &__text {
+    margin-bottom: 1em;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

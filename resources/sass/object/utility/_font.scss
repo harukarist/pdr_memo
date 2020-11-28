@@ -1,0 +1,58 @@
+.u-font {
+  &-color {
+    &--default {
+      color: $font-color--default;
+    }
+    &--accent {
+      color: $font-color--main;
+    }
+    &--heading {
+      color: $font-color--heading;
+    }
+    &--white {
+      color: $font-color--white;
+    }
+    &--gray {
+      color: $font-color--gray;
+    }
+  }
+
+  &-size {
+    &--s{
+      font-size: $font-size--s;
+    }
+    &--m{
+      font-size: $font-size--m;
+    }
+    &--l{
+      font-size: $font-size--l;
+    }
+    &--xl{
+      font-size: $font-size--xl;
+    }
+    &--xxl{
+      font-size: $font-size--xxl;
+    }
+    &--xxxl{
+      font-size: $font-size--xxxl;
+    }
+  }
+
+  &-family {
+    &__theme {
+      font-family: $font-family--theme;
+    }
+    &__default {
+      font-family: $font-family--default;
+    }
+  }
+
+  &-weight {
+    &--normal {
+      font-weight: normal;
+    }
+    &--bold {
+      font-weight: bold;
+    }
+  }
+}

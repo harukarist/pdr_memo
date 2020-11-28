@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-  <div class="container">
+  <div class="container py-4">
     <h5 class="mb-4">タスクを修正する</h5>
     {{-- 削除ボタン --}}
     <div class="p-delete text-right">

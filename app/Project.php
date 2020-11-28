@@ -12,9 +12,9 @@ class Project extends Model
 
     // ステータスの定義
     const CATEGORY = [
-        1 => ['category_name' => 'Input', 'category_class' => 'badge-primary'],
-        2 => ['category_name' => 'Output', 'category_class' => 'badge-success'],
-        3 => ['category_name' => 'Etc', 'category_class' => 'badge-secondary'],
+        1 => ['category_name' => 'Input', 'category_class' => 'badge-light'],
+        2 => ['category_name' => 'Output', 'category_class' => 'badge-light'],
+        3 => ['category_name' => 'Etc', 'category_class' => 'badge-light'],
     ];
 
     // ロックをかけないカラム

@@ -1,0 +1,71 @@
+.p-profile {
+  @include mq(medium){
+    text-align: center;
+    position: relative;
+    margin-bottom: 100px;
+  }
+  &__avatar {
+    background: url("../images/avatar.jpg"); 
+    background-size: cover;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: 15px;
+    @include mq(medium){
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: calc(50% - 50px);
+    }
+  }
+  &__content {
+    $balloon-color: $bg-color--lucent-base;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    background: $balloon-color;
+    position: relative;
+    max-width: 530px;
+    padding: $space--xxl;
+    border-radius: 10px;
+    left: 30px;
+    text-align: left;
+    line-height: 1.8;
+    @include mq(medium){
+      padding: $space--xl;
+      left: 0;
+      top: 120px;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      left: -20px;
+      top: 50%;
+      border-right: 20px solid $balloon-color;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      @include mq(medium){
+        display: block;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%,-100%);
+        -webkit-transform: translate(-50%,-100%);
+        -ms-transform: translate(-50%,-100%);
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid transparent;
+        border-bottom: 15px solid $balloon-color;
+
+      }
+    }
+  }
+  &__text {
+    margin-bottom: 1em;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

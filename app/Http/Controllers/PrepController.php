@@ -15,8 +15,7 @@ class PrepController extends Controller
 {
     // ステータスの定義
     const CATEGORY = [
-        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-
-        light'],
+        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-light'],
         2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-light'],
         3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-light'],
     ];
@@ -93,7 +92,7 @@ class PrepController extends Controller
         $do_prep = $current_task->preps()->find($prep_id);
 
         // 該当タスクのステータスを着手中に変更
-        $current_task->update(['status' => 2]);
+        $current_task->update(['status' => 3]);
 
         // 該当Prepに紐づくReviewの個数をカウント
         $review_count = $do_prep->reviews->max('step_counter') + 1;

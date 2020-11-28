@@ -1,0 +1,95 @@
+.p-hero {
+  height: 98vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // パララックスデザイン（背景を固定）
+  &::before {
+    content:"";
+    display:block;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 0;
+    width:100vw;
+    height:98vh;
+    @include mq() {
+      height: 95vh;
+    }
+    // box-sizing: border-box;
+    margin: 0;
+    transform: translateZ(0); // GPUレイヤーを生成してチラつきを抑える
+    -webkit-transform: translateZ(0);
+    background : -webkit-gradient(linear, left top, left bottom, from(rgba(88, 54, 0, 0.5)), to(rgba(18, 11, 0, 0.4)), url("../images/hero.jpg"));
+    background: -webkit-linear-gradient(top, rgba(88, 54, 0, 0.5), rgba(18, 11, 0, 0.4) ), url("../images/hero.jpg");
+    background : linear-gradient(to bottom, rgba(88, 54, 0, 0.5), rgba(18, 11, 0, 0.4) ), url("../images/hero.jpg"); 
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    border-bottom-right-radius: 2000px 300px;
+    border-bottom-left-radius: 2000px 300px;
+    margin-left: -300px;
+    margin-right: -300px;
+    padding-left: 300px;
+    padding-right: 300px;
+    @include mq() {
+      border-bottom-right-radius: 1000px 200px;
+      border-bottom-left-radius: 1000px 200px;
+      margin-left: -100px;
+      margin-right: -100px;
+      padding-left: 100px;
+      padding-right: 100px;
+    };
+  }
+  &__content {
+    z-index: 1;
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  %hero_text {
+    font-family: $font-family--theme;
+    color: $font-color--white;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0,0,0,.6), 0 0 20px rgba(0,0,0,.1);
+  }
+  &__title {
+    font-size: $font-size--xxl;
+    @extend %hero_text;
+    @include mq(xsmall) {
+      font-size: 6vw;
+    }
+  }
+  &__subtitle {
+    font-size: $font-size--l;
+    @extend %hero_text;
+    @include mq(xsmall) {
+      font-size: 4vw;
+    }
+  }
+  &__underline {
+    border-bottom: solid 1px $font-color--white;
+    margin-bottom: 0.2em;
+    padding: 0 20px;
+  }
+  &__scroll {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    &-text {
+      @extend %hero_text;
+      font-size: $font-size--m;
+      color: $bg-color--base;
+      padding-bottom: 0.6em;
+      display: block;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  
+}

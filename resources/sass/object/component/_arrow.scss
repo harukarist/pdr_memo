@@ -1,0 +1,51 @@
+.c-arrow-down {
+  &__arrow {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    box-sizing: border-box;
+  }
+  &--animation {
+    -webkit-animation: arrow-down 3s ease-in-out infinite;
+    animation: arrow-down 3s ease-in-out infinite;
+  }
+  @-webkit-keyframes arrow-down {
+    0% {
+      -webkit-transform: translate(0, 0);
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.8;
+    }
+    60% {
+      -webkit-transform: translate(0, 20px);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes arrow-down {
+    0% {
+      transform: translate(0, 0);
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.8;
+    }
+    60% {
+      transform: translate(0, 20px);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}

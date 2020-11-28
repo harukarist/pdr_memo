@@ -1,0 +1,11 @@
+.u-bgcolor {
+  &--base {
+    background: $bg-color--base;
+  }
+  &--main {
+    background: $bg-color--main;
+  }
+  &--accent {
+    background: $bg-color--accent;
+  }
+}

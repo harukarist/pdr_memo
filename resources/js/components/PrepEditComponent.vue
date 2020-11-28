@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container">
+  <div class="container py-4">
     <h5 class="mb-4">活動記録を編集する</h5>
 
     <button

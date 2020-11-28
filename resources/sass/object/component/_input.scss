@@ -1,0 +1,42 @@
+
+.c-input {
+  display: block;
+  margin-top: $space--s;
+  margin-bottom: $space--m;
+  height: 60px;
+  font-size: $font-size--default;
+  color: $font-color--default;
+  transition: all .3s ease-in;
+  box-sizing: border-box;
+  outline: none;
+  &--underline {
+    border-bottom:1px solid $bg-color--main;
+    border-right:none;
+    border-left:none;
+    border-top:none;
+    background: transparent;
+  }
+  &--white {
+    border-radius: 4px;
+    border: none;
+  }
+  &--large {
+    padding: 5px 20px;
+    width: 100%;
+  }
+  &__textarea {
+    height: 200px;
+    border:1px solid $bg-color--main;
+    background: transparent;
+    padding: 20px;
+  }
+  &:focus {
+    border: 2px solid $bg-color--main;
+    border-radius: 4px;
+    background: $bg-color--white;
+  }
+}
+// フォーム内に初期表示するプレースホルダ
+::placeholder {
+  color: $font-color--gray;
+}

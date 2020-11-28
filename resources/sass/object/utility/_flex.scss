@@ -1,0 +1,29 @@
+.u-flex {
+  display: flex;
+  &-row--space-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-row--center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &-column--space-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+  &-column--center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &-column--left {
+    background: #000;
+    display: flex;
+    flex-direction: column;
+  }
+}

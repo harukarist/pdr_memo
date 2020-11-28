@@ -1,0 +1,13 @@
+.c-pagetop {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  font-size: $font-size--xl;
+  border: 2px solid #fff;
+  background: $bg-color--accent;
+  opacity: .9;
+  translate: 2s;
+  &:hover {
+    background: darken($bg-color--accent,5%);
+  }
+}

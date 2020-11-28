@@ -14,8 +14,9 @@ class Task extends Model
     // ステータスの定義
     const STATUS = [
         1 => ['status_name' => '未着手', 'status_class' => 'badge-danger'],
-        2 => ['status_name' => '着手中', 'status_class' => 'badge-info'],
-        3 => ['status_name' => '完了', 'status_class' => ''],
+        2 => ['status_name' => 'Prep済み', 'status_class' => 'badge-info'],
+        // 3 => ['status_name' => '着手中', 'status_class' => 'badge-info'],
+        4 => ['status_name' => '完了', 'status_class' => ''],
     ];
 
     // ロックをかけないカラム
