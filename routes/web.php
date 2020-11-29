@@ -24,7 +24,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/records', 'RecordController@index')->name('record.index');
+    Route::get('/records', 'RecordController@index')->name('records.index');
 
     // TaskController
     // タスク一覧
