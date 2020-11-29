@@ -43,18 +43,24 @@
                     <div class="navbar-nav">
                         @guest
                         {{-- 未ログイン --}}
-                            <a class="c-navbar__link navbar-item" href="{{ route('login') }}">ログイン</a>
+                            <a class="c-navbar__link navbar-item" href="{{ route('login') }}">
+                                <i class="fas fa-sign-in-alt mr-1" aria-hidden="true"></i>ログイン</a>
                             ｜
-                            <a class="c-navbar__link navbar-item" href="{{ route('register') }}">ユーザー登録</a>
+                            <a class="c-navbar__link navbar-item" href="{{ route('register') }}">
+                                <i class="fas fa-user-plus mr-1" aria-hidden="true"></i>ユーザー登録</a>
                         @else
                         {{-- ログイン後 --}}
                             {{-- <p class="c-navbar__item nav-item">こんにちは, {{ Auth::user()->name }}さん</p> --}}
                             {{-- ｜ --}}
-                            <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link">タスクリスト</a>
+                            <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link">
+                                <i class="fas fa-list-ul mr-1" aria-hidden="true"></i>タスクリスト</a>
+                            <a href="{{ route('records.index') }}" class="c-navbar__item nav-item nav-link">
+                                <i class="fas fa-medal mr-1" aria-hidden="true"></i>これまでの記録</a>
 
                             <a href="#" id="js-logout" class="c-navbar__link navbar-item nav-link" onclick="event.preventDefault();
-                            document.getElementById('js-logout-form').submit();">ログアウト</a>
-                            <form id="js-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            document.getElementById('js-logout-form').submit();">
+                            <i class="fas fa-sign-out-alt mr-1" aria-hidden="true"></i>ログアウト</a>
+                            <form id="js-logout-form mr-1" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                             </form>
                         @endguest

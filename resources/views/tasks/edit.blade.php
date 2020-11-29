@@ -57,6 +57,19 @@
                   value="{{ old('task_name') ?? $editing_task->task_name }}" />
         </div>
         <div class="form-group">
+          <label for="priority">優先度</label>
+          <select name="priority" id="priority" class="form-control">
+            @foreach(\App\Task::PRIORITY as $key => $val)
+              <option
+                  value="{{ $key }}"
+                  {{ $key == old('priority', $editing_task->priority) ? 'selected' : '' }}
+              >
+                {{ $val['priority_name'] }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+        <div class="form-group">
           <label for="status">ステータス</label>
           <select name="status" id="status" class="form-control">
             @foreach(\App\Task::STATUS as $key => $val)

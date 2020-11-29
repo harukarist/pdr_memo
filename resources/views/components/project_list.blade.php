@@ -2,7 +2,7 @@
   <section class="row justify-content-center">
     <div class="col-sm-8">
       <div class="card">
-        <div class="card-header">プロジェクト一覧</div>
+        <div class="card-header">プロジェクトの編集/削除</div>
         <div class="card-body">
           <table class="table">
             <tbody>
