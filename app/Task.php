@@ -14,13 +14,21 @@ class Task extends Model
     // ステータスの定義
     const STATUS = [
         1 => ['status_name' => '未着手', 'status_class' => 'badge-danger'],
-        2 => ['status_name' => 'Prep済み', 'status_class' => 'badge-info'],
-        // 3 => ['status_name' => '着手中', 'status_class' => 'badge-info'],
+        // 2 => ['status_name' => 'Prep済み', 'status_class' => 'badge-info'],
+        3 => ['status_name' => '着手中', 'status_class' => 'badge-info'],
         4 => ['status_name' => '完了', 'status_class' => ''],
     ];
 
+    // 優先度の定義
+    const PRIORITY = [
+        0 => ['priority_name' => 'なし', 'priority_class' => 'text-secondary'],
+        1 => ['priority_name' => '★', 'priority_class' => 'text-info'],
+        2 => ['priority_name' => '★★', 'priority_class' => 'text-success'],
+        3 => ['priority_name' => '★★★', 'priority_class' => 'text-danger'],
+    ];
+
     // ロックをかけないカラム
-    protected $fillable = ['task_name', 'project_id', 'due_date', 'status'];
+    protected $fillable = ['task_name', 'project_id', 'due_date', 'status','priority'];
 
     // リレーション先のレコードも論理削除
     protected static function boot()
@@ -60,6 +68,36 @@ class Task extends Model
 
         // 配列からステータス値をキーに探索して値を返す
         return self::STATUS[$status]['status_class'];
+    }
+
+    // 優先度
+    public function getPriorityNameAttribute()
+    {
+        // テーブルのステータス値を代入
+        $priority = $this->attributes['priority'];
+
+        // 定義されていなければ空文字を返す
+        if (!isset(self::PRIORITY[$priority])) {
+            return '';
+        }
+
+        // 配列からステータス値をキーに探索して値を返す
+        return self::PRIORITY[$priority]['priority_name'];
+    }
+
+    // ステータスに対応するクラスの返却
+    public function getPriorityClassAttribute()
+    {
+        // テーブルのステータス値を代入
+        $priority = $this->attributes['priority'];
+
+        // 定義されていなければ空文字を返す
+        if (!isset(self::PRIORITY[$priority])) {
+            return '';
+        }
+
+        // 配列からステータス値をキーに探索して値を返す
+        return self::PRIORITY[$priority]['priority_class'];
     }
 
     // 日付のフォーマット
