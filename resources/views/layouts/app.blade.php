@@ -43,10 +43,9 @@
                     <div class="navbar-nav">
                         @guest
                         {{-- 未ログイン --}}
-                            <a class="c-navbar__link navbar-item" href="{{ route('login') }}">
+                            <a class="c-navbar__item nav-item nav-link" href="{{ route('login') }}">
                                 <i class="fas fa-sign-in-alt mr-1" aria-hidden="true"></i>ログイン</a>
-                            ｜
-                            <a class="c-navbar__link navbar-item" href="{{ route('register') }}">
+                            <a class="c-navbar__item nav-item nav-link" href="{{ route('register') }}">
                                 <i class="fas fa-user-plus mr-1" aria-hidden="true"></i>ユーザー登録</a>
                         @else
                         {{-- ログイン後 --}}
@@ -57,10 +56,10 @@
                             <a href="{{ route('records.index') }}" class="c-navbar__item nav-item nav-link">
                                 <i class="fas fa-medal mr-1" aria-hidden="true"></i>これまでの記録</a>
 
-                            <a href="#" id="js-logout" class="c-navbar__link navbar-item nav-link" onclick="event.preventDefault();
+                            <a href="{{ route('logout') }}" id="js-logout" class="c-navbar__link navbar-item nav-link" onclick="event.preventDefault();
                             document.getElementById('js-logout-form').submit();">
                             <i class="fas fa-sign-out-alt mr-1" aria-hidden="true"></i>ログアウト</a>
-                            <form id="js-logout-form mr-1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form id="js-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                             </form>
                         @endguest
