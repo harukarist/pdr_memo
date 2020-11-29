@@ -39,7 +39,7 @@ class RecordController extends Controller
             ->leftJoin('preps', 'preps.id', '=', 'reviews.prep_id')
             ->leftJoin('tasks', 'tasks.id', '=', 'preps.task_id')
             ->leftJoin('projects', 'projects.id', '=', 'tasks.project_id')
-            ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.created_at,INTERVAL -3 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'review_text', 'actual_time', 'reviews.category_id')
+            ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.created_at,INTERVAL -3 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'status', 'review_text', 'actual_time', 'reviews.category_id')
             ->orderBy('target_date', 'DESC')
             ->where('preps.user_id', $user_id)
             ->where('reviews.deleted_at', null)
@@ -59,6 +59,7 @@ class RecordController extends Controller
             if (empty($lists)) {
                 $lists[$dn]['target_date'] = $value->target_date;
                 $lists[$dn]['tasks'][$tn]['task_name'] = $value->task_name;
+                $lists[$dn]['tasks'][$tn]['task_status'] = $value->status;
             } else {
                 // 日付が違う場合は日付と前日の合計時間を出力
                 if ($before_date != $value->target_date) {
@@ -73,6 +74,7 @@ class RecordController extends Controller
                     $tn++;
                     // echo ('■' . $value->task_name . '<br>');
                     $lists[$dn]['tasks'][$tn]['task_name'] = $value->task_name;
+                    $lists[$dn]['tasks'][$tn]['task_status'] = $value->status;
                 }
                 // 最後の要素の場合は合計時間を出力
                 if ($index === $lastIndex) {
@@ -97,7 +99,8 @@ class RecordController extends Controller
             $tmp = 0;
         }
         $category = self::CATEGORY;
-        // dd($lists);
+
+        // dd($lists,$lists[0]['tasks'][0]['task_status'],$lists[0]['target_date']);
 
         // //    $lists = Auth::user()->tasks()->whereYear('created_at', '2020')
         // //     ->whereMonth('created_at', '11')

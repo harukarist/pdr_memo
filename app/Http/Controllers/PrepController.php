@@ -40,6 +40,8 @@ class PrepController extends Controller
         $prep = new Prep();
         $prep->task_id = $task_id;
         Auth::user()->preps()->save($prep->fill($request->all()));
+        // タスクのステータスを更新
+        Auth::user()->tasks()->find($task_id)->update(['status' => 2]);
 
         // 一覧画面にリダイレクト
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '計画を登録しました');
@@ -76,9 +78,12 @@ class PrepController extends Controller
     public function delete(int $project_id, int $task_id, int $prep_id)
     {
         // リクエストで受け取ったIDのPrepを削除
-        Auth::user()->tasks()->find($task_id)->preps()->find($prep_id)->delete();
+        $current_task = Auth::user()->tasks()->find($task_id);
+        $current_task->preps()->find($prep_id)->delete();
+        $current_task->update(['status' => 1]);
         // Prep::find($prep_id)->delete();
         // Prep::destroy($prep_id);
+        // タスクのステータスを更新
 
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '計画を削除しました');
     }
