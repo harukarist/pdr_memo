@@ -15,9 +15,36 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function list()
+    {
+        $user_id = Auth::id();
+        $tasks = Project::with('tasks.preps.reviews')->where('projects.user_id', $user_id)->get();
+        return response()->json(
+            [
+                'tasks' => $tasks,
+            ],
+            200,
+            [],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+    
+    public function done(int $task_id, Request $request)
+    {
+        $current_task = Auth::user()->tasks()->find($task_id);
+        $current_task->update(['status' => 4]);
+    }
+    public function undone(int $task_id, Request $request)
+    {
+        $current_task = Auth::user()->tasks()->find($task_id);
+        $current_task->update(['status' => 3]);
+    }
+      
+
     // タスク一覧表示
     public function index(int $project_id)
     {
+
         // ログインユーザーに紐づくプロジェクトを取得
         $projects = Auth::user()->projects()->get();
 
@@ -25,7 +52,7 @@ class TaskController extends Controller
         $current_project = Auth::user()->projects()->find($project_id);
 
         // プロジェクトが存在しない場合はホーム画面へリダイレクト
-        if(empty($current_project)){
+        if (empty($current_project)) {
             return view('home');
         }
         $tasks = $current_project->tasks()->orderBy('updated_at', 'desc')->paginate(10);
@@ -41,7 +68,7 @@ class TaskController extends Controller
         $remained_hours = 0;
         $remained_steps = 0;
 
-        if ($tasks->count()) {
+        // if ($tasks->count()) {
             // ログインユーザIDを取得
             $user_id = Auth::getUser()->id;
             $tasklist = $current_project->tasks()->get();
@@ -57,10 +84,10 @@ class TaskController extends Controller
             $counter = [
                 'reviewed_count' => $records->count('actual_time'),
                 'reviewed_hours' => round(($records->sum('actual_time')) / 60, 1),
-                'completed_count' => $tasklist->where('status','=', 4)->count(),
-                'doing_count' => $tasklist->where('status','=', 3)->count(),
-                'prepped_count' => $tasklist->where('status','=', 2)->count(),
-                'waiting_count' => $tasklist->where('status','=', 1)->count(),
+                'completed_count' => $tasklist->where('status', '=', 4)->count(),
+                'doing_count' => $tasklist->where('status', '=', 3)->count(),
+                'prepped_count' => $tasklist->where('status', '=', 2)->count(),
+                'waiting_count' => $tasklist->where('status', '=', 1)->count(),
             ];
 
 
@@ -102,10 +129,9 @@ class TaskController extends Controller
             if ($remained_minutes) {
                 $remained_hours = round(($remained_minutes) / 60, 1);
             }
-        }
-
+        // }
         // プロジェクトデータと現在のプロジェクトIDをビューテンプレートに返却
-        return view('tasks.index', compact('projects', 'current_project','tasks', 'counter', 'remained_hours', 'remained_steps'));
+        return view('tasks.index', compact('projects', 'current_project', 'tasks', 'counter', 'remained_hours', 'remained_steps'));
     }
 
     // タスク作成画面を表示
