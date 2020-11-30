@@ -36,11 +36,18 @@ class ProjectController extends Controller
     {
         // Projectモデルのインスタンスを作成する
         $project = new Project();
+        $project->fill($request->all());
+        
+        // $project_name = $request->project_name;
+        // $project->category_id = $request->category_id;
+
         // ログインユーザーに紐づけて保存
-        Auth::user()->projects()->save($project->fill($request->all()));
+        // Auth::user()->projects()->save($project->fill($request->all()));
+        Auth::user()->projects()->save($project);
 
         // そのプロジェクトのタスク一覧画面にリダイレクト
-        return redirect()->route('tasks.index', ['project_id' => $project->id])->with('flash_message', 'プロジェクトを作成しました');
+        // return redirect()->route('tasks.index', ['project_id' => $project->id])->with('flash_message', 'プロジェクトを作成しました');
+        return redirect()->route('projects.create')->with('flash_message', 'プロジェクトを作成しました');
     }
 
     // プロジェクト編集画面を表示
