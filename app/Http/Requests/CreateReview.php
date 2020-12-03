@@ -29,8 +29,10 @@ class CreateReview extends FormRequest
             'problem_text' => 'max:1000',
             'try_text' => 'max:1000',
             'actual_time' => 'required|min:0|numeric|digits_between:1, 3',
-            'step_counter' => 'required|min:1|numeric|digits_between:1, 3',
             'category_id' =>  'required|min:1|numeric',
+            'flow_level' =>  'required|min:1|numeric|between:1,5',
+            'started_date' =>  'required|date',
+            'started_time' =>  'required|date_format:H:i',
         ];
     }
 }

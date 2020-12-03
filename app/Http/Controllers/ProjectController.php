@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
-    // ステータスの定義
-    const CATEGORY = [
-        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-light'],
-        2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-light'],
-        3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-light'],
-    ];
 
     // プロジェクト作成画面
     public function showCreateForm()
@@ -25,9 +19,9 @@ class ProjectController extends Controller
         $projects = Auth::user()->projects()->get();
         // $categories = Auth::user()->categories()->get();
 
-        $categories = self::CATEGORY;
 
-        return view('projects.create', compact('projects', 'categories'));
+
+        return view('projects.create', compact('projects',));
     }
 
     // プロジェクトの作成
@@ -37,7 +31,7 @@ class ProjectController extends Controller
         // Projectモデルのインスタンスを作成する
         $project = new Project();
         $project->fill($request->all());
-        
+
         // $project_name = $request->project_name;
         // $project->category_id = $request->category_id;
 
@@ -46,8 +40,7 @@ class ProjectController extends Controller
         Auth::user()->projects()->save($project);
 
         // そのプロジェクトのタスク一覧画面にリダイレクト
-        // return redirect()->route('tasks.index', ['project_id' => $project->id])->with('flash_message', 'プロジェクトを作成しました');
-        return redirect()->route('projects.create')->with('flash_message', 'プロジェクトを作成しました');
+        return redirect()->route('tasks.index', ['project_id' => $project->id])->with('flash_message', 'プロジェクトを作成しました');
     }
 
     // プロジェクト編集画面を表示
@@ -57,13 +50,13 @@ class ProjectController extends Controller
         $edit_project = Auth::user()->projects()->find($project_id);
         // $categories = Auth::user()->categories()->get();
 
-        $categories = self::CATEGORY;
+
 
         // ログインユーザーに紐づくプロジェクトを取得
         if ($edit_project) {
             $projects = Auth::user()->projects()->get();
 
-            return view('projects.edit', compact('edit_project', 'projects', 'categories'));
+            return view('projects.edit', compact('edit_project', 'projects',));
         } else {
             return redirect()->route('home');
         }
@@ -79,7 +72,7 @@ class ProjectController extends Controller
         Auth::user()->projects()->save($project->fill($request->all()));
 
         // 編集対象のプロジェクトが属するプロジェクトのプロジェクト一覧にリダイレクト
-        return redirect()->route('projects.edit', ['project_id' => $project_id])->with('flash_message', 'プロジェクトを変更しました');
+        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', 'プロジェクトを変更しました');
     }
 
     // プロジェクト削除処理

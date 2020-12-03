@@ -28,7 +28,7 @@ class Task extends Model
     ];
 
     // ロックをかけないカラム
-    protected $fillable = ['task_name', 'project_id', 'due_date', 'status','priority'];
+    protected $fillable = ['task_name', 'due_date', 'status', 'priority'];
 
     // リレーション先のレコードも論理削除
     protected static function boot()
@@ -106,11 +106,14 @@ class Task extends Model
         return Carbon::parse($value)->format("m/d H:i");
     }
     // 期限日の整形
-    // public function getFormattedDueDateAttribute()
-    // {
-    //     return Carbon::createFromFormat('Y-m-d', $this->attributes['due_date'])
-    //         ->format('Y/m/d');
-    // }
+    public function getFormattedDueDateAttribute()
+    {
+        if ($this->attributes['due_date']) {
+            setlocale(LC_ALL, 'ja_JP.UTF-8');
+            return Carbon::createFromFormat('Y-m-d', $this->attributes['due_date'])
+                ->formatLocalized('%m/%d(%a)');
+        }
+    }
 
     // リレーション
     public function project()

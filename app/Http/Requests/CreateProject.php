@@ -25,8 +25,9 @@ class CreateProject extends FormRequest
     public function rules()
     {
         return [
-            // 入力必須
             'project_name' => 'required|max:191',
+            'project_color' => 'required',
+            'project_target' =>  'max:191',
             'category_id' =>  'required|min:1|numeric',
         ];
     }

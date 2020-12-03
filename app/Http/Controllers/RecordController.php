@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use App\Review;
+use App\Project;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -11,11 +13,6 @@ use Illuminate\Support\Facades\Date;
 
 class RecordController extends Controller
 {
-    const CATEGORY = [
-        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-light'],
-        2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-light'],
-        3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-light'],
-    ];
 
     // 記録一覧表示
     public function index()
@@ -39,9 +36,9 @@ class RecordController extends Controller
             ->leftJoin('preps', 'preps.id', '=', 'reviews.prep_id')
             ->leftJoin('tasks', 'tasks.id', '=', 'preps.task_id')
             ->leftJoin('projects', 'projects.id', '=', 'tasks.project_id')
-            ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.created_at,INTERVAL -3 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'status', 'review_text', 'actual_time', 'reviews.category_id')
+            ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'status', 'review_text', 'actual_time', 'reviews.category_id')
             ->orderBy('target_date', 'DESC')
-            ->where('preps.user_id', $user_id)
+            ->where('projects.user_id', $user_id)
             ->where('reviews.deleted_at', null)
             ->where('tasks.deleted_at', null)
             ->get();
@@ -54,18 +51,25 @@ class RecordController extends Controller
         $dn = 0;
         $tn = 0;
         $lastIndex = count($dones) - 1;
+
+        // dd($dones);
         foreach ($dones as $index => $value) {
             // 最初の要素の場合は日付とタスク名を出力
             if (empty($lists)) {
                 $lists[$dn]['target_date'] = $value->target_date;
                 $lists[$dn]['tasks'][$tn]['task_name'] = $value->task_name;
                 $lists[$dn]['tasks'][$tn]['task_status'] = $value->status;
+                $before_date = $value->target_date;
+                $before_task = $value->task_name;
             } else {
-                // 日付が違う場合は日付と前日の合計時間を出力
+                // 日付が違う場合は日付,タスクと、前日の合計時間を出力
                 if ($before_date != $value->target_date) {
                     $dn++;
+                    $tn = 0;
                     // echo ($value->target_date . '<br>');
                     $lists[$dn]['target_date'] = $value->target_date;
+                    $lists[$dn]['tasks'][$tn]['task_name'] = $value->task_name;
+                    $lists[$dn]['tasks'][$tn]['task_status'] = $value->status;
                     $lists[$dn - 1]['total_time'] = $cnt;
                     $cnt = [];
                 }
@@ -78,7 +82,10 @@ class RecordController extends Controller
                 }
                 // 最後の要素の場合は合計時間を出力
                 if ($index === $lastIndex) {
-                    $cnt[$value->category_id] = $cnt[$value->category_id] + $value->actual_time;
+                    if (isset($cnt[$value->category_id])) {
+                        $tmp = $cnt[$value->category_id];
+                    }
+                    $cnt[$value->category_id] =  $tmp + $value->actual_time;
                     $lists[$dn]['total_time'] = $cnt;
                 }
             }
@@ -87,7 +94,7 @@ class RecordController extends Controller
                 'actual_time' => $value->actual_time,
                 // 'review_text' => mb_substr($value->review_text, 0, 50),
                 'review_text' => $value->review_text,
-                'category' => self::CATEGORY[$value->category_id],
+                'category' => Project::CATEGORIES[$value->category_id],
             ];
             // echo (mb_substr($value->review_text, 0, 50) . '<br>');
             $before_date = $value->target_date;
@@ -98,9 +105,9 @@ class RecordController extends Controller
             $cnt[$value->category_id] =  $tmp + $value->actual_time;
             $tmp = 0;
         }
-        $category = self::CATEGORY;
+        $category = Project::CATEGORIES;
 
-        // dd($lists,$lists[0]['tasks'][0]['task_status'],$lists[0]['target_date']);
+        // dd($dones, $lists, $lists[0]['tasks'][0]['task_status'], $lists[0]['target_date']);
 
         // //    $lists = Auth::user()->tasks()->whereYear('created_at', '2020')
         // //     ->whereMonth('created_at', '11')

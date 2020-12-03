@@ -25,7 +25,8 @@ class CreateTask extends FormRequest
     {
         return [
             'task_name' => 'required|max:191',
-            // 'due_date' => 'required|date|after_or_equal:today',
+            'due_date' => 'nullable|date',
+            'priority' =>  'min:0|numeric|between:0,3',
         ];
     }
 
@@ -34,6 +35,7 @@ class CreateTask extends FormRequest
         return [
             'task_name' => 'タスク名',
             'due_date' => '期限日',
+            'priority' => '優先度',
         ];
     }
 

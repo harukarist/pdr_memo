@@ -11,14 +11,14 @@ class Project extends Model
     use SoftDeletes;
 
     // ステータスの定義
-    const CATEGORY = [
-        1 => ['category_name' => 'Input', 'category_class' => 'badge-light'],
-        2 => ['category_name' => 'Output', 'category_class' => 'badge-light'],
-        3 => ['category_name' => 'Etc', 'category_class' => 'badge-light'],
+    const CATEGORIES = [
+        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-light'],
+        2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-light'],
+        3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-light'],
     ];
 
     // ロックをかけないカラム
-    protected $fillable = ['project_name', 'category_id'];
+    protected $fillable = ['project_name', 'project_color', 'project_target', 'category_id'];
 
     // リレーション先のレコードも論理削除
     protected static function boot()

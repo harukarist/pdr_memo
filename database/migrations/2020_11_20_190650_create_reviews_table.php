@@ -19,8 +19,9 @@ class CreateReviewsTable extends Migration
             $table->text('good_text')->nullable();
             $table->text('problem_text')->nullable();
             $table->text('try_text')->nullable();
+            $table->integer('flow_level');
+            $table->dateTime('started_at');
             $table->integer('actual_time');
-            $table->integer('step_counter');
             $table->bigInteger('prep_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();
             $table->timestamps();

@@ -11,6 +11,10 @@ class Prep extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
+    // フォーム選択肢の定義
+    const UNIT_TIME = ['5', '15', '25', '30', '45', '60'];
+    const ESTIMATED_STEPS = ['1', '2', '3', '4', '5'];
+
     // リレーション先のレコードも論理削除
     protected static function boot()
     {

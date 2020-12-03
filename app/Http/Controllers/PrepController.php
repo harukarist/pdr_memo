@@ -6,6 +6,7 @@ use App\Prep;
 use App\Task;
 use App\Project;
 use App\Category;
+use Carbon\Carbon;
 use App\Http\Requests\EditPrep;
 use App\Http\Requests\CreatePrep;
 use App\Http\Controllers\Controller;
@@ -13,12 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PrepController extends Controller
 {
-    // ステータスの定義
-    const CATEGORY = [
-        1 => ['id' => 1, 'category_name' => 'Input', 'category_class' => 'badge-light'],
-        2 => ['id' => 2, 'category_name' => 'Output', 'category_class' => 'badge-light'],
-        3 => ['id' => 3, 'category_name' => 'Etc', 'category_class' => 'badge-light'],
-    ];
 
     // Prep登録画面を表示
     public function showCreateForm(int $project_id, int $task_id)
@@ -26,12 +21,8 @@ class PrepController extends Controller
         // ログインユーザーに紐づくタスク、カテゴリーを取得
         $tasks = Auth::user()->tasks()->get();
         $current_task = Auth::user()->tasks()->find($task_id);
-        $categories = self::CATEGORY;
 
-        $unit_times = ['45', '60', '5', '15'];
-        $estimated_steps = [2, 3, 4, 5];
-
-        return view('preps.create', compact('tasks', 'current_task', 'categories', 'unit_times', 'estimated_steps'));
+        return view('preps.create', compact('tasks', 'current_task'));
     }
 
     // Prep登録処理
@@ -54,12 +45,7 @@ class PrepController extends Controller
         $current_task = Auth::user()->tasks()->find($task_id);
         $editing_prep = $current_task->preps()->find($prep_id);
 
-        // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
-        $categories = self::CATEGORY;
-        $unit_times = ['30', '45', '60', '5', '15'];
-        $estimated_steps = [1, 2, 3, 4, 5];
-
-        return view('preps.edit', compact('editing_prep', 'categories', 'unit_times', 'estimated_steps', 'current_task'));
+        return view('preps.edit', compact('editing_prep', 'current_task'));
     }
 
     // Prep編集処理
@@ -98,13 +84,12 @@ class PrepController extends Controller
 
         // 該当タスクのステータスを着手中に変更
         $current_task->update(['status' => 3]);
-
-        // 該当Prepに紐づくReviewの個数をカウント
-        $review_count = $do_prep->reviews->max('step_counter') + 1;
-        // dd($do_prep,$current_task, $review_count);
+        // 開始日時を記録
+        $started_at = Carbon::now();
+        session(['started_at' => $started_at]);
 
         // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
-        return view('preps.do', compact('do_prep', 'current_task', 'review_count'));
+        return view('preps.do', compact('do_prep', 'current_task', 'started_at'));
     }
 
     // Do完了処理
@@ -113,7 +98,7 @@ class PrepController extends Controller
         // 該当タスクの実行カウンタを1インクリメント
         Auth::user()->tasks()->find($task_id)->increment('done_count');
 
-        // 削除対象のPrepが属するPrepのPrep一覧にリダイレクト
+        // Review入力画面にリダイレクト
         return redirect()->route('reviews.create', ['project_id' => $project_id, 'task_id' => $task_id, 'prep_id' => $prep_id])->with('flash_message', 'ステップを1つ達成しました！振り返りを行いましょう！');
     }
 }
