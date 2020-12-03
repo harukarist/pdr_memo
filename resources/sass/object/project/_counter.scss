@@ -1,0 +1,7 @@
+.p-counter {
+  &__number {
+    font-size: 1rem;
+    font-weight: bold;
+    color: $font-color--main;
+  }
+}

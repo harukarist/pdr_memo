@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-  <div class="container py-4">
+  <div class="container c-container">
     <h5 class="mb-4">タスクを修正する</h5>
     {{-- 削除ボタン --}}
     <div class="p-delete text-right">
@@ -39,7 +39,8 @@
       </div>
       </form>
     </div>
-    <div class="form_edit">
+
+    <div class="c-form__wrapper">
       @if($errors->any())
         <div class="alert alert-danger">
           @foreach($errors->all() as $message)
@@ -58,7 +59,7 @@
         </div>
         <div class="form-group">
           <label for="priority">優先度</label>
-          <select name="priority" id="priority" class="form-control">
+          <select name="priority" id="priority" class="form-control  @error('priority') is-invalid @enderror">
             @foreach(\App\Task::PRIORITY as $key => $val)
               <option
                   value="{{ $key }}"
@@ -68,6 +69,10 @@
               </option>
             @endforeach
           </select>
+        </div>
+        <div class="form-group">
+          <label for="due_date">期限</label>
+          <input type="date" id="due_date" class="form-control @error('due_date') is-invalid @enderror" name="due_date" value="{{ old('due_date') ?? $editing_task->due_date  }}">
         </div>
         <div class="form-group">
           <label for="status">ステータス</label>
@@ -82,11 +87,7 @@
             @endforeach
           </select>
         </div>
-        {{-- <div class="form-group">
-          <label for="due_date">期限</label>
-          <input type="text" class="form-control" name="due_date" id="due_date"
-                  value="{{ old('due_date') ?? $editing_task->formatted_due_date }}" />
-        </div> --}}
+          
         <div class="text-right">
           <button type="submit" class="btn btn-primary">送信</button>
         </div>

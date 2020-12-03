@@ -2,61 +2,10 @@
 
 @section('content')
 <div class="container c-container">
-  <h5 class="mb-4">振り返る</h5>
-    <!-- プログレスバー -->
-    <div class="progressbar__wrapper">
-      <ul class="progressbar">
-        <li class="active">Prep</li>
-        <li class="active">Do</li>
-        <li class="active">Review</li>
-      </ul>
-    </div>
-    <!-- ガイド -->
-    <section class="mb-4">
-      <div class="border bg-white p-3 mb-3">
-        <div class="p-guide__wrapper d-flex">
-          {{-- チェックボックス --}}
-          <div class="p-guide__checkbox mr-2">
-            @if($current_task->status == 4)
-            <i class="far fa-check-square icon-checkbox" aria-hidden="true"></i>
-            @else
-            <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
-            @endif
-          </div>
-          <div class="p-guide__contents text-justify p-0">
-            <div class="p-guide__taskname">
-              <h6 class="d-inline align-middle">
-                {{ $current_task->task_name }}</h6>
-              <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
-            </div>
-            @forelse($current_task->preps as $prep)
-              <div class="p-guide__prep-detail py-2">
-                <small>
-                  Prep-{{ $loop->iteration }}
-                  <mark class="mr-2">
-                  {{ $prep->unit_time }}分 × 
-                  {{ $prep->estimated_steps }} ＝
-                  {{ ($prep->unit_time)*($prep->estimated_steps) }}分
-                  </mark>
-                  <span class="badge badge-light">{{ $prep->category->category_name }}</span>
-                </small>
-              </div>
-              <div class="p-guide__prep-text">
-                {!! nl2br(e($prep->prep_text)) !!}
-              </div>
-            @empty
-            @endforelse
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
-        <p class="p-guide__text">{{ $done_count }}回目おつかれさまでした！結果を振り返ってみましょう。</p>
-      </div>
-    </section>
+  <h5 class="mb-4">記録を追加</h5>
 
   <section class="mb-4">
-    <!-- Review入力フォーム -->
-    <form method="POST" action="{{ route('reviews.create', ['project_id' => $current_task->project_id,'task_id' => $current_task->id,'prep_id' => $done_prep->id ]) }}">
+    <form method="POST" action="{{ route('reviews.add') }}">
     @csrf
 
       {{-- バリデーションエラー --}}
@@ -69,23 +18,61 @@
         </ul>
       </div>
       @endif
+
+      <div class="form-group">
+        <label for="project_id">プロジェクト</label>
+        <select id="project_id" class="form-control @error('project_id') is-invalid @enderror" name="project_id">
+          @foreach($projects as $project)
+            <option value="{{ $project->id }}" @if(old('project_id') === $project->id) selected @endif>{{ $project->project_name }}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="task_name">タスク名</label>
+        <input type="text" class="form-control" name="task_name" id="task_name" value="{{ old('task_name') }}" />
+      </div>
+
+      <div class="form-group">
+        <label for="prep_text">行った準備</label>
+        <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text">{{ old('prep_text') }}</textarea>
+      </div>
+
+      <!-- 予定時間・ステップ数 -->
+      <div class="form-inline mb-4">
+        <div class="form-group col-6">
+          <label for="unit_time" class="pr-2">単位時間</label>
+          <select id="unit_time" class="form-control @error('unit_time') is-invalid @enderror" name="unit_time">
+            @foreach(\App\Prep::UNIT_TIME as $unit_time)
+              <option value="{{ $unit_time }}" @if(old('unit_time') === $unit_time) selected @elseif($unit_time === '30') selected @endif>{{ $unit_time }} 分</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="form-group col-6">
+          <label for="estimated_steps" class="pr-2">予想ステップ数</label>
+          <select id="estimated_steps" class="form-control @error('estimated_steps') is-invalid @enderror" name="estimated_steps">
+            @foreach(\App\Prep::ESTIMATED_STEPS as $step)
+            <option value="{{ $step }}" @if(old('estimated_steps') === $step ) selected @elseif($step === 1) selected @endif>{{ $step }}回</option>
+            @endforeach
+          </select>
+        </div>
+      </div>
       
-      <!-- Reviewテキストエリア -->
       <!-- 実行時間 -->
       <div class="form-inline row mb-4">
         <div class="form-group col-auto">
           <label for="started_at" class="pr-2">開始</label>
           <div class="input-group">
-            <input type="date" class="form-control @error('started_date') is-invalid @enderror" id="started_date" name="started_date" value="{{ old('started_date') ?? $started_date }}" />
+            <input type="date" class="form-control @error('started_date') is-invalid @enderror" id="started_date" name="started_date" value="{{ old('started_date')}}" />
           </div>
           <div class="input-group">
-            <input type="time" class="form-control @error('started_time') is-invalid @enderror" id="started_time" name="started_time" value="{{ old('started_time') ?? $started_time }}" />
+            <input type="time" class="form-control @error('started_time') is-invalid @enderror" id="started_time" name="started_time" value="{{ old('started_time') }}" />
           </div>
         </div>
         <div class="form-group col-auto">
-          <label for="actual_time" class="pr-2">行った時間</label>
+          <label for="actual_time" class="pr-2">実際に行った時間</label>
           <div class="input-group">
-            <input type="tel" class="form-control @error('actual_time') is-invalid @enderror" id="actual_time" name="actual_time" value="{{ old('actual_time') ?? $actual_time }}" />
+            <input type="tel" class="form-control @error('actual_time') is-invalid @enderror" id="actual_time" name="actual_time" value="{{ old('actual_time') }}" />
             <div class="input-group-append">
               <span class="input-group-text">分間</span>
             </div>
@@ -132,7 +119,7 @@
           <textarea id="try_text" class="form-control" name="try_text">{{ old('try_text') }}</textarea>
         </div>
       </div>
-  
+
       <div class="form-inline row mb-4">
         <!-- カテゴリー -->
         <div class="form-group form-inline col-auto mb-3">
@@ -140,7 +127,7 @@
           <div class="pl-3">
             <div class="form-check form-check-inline">
               @forelse(\App\Project::CATEGORIES as $category)
-                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $done_prep->category_id == $category['id']) checked @endif>
+                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id']) checked @endif>
                 <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
                   <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
                 </label>
@@ -152,10 +139,8 @@
 
         {{-- タスクを完了に切り替え --}}
         <div class="form-check col-auto mb-4 ml-4">
-          <span class="d-flex">
-          <input class="form-check-input align-self-center" type="checkbox" name="task_completed" id="task_completed" @if(old('task_completed') === 'on') checked @endif>
-          <label class="form-check-label align-self-center" for="task_completed">タスクを完了済みにする</label>
-          </span>
+          <input class="form-check-input" type="checkbox" name="task_completed" id="task_completed" checked>
+          <label class="form-check-label" for="task_completed">タスクを完了済みにする</label>
         </div>
       </div>
 

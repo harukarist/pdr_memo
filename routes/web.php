@@ -18,21 +18,27 @@
 // })->where('any', '.*');
 
 Route::get('/', function () {
-    return view('guest');
+    if (empty(Auth::user())) {
+        return view('guest');
+    } else {
+        return redirect('/home');
+    }
 });
 
 Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/records', 'RecordController@index')->name('records.index');
+    Route::get('/list', 'TaskController@list');
 
     // TaskController
     // タスク一覧
     Route::get('/projects/{project_id}/tasks', 'TaskController@index')->name('tasks.index');
+    // 完了済みタスク一覧
+    Route::get('/projects/{project_id}/tasks/done', 'TaskController@index')->name('tasks.done');
     // タスク作成
-    Route::get('/projects/{project_id}/tasks/create', 'TaskController@showCreateForm')->name('tasks.create');
-    Route::post('/projects/{project_id}/tasks/create', 'TaskController@create');
-    Route::post('/projects/{project_id}/tasks', 'TaskController@taskAdd')->name('tasks.add');
+    Route::post('/projects/{project_id}/tasks', 'TaskController@create')->name('tasks.create');
+    // Route::post('/projects/{project_id}/tasks', 'TaskController@taskAdd')->name('tasks.add');
     // タスク編集
     Route::get('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@showEditForm')->name('tasks.edit');
     Route::patch('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@edit');
@@ -64,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Do
     Route::get('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/do', 'PrepController@showDoForm')->name('preps.do');
-    Route::get('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/done', 'PrepController@done')->name('preps.done');
+    Route::post('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/done', 'PrepController@done')->name('preps.done');
 
     // ReviewController
     // Review作成
@@ -73,8 +79,11 @@ Route::group(['middleware' => 'auth'], function () {
     // Review編集
     Route::get('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/edit', 'ReviewController@showEditForm')->name('reviews.edit');
     Route::patch('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/edit', 'ReviewController@edit');
-    // Prep削除
+    // Review削除
     Route::delete('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/delete', 'ReviewController@delete')->name('reviews.delete');
+    // 記録の追加
+    Route::get('/reviews/add', 'ReviewController@showAddForm')->name('reviews.add');
+    Route::post('/reviews/add', 'ReviewController@add');
 });
 
 // 会員登録・ログイン・ログアウト・パスワード再設定

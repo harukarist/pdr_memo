@@ -79,5 +79,7 @@
             {{-- <router-view></router-view> --}}
         </main>
     </div>
+
+    @yield('scripts')
 </body>
 </html>

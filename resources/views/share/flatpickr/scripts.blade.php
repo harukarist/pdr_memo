@@ -1,9 +1,5 @@
-<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="jquery.datetimepicker.js"></script>
 <script>
-  flatpickr(document.getElementById('due_date'), {
-    locale: 'ja',
-    dateFormat: "Y/m/d",
-    minDate: new Date()
-  });
+$('#datetimepicker').datetimepicker();
 </script>

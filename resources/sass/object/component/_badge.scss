@@ -1,0 +1,8 @@
+.c-badge {
+  &__category {
+    background: $bg-color--main;
+    color: $font-color--white;
+    font-family: $font-family--default;
+    font-weight: normal;
+  }
+}

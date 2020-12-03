@@ -1,13 +1,24 @@
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+// // Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
-@import 'progressbar';
-@import 'navbar';
-@import 'record';
-@import 'form';
+
+// Base
+@import 'base';
+
+// Component
+@import 'object/component/container';
+@import 'object/component/heading';
+@import 'object/component/form';
+@import 'object/component/badge';
+
+// Project
+@import 'object/project/navbar';
+@import 'object/project/progressbar';
+@import 'object/project/record';
+@import 'object/project/counter';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';

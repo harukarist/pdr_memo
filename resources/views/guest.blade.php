@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="jumbotron jumbotron-fluid">
-  <div class="container py-6 text-center">
+  <div class="container c-container__fluid text-center">
     <h3 class="mb-4">記録と振り返りを力に変えよう！</h3>
 
     <p>PDR-memo は、ハーバードビジネススクールで提唱されている<br>

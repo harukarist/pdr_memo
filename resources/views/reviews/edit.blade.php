@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
+<div class="container c-container">
   <h5 class="mb-4">振り返りを編集する</h5>
   <!-- プログレスバー -->
   <div class="progressbar__wrapper">
@@ -98,6 +98,39 @@
       @endif
 
       <!-- Reviewテキストエリア -->
+      <!-- 実行時間 -->
+      <div class="form-inline row mb-4">
+        <div class="form-group col-auto">
+          <label for="started_at" class="pr-2">開始</label>
+          <div class="input-group">
+            <input type="date" class="form-control @error('started_date') is-invalid @enderror" id="started_date" name="started_date" value="{{ old('started_date') ?? $started_date }}" />
+          </div>
+          <div class="input-group">
+            <input type="time" class="form-control @error('started_time') is-invalid @enderror" id="started_time" name="started_time" value="{{ old('started_time') ?? $started_time }}" />
+          </div>
+        </div>
+        <div class="form-group col-auto">
+          <label for="actual_time" class="pr-2">行った時間</label>
+          <div class="input-group">
+            <input type="tel" class="form-control @error('actual_time') is-invalid @enderror" id="actual_time" name="actual_time" value="{{ old('actual_time') ?? $editing_review->actual_time }}" />
+            <div class="input-group-append">
+              <span class="input-group-text">分間</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-inline row mb-4">
+        <div class="form-group col-auto">
+          <label for="flow_level" class="pr-2">集中度</label>
+          <select id="flow_level" class="form-control @error('flow_level') is-invalid @enderror" name="flow_level">
+            @foreach(\App\Review::FLOW_LEVEL as $flow_level)
+              <option value="{{ $flow_level['value'] }}" @if(old('flow_level') === $flow_level['value']) selected @elseif($editing_review->flow_level === $flow_level['value']) selected @endif>{{ $flow_level['value'].'：'.$flow_level['level_name'] }}</option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="review_text">振り返り</label>
         <textarea id="review_text" class="form-control @error('review_text') is-invalid @enderror" name="review_text">{{ old('review_text') ?? $editing_review->review_text }}</textarea>
@@ -125,38 +158,17 @@
           <textarea id="try_text" class="form-control" name="try_text">{{ old('try_text') ?? $editing_review->try_text}}</textarea>
         </div>
       </div>
-  
-      <!-- 実行時間 -->
-      <div class="form-inline row mb-4">
-        <div class="form-group col-6">
-          <label for="actual_time" class="pr-2">実際に行った時間</label>
-          <div class="input-group">
-            <input type="tel" class="form-control @error('actual_time') is-invalid @enderror" id="actual_time" name="actual_time" value="{{ old('actual_time') ?? $editing_review->actual_time }}" />
-            <div class="input-group-append">
-              <span class="input-group-text">分間</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group col-6">
-          <label for="step_counter" class="pr-2">ステップ数</label>
-          <div class="input-group">
-            <input type="tel" class="form-control @error('step_counter') is-invalid @enderror" id="step_counter" name="step_counter" value="{{ old('step_counter') ?? $editing_review->step_counter }}" />
-            <div class="input-group-append">
-              <span class="input-group-text">回目</span>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div class="form-inline row mb-4">
         <!-- カテゴリー -->
         <div class="form-group form-inline col-auto mb-3">
           <label for="category_id" class="mb-0">カテゴリー</label>
           <div class="pl-3">
             <div class="form-check form-check-inline">
-              @forelse($categories as $category)
+              @forelse(\App\Project::CATEGORIES as $category)
                 <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $editing_review->category_id == $category['id']) checked @endif>
-                <label class="form-check-label pr-4" for="{{ $category['id'] }}">
-                  <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
+                <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
+                  <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
                 </label>
               @empty
               @endforelse
@@ -166,8 +178,9 @@
 
         {{-- タスクを完了に切り替え --}}
         <div class="form-check col-auto mb-4 ml-4">
-          <input class="form-check-input" type="checkbox" name="task_completed" id="task_completed">
-          <label class="form-check-label" for="task_completed">タスクを完了済みにする</label>
+          <span class="d-flex">
+          <input class="form-check-input align-self-center" type="checkbox" name="task_completed" id="task_completed" @if(old('task_completed') === 'on' || $current_task->status == 4 ) checked @endif>
+          <label class="form-check-label align-self-center" for="task_completed">タスクを完了済みにする</label>
         </div>
       </div>
 

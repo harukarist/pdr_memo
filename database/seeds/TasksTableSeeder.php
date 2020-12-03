@@ -13,12 +13,14 @@ class TasksTableSeeder extends Seeder
      */
     public function run()
     {
+        $project = DB::table('projects')->first();
+
         foreach (range(1, 4) as $num) {
             DB::table('tasks')->insert([
                 'task_name' => "サンプルタスク {$num}",
-                'project_id' => 1,
-                'status' => $num,
                 'due_date' => Carbon::now()->addDay($num),
+                'status' => $num,
+                'project_id' => $project->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

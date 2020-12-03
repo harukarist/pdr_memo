@@ -58,15 +58,15 @@ $font-family--default: 'Nunito Sans','Noto Sans JP', "游ゴシック", YuGothic
 // base
 // ==================================
 html, body {
-  width: 100vw;
-  box-sizing: border-box;
+  // width: 100vw;
+  // box-sizing: border-box;
   font-family: $font-family--default;
   font-size: $font-size--default;
   line-height: 1.6;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-size-adjust: 100%;
-  color: $font-color--default;
-  background: $bg-color--white;
+  // color: $font-color--default;
+  // background: $bg-color--white;
 }
 
 p, a {
@@ -93,19 +93,25 @@ ul {
   list-style-type: none;
 }
 
+mark {
+  background-color:#ff9;
+  color:#000;
+  font-style:normal;
+  font-weight:bold;
+}
 // ==================================
 // フォームのデフォルトスタイルをリセット
 // ==================================
-input, button, textarea, select {
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: none;
-  border-radius: 0;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  font-family: inherit;
-  font-size: 100%;
-}
+// input, button, textarea, select {
+//   margin: 0;
+//   padding: 0;
+//   background: none;
+//   border: none;
+//   border-radius: 0;
+//   outline: none;
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+//   font-family: inherit;
+//   font-size: 100%;
+// }

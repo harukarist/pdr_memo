@@ -21,4 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/list', 'TaskController@list');
+
+// タスク完了
+Route::put('/tasks/{task_id}/done', 'TaskController@done');
+// タスク未完了
+Route::put('/tasks/{task_id}/undone', 'TaskController@undone');
+
+
 // Route::get('/projects/{project_id}/tasks', 'TaskController@index');

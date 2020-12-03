@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container py-4">
+  <div class="container c-container">
     <h5 class="mb-4">準備する</h5>
     <!-- プログレスバー -->
     <div class="progressbar__wrapper">
@@ -74,7 +74,7 @@
             <label for="unit_time" class="pr-2">単位時間</label>
             <select id="unit_time" class="form-control @error('unit_time') is-invalid @enderror" name="unit_time">
               <option value="30" @empty(old('unit_time')) selected @endempty>30 分</option>
-              @foreach($unit_times as $unit_time)
+              @foreach(\App\Prep::UNIT_TIME as $unit_time)
                 <option value="{{ $unit_time }}" @if(old('unit_time') == $unit_time) selected @endif>{{ $unit_time }} 分</option>
               @endforeach
             </select>
@@ -83,7 +83,7 @@
             <label for="estimated_steps" class="pr-2">ステップ数</label>
             <select id="estimated_steps" class="form-control @error('estimated_steps') is-invalid @enderror" name="estimated_steps">
               <option value="1" @empty(old('estimated_steps')) selected @endempty>1 回</option>
-              @foreach($estimated_steps as $step)
+              @foreach(\App\Prep::ESTIMATED_STEPS as $step)
               <option value="{{ $step }}" @if(old('estimated_steps')== $step) selected @endif>{{ $step }}回</option>
               @endforeach
             </select>
@@ -95,10 +95,10 @@
           <label for="category_id" class="mb-0">カテゴリー</label>
           <div class="pl-3">
             <div class="form-check form-check-inline">
-              @forelse($categories as $category)
+              @forelse(\App\Project::CATEGORIES as $category)
                 <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $current_task->project->category_id == $category['id'] ) checked @endif>
-                <label class="form-check-label pr-4" for="{{ $category['id'] }}">
-                  <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
+                <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
+                  <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
                 </label>
               @empty
               @endforelse

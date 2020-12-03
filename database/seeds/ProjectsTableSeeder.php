@@ -20,6 +20,7 @@ class ProjectsTableSeeder extends Seeder
         foreach ($names as $name) {
             DB::table('projects')->insert([
                 'project_name' => $name,
+                'color_code' => '6cb2eb',
                 'user_id' => $user->id,
                 'category_id' => $category->id,
                 'created_at' => Carbon::now(),

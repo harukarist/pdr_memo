@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
+<div class="container c-container">
   <h5 class="mb-4">これまでの記録</h5>
 
   <section class="mb-5">
+    <a href="{{ route('reviews.add') }}" class="btn btn-outline-secondary btn-block mb-4">
+      記録を追加
+    </a>
     @forelse($lists as $list)
     <div class="p-record__wrapper mb-4">
       <div class="p-record__date border-bottom mb-4 px-2 d-flex">
@@ -30,6 +33,7 @@
               <span>{{ $task['task_name'] ?? '' }}</span>
             </div>
             <div class="p-record__reviews px-4 py-2">
+              @if(!empty($task['reviews']))
               @forelse($task['reviews'] as $review)
               <p>
                 {!! nl2br(e($review['review_text'])) ?? '' !!}<br>
@@ -38,6 +42,7 @@
               </p>  
               @empty
               @endforelse
+              @endif
             </div>
           @endif
         @empty

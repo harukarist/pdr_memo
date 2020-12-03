@@ -1,9 +1,10 @@
 // Body
-$body-bg: #f8fafc;
+// $body-bg: #f8fafc;
+$body-bg: #F4F4F4;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
+// $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
@@ -17,13 +18,9 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+$light-gray: #b6bdc2;
 
 // fontawesome
 $fa-font-path: "../webfonts";
 
-mark {
-  background-color:#ff9;
-  color:#000;
-  font-style:normal;
-  font-weight:bold;
-}
+

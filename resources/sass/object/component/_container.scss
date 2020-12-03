@@ -1,3 +1,10 @@
 .c-container {
-  max-width: $site-width;
+  // max-width: $site-width;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  &__fluid{
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
 }

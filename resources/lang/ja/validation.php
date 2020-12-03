@@ -158,7 +158,6 @@ return [
         'problem_text' => '課題・改善点',
         'try_text' => '次回の工夫',
         'actual_time' => '実際に行った時間',
-        'step_counter' => 'ステップ数',
     ],
 
 ];

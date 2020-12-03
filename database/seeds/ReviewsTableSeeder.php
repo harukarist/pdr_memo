@@ -22,12 +22,12 @@ class ReviewsTableSeeder extends Seeder
                 'good_text' => "goodテキスト{$num}",
                 'problem_text' => "problemテキスト{$num}",
                 'try_text' => "tryテキスト{$num}",
+                'started_at' => Carbon::now(),
                 'actual_time' => 35,
-                'step_counter' => $num,
                 'prep_id' => $prep->id,
                 'category_id' => $category->id,
-                'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now(),
             ]);
         }
     }

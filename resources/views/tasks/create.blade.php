@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-  <div class="container py-4">
+  <div class="container c-container">
     <div class="row">
       <div class="col col-md-offset-3 col-md-6">
         <div class="card">
@@ -27,10 +27,10 @@
                 <label for="task_name">タスク名</label>
                 <input type="text" class="form-control" name="task_name" id="task_name" value="{{ old('task_name') }}" />
               </div>
-              {{-- <div class="form-group">
+              <div class="form-group">
                 <label for="due_date">期限</label>
                 <input type="text" class="form-control" name="due_date" id="due_date" value="{{ old('due_date') }}" />
-              </div> --}}
+              </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>
               </div>
