@@ -16,7 +16,18 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('project_name');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('category_id')->unsigned();
             $table->timestamps(); //created_at, updated_at
+
+            // 外部キーを設定する
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')
+            ->onUpdate('cascade')->onDelete('restrict');
+
+            // ソフトデリートを定義
+            $table->softDeletes();
         });
     }
 

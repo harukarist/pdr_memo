@@ -15,10 +15,24 @@ class CreatePrepsTable extends Migration
     {
         Schema::create('preps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('prep_text')->nullable()->default('');
+            $table->text('prep_text')->nullable();
             $table->integer('unit_time');
             $table->integer('estimated_steps');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('task_id')->unsigned();
+            $table->bigInteger('category_id')->unsigned();
             $table->timestamps();
+
+            // 外部キーを設定
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks')
+                ->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('category_id')->references('id')->on('categories')
+                ->onUpdate('cascade')->onDelete('restrict');
+
+            // ソフトデリートを定義
+            $table->softDeletes();
         });
     }
 

@@ -16,13 +16,19 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('task_name');
-            $table->bigInteger('project_id')->unsigned();
             $table->date('due_date')->nullable();
             $table->integer('status')->default(1);
+            $table->integer('priority')->default(0);
             $table->integer('done_count')->default(0);
+            $table->bigInteger('project_id')->unsigned();
             $table->timestamps();
-            // 外部キーの設定
-            $table->foreign('project_id')->references('id')->on('projects');
+            
+            // 外部キーをcascadeオプションありで設定する
+            $table->foreign('project_id')->references('id')->on('projects')
+            ->onDelete('cascade')->onUpdate('cascade');
+
+            // ソフトデリートを定義
+            $table->softDeletes();
         });
     }
 
