@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Prep;
-use App\Task;
-use App\Project;
-use App\Category;
 use Carbon\Carbon;
 use App\Http\Requests\EditPrep;
 use App\Http\Requests\CreatePrep;

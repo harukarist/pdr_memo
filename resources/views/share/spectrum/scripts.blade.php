@@ -1,4 +1,4 @@
-{{-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-ja.min.js"></script>
 <script>
@@ -46,16 +46,3 @@
     });
   });
 </script>
-
-
-
-
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/i18n/jquery.spectrum-ja.min.js"></script>
-<script>
-jQuery(function($){
-
-  });
-});
-
-</script> --}}

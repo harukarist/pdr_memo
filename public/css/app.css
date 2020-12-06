@@ -179,6 +179,85 @@ mark {
   color: #695B52;
 }
 
+.calendar table {
+  table-layout: fixed;
+}
+
+.calendar table th {
+  text-align: center;
+  border: solid 1px #999;
+}
+
+.calendar table td {
+  padding: 0px;
+  border: solid 1px #999;
+  width: 150px;
+  height: 80px;
+  font-size: 14pt;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.calendar table td.day-reviewed {
+  background-color: #A09791;
+}
+
+.calendar table td.day-today {
+  background-color: #BEB7B3;
+}
+
+.calendar table td.day-blank {
+  background-color: #efefef;
+}
+
+.calendar table td:before {
+  display: block;
+  float: left;
+  height: 50px;
+  content: "";
+}
+
+.calendar table td a {
+  padding: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: #444444;
+}
+
+.calendar table td a:hover {
+  background-color: #BEB7B3;
+  text-decoration: none;
+}
+
+.calendar table td.day-sun .day {
+  color: red;
+}
+
+.calendar table td.day-sat .day {
+  color: blue;
+}
+
+.calendar table td.day-holiday .day {
+  color: red;
+}
+
+.calendar table td .day {
+  margin-bottom: 0;
+}
+
+.calendar table td .review-hour {
+  font-size: 16px;
+}
+
+.calendar table td .day-holiday .day-name {
+  font-size: 8px;
+  letter-spacing: 0em;
+  line-height: 1;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

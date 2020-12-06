@@ -28,8 +28,15 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
     Route::get('/home', 'HomeController@index')->name('home');
+
+    // RecordController
     Route::get('/records', 'RecordController@index')->name('records.index');
     Route::get('/list', 'TaskController@list');
+
+    // CalendarController
+    Route::get('/reports/weekly', 'WeeklyController@show')->name('reports.weekly');
+    Route::get('/reports/calendar', 'CalendarController@show')->name('reports.calendar');
+    Route::get('/reports/daily', 'WeeklyController@day')->name('reports.daily');
 
     // TaskController
     // タスク一覧
@@ -54,7 +61,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/projects/{project_id}/edit', 'ProjectController@edit');
     // プロジェクト削除
     Route::delete('/projects/{project_id}/delete', 'ProjectController@delete')->name('projects.delete');
-
 
     // PrepController
     // Prep作成

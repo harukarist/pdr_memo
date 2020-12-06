@@ -7,6 +7,7 @@ use App\Task;
 use App\Review;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Requests\AddReview;
 use App\Http\Requests\EditReview;
 use App\Http\Requests\CreateReview;
 use App\Http\Controllers\Controller;
@@ -23,19 +24,20 @@ class ReviewController extends Controller
         $done_prep = $current_task->preps()->find($prep_id);
 
         if ($request->session()->has('started_at')) {
-            // セッションの値を取得して破棄
-            $started_at = $request->session()->pull('started_at');
+            // セッションに記録した開始時刻の値を取得して破棄
+            $sa = $request->session()->pull('started_at');
         } else {
-            // セッションがない場合は現在時刻から予定単位時間を引いた時間
-            $started_at = $dt->copy()->subMinutes($done_prep->unit_time);
+            // セッションがない場合は現在時刻から予定単位時間を引いた時間を開始時間とする
+            $sa = $dt->copy()->subMinutes($done_prep->unit_time);
         }
-        $actual_time = $started_at->diffInMinutes($dt);
+        // 開始時刻を日付と時刻に分ける
+        $started_date = $sa->toDateString();
+        $started_time = $sa->format('H:i');
 
-        $started_date = $started_at->toDateString();
-        $started_time = $started_at->format('H:i');
+        // 現在時刻と開始時刻の差を実際にかかった時間とする
+        $actual_time = $sa->diffInMinutes($dt);
 
-
-
+        // タスク実行回数を取得
         $done_count = $current_task->done_count;
 
         return view('reviews.create', compact('done_prep', 'current_task',  'started_date', 'started_time', 'done_count', 'actual_time'));
@@ -77,12 +79,12 @@ class ReviewController extends Controller
 
         if (!empty($editing_review->started_at)) {
             $sa = new Carbon($editing_review->started_at);
-            $started_date = $sa->toDateString();
-            $started_time = $sa->format('H:i');
         } else {
             // 記録がない場合は現在時刻から予定単位時間を引いた時間
-            $started_at = Carbon::now()->subMinutes($editing_review->prep->unit_time);
+            $sa = Carbon::now()->subMinutes($editing_review->prep->unit_time);
         }
+        $started_date = $sa->toDateString();
+        $started_time = $sa->format('H:i');
 
         return view('reviews.edit', compact('editing_review', 'current_task',  'started_date', 'started_time'));
     }
@@ -95,10 +97,10 @@ class ReviewController extends Controller
         $current_prep = Auth::user()->preps()->find($prep_id);
 
         // 入力された日付、時刻からdateTimeを生成
-        $editing_review->started_at = Carbon::createFromFormat(
-            'Y-m-d H:i',
-            $request->started_date . ' ' . $request->started_time
-        );
+        // $editing_review->started_at = Carbon::createFromFormat(
+        //     'Y-m-d H:i',
+        //     $request->started_date . ' ' . $request->started_time
+        // );
 
         // 完了済みチェックがonの場合はタスクのステータスを4（完了）に切り替え
         if ($request->task_completed) {
@@ -130,11 +132,16 @@ class ReviewController extends Controller
         // ログインユーザーに紐づく該当IDのレコードを取得
         $projects = Auth::user()->projects()->get();
 
-        return view('reviews.add', compact('projects'));
+        $dt = Carbon::now();
+        // 開始時刻を日付と時刻に分ける
+        $started_date = $dt->toDateString();
+        $started_time = $dt->format('H:i');
+
+        return view('reviews.add', compact('projects','started_date','started_time'));
     }
 
     // 記録追加処理
-    public function add(CreateReview $request)
+    public function add(AddReview $request)
     {
         // 選択されたプロジェクトに紐づくタスクを作成
         $project = Auth::user()->projects()->find($request->project_id);

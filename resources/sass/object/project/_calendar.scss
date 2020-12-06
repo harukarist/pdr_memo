@@ -1,0 +1,76 @@
+.calendar table{
+	table-layout: fixed;
+	th {
+		text-align: center;
+		border: solid 1px #999;
+	}
+	td {	
+		padding: 0px;
+		border: solid 1px #999;
+		// background-color: #ccc;
+		width:150px;
+		height:80px;
+		font-size:14pt;
+		text-align: center;
+		vertical-align:middle;
+		overflow: hidden;
+		&.day-reviewed {
+			background-color: $bg-color--main;
+		}
+		&.day-today {
+			background-color: $bg-color--main-light;
+		}
+		&.day-blank {
+			background-color: #efefef;
+		}
+		&:before {
+			display: block;
+			float: left;
+			height: 50px;
+			content: "";
+		}
+		a {
+			padding: 0;
+			display: block;
+			width: 100%;
+			height: 100%;
+			text-decoration: none;
+			color: $font-color--default;
+			&:hover{
+				background-color: $bg-color--main-light;
+				text-decoration: none;
+			}
+		}
+		&.day-sun .day{
+			color:red;
+		}
+		&.day-sat .day{
+			color: blue;
+		}
+		&.day-holiday .day{
+			color:red;
+		}
+		.day {
+			margin-bottom: 0;
+		}
+		.review-hour {
+			font-size: 16px;
+		}
+		.day-holiday .day-name {
+			font-size: 8px;
+			letter-spacing: 0em;
+			line-height: 1.0;
+		}
+		
+	}
+}
+
+
+// .review-hour {
+// 	font-size: 16px;
+// }
+// .day-holiday .day-name {
+// 	font-size: 8px;
+// 	letter-spacing: 0em;
+// 	line-height: 1.0;
+// }

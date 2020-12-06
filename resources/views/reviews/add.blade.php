@@ -63,10 +63,10 @@
         <div class="form-group col-auto">
           <label for="started_at" class="pr-2">開始</label>
           <div class="input-group">
-            <input type="date" class="form-control @error('started_date') is-invalid @enderror" id="started_date" name="started_date" value="{{ old('started_date')}}" />
+            <input type="date" class="form-control @error('started_date') is-invalid @enderror" id="started_date" name="started_date" value="{{ old('started_date') ?? $started_date }}" />
           </div>
           <div class="input-group">
-            <input type="time" class="form-control @error('started_time') is-invalid @enderror" id="started_time" name="started_time" value="{{ old('started_time') }}" />
+            <input type="time" class="form-control @error('started_time') is-invalid @enderror" id="started_time" name="started_time" value="{{ old('started_time') ?? $started_time }}" />
           </div>
         </div>
         <div class="form-group col-auto">
@@ -127,9 +127,9 @@
           <div class="pl-3">
             <div class="form-check form-check-inline">
               @forelse(\App\Project::CATEGORIES as $category)
-                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id']) checked @endif>
-                <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
-                  <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
+                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id']||$category['id']==1) checked @endif>
+                <label class="form-check-label pr-4" for="{{ $category['id'] }}">
+                  <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
                 </label>
               @empty
               @endforelse

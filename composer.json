@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "ext-intl": "^7.4",
+        "azuyalabs/yasumi": "^2.3",
         "doctrine/dbal": "^2.12",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.18.35",

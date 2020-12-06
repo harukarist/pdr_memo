@@ -73,18 +73,16 @@
           <div class="form-group col-6">
             <label for="unit_time" class="pr-2">単位時間</label>
             <select id="unit_time" class="form-control @error('unit_time') is-invalid @enderror" name="unit_time">
-              <option value="30" @empty(old('unit_time')) selected @endempty>30 分</option>
               @foreach(\App\Prep::UNIT_TIME as $unit_time)
-                <option value="{{ $unit_time }}" @if(old('unit_time') == $unit_time) selected @endif>{{ $unit_time }} 分</option>
+                <option value="{{ $unit_time }}" @if(old('unit_time') == $unit_time || empty(old('unit_time')) && $unit_time == 30) selected @endif>{{ $unit_time }} 分</option>
               @endforeach
             </select>
           </div>
           <div class="form-group col-6">
             <label for="estimated_steps" class="pr-2">ステップ数</label>
             <select id="estimated_steps" class="form-control @error('estimated_steps') is-invalid @enderror" name="estimated_steps">
-              <option value="1" @empty(old('estimated_steps')) selected @endempty>1 回</option>
               @foreach(\App\Prep::ESTIMATED_STEPS as $step)
-              <option value="{{ $step }}" @if(old('estimated_steps')== $step) selected @endif>{{ $step }}回</option>
+              <option value="{{ $step }}" @if(old('estimated_steps') == $step || empty(old('estimated_steps')) && $step == 1) selected @endif>{{ $step }}回</option>
               @endforeach
             </select>
           </div>

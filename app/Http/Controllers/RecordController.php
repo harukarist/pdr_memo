@@ -25,12 +25,15 @@ class RecordController extends Controller
             ->join('preps', 'preps.id', '=', 'reviews.prep_id')
             ->join('tasks', 'tasks.id', '=', 'preps.task_id')
             ->select(
-                DB::raw('DATE_FORMAT(DATE_ADD(reviews.created_at,INTERVAL -3 HOUR),"%Y/%m/%d (%a)") as target_date'),
+                DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -2 HOUR),"%Y-%m-%d") as target_date'),
                 DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
             )
             ->where('preps.user_id', '=', $user_id)
+            ->whereYear('started_at', '=', '2020')
+            ->whereMonth('started_at', '=', '12')
             ->groupby('target_date')
             ->get();
+
 
         $dones = DB::table('reviews')
             ->leftJoin('preps', 'preps.id', '=', 'reviews.prep_id')
@@ -41,6 +44,8 @@ class RecordController extends Controller
             ->where('projects.user_id', $user_id)
             ->where('reviews.deleted_at', null)
             ->where('tasks.deleted_at', null)
+            ->whereYear('started_at', '=', '2020')
+            ->whereMonth('started_at', '=', '12')
             ->get();
 
         $lists = [];

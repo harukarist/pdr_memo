@@ -1,5 +1,10 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="jquery.datetimepicker.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
 <script>
-$('#datetimepicker').datetimepicker();
+  flatpickr(document.getElementById('flatpickr'), {
+    locale: 'ja',
+    dateFormat: "Y/m/d",
+    minDate: new Date()
+  });
 </script>

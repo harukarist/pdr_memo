@@ -149,6 +149,7 @@ return [
         'task_id' => 'タスク',
         'task_name' => 'タスク名',
         'due_date' => '期限日',
+        'priority' => '優先度',
         'status' => 'ステータス',
         'prep_text' => '準備',
         'unit_time' => '単位時間',
@@ -158,6 +159,8 @@ return [
         'problem_text' => '課題・改善点',
         'try_text' => '次回の工夫',
         'actual_time' => '実際に行った時間',
+        'started_date' => '開始日',
+        'started_time' => '開始時刻',
     ],
 
 ];

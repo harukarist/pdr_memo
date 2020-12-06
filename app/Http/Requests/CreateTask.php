@@ -29,21 +29,4 @@ class CreateTask extends FormRequest
             'priority' =>  'min:0|numeric|between:0,3',
         ];
     }
-
-    public function attributes()
-    {
-        return [
-            'task_name' => 'タスク名',
-            'due_date' => '期限日',
-            'priority' => '優先度',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            // キーでルールを指定（'項目.ルール'）
-            'due_date.after_or_equal' => ':attribute には今日以降の日付を入力してください。',
-        ];
-    }
 }

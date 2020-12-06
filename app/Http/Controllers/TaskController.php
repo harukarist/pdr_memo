@@ -32,16 +32,18 @@ class TaskController extends Controller
     // タスク一覧表示
     public function index(int $project_id, Request $request)
     {
+        // ログインユーザーに紐づくプロジェクトを取得
+        $projects = Auth::user()->projects()->get();
         // プロジェクトを取得
         $current_project = Auth::user()->projects()->find($project_id);
+
         // プロジェクトが存在しない場合はホーム画面へリダイレクト
         if (empty($current_project)) {
             return view('home');
         }
         // プロジェクトに紐づくタスクを取得
         $project_tasks = $current_project->tasks()->get();
-        // ログインユーザーに紐づくプロジェクトを取得
-        $projects = Auth::user()->projects()->get();
+
 
         if ($request->is('projects/*/tasks/done')) {
             $tasks = $current_project->tasks()->where('status', '=', '4')->orderBy('updated_at', 'desc')->paginate(15);
@@ -52,6 +54,8 @@ class TaskController extends Controller
             $has_done = false;
         }
 
+        // dd(isset($tasks),!empty($tasks),isset($tasks[0]),!empty($tasks[0]),count($tasks));
+        // $tasksが存在しない時、true, true, false, false, 0
 
         // $items = Auth::user()->preps()->select(DB::raw('DATE_FORMAT(preps.created_at,"%Y/%m/%d") as prepedday'), DB::raw('ROUND(SUM(preps.unit_time)/60,1) as hour'))->groupby('prepedday')->get();
         // $items = Auth::user()->tasks()->select(DB::raw('DATE_FORMAT(preps.created_at,"%Y/%m/%d") as prepedday'), DB::raw('ROUND(SUM(preps.unit_time)/60,1) as hour'))->groupby('prepedday')->get();
@@ -66,7 +70,8 @@ class TaskController extends Controller
 
         // if ($tasks->count()) {
         // ログインユーザIDを取得
-        $user_id = Auth::getUser()->id;
+        // $user_id = Auth::getUser()->id;
+        $user_id = Auth::id();
 
         // 達成回数
         $records = DB::table('reviews')
@@ -88,10 +93,10 @@ class TaskController extends Controller
 
 
         // 記録開始日
-        // $first_date = Auth::user()->tasks()->orderBy('tasks.created_at', 'asc')->first()->created_at;
-        // $dt = Carbon::tomorrow();
-        // $df = new Carbon($first_date);
-        // $days_count = $df->diffInDays($dt);
+        $first_date = Auth::user()->tasks()->orderBy('tasks.created_at', 'asc')->first()->created_at;
+        $dt = Carbon::tomorrow();
+        $df = new Carbon($first_date);
+        $days_count = $df->diffInDays($dt);
 
         // 今後の予定時間、予定ステップ数
         $tasks_ongoing = $project_tasks->where('status', '<', 4);

@@ -53,7 +53,7 @@
                             {{-- ｜ --}}
                             <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link">
                                 <i class="fas fa-list-ul mr-1" aria-hidden="true"></i>タスクリスト</a>
-                            <a href="{{ route('records.index') }}" class="c-navbar__item nav-item nav-link">
+                            <a href="{{ route('reports.weekly') }}" class="c-navbar__item nav-item nav-link">
                                 <i class="fas fa-medal mr-1" aria-hidden="true"></i>これまでの記録</a>
 
                             <a href="{{ route('logout') }}" id="js-logout" class="c-navbar__link navbar-item nav-link" onclick="event.preventDefault();
@@ -79,7 +79,5 @@
             {{-- <router-view></router-view> --}}
         </main>
     </div>
-
-    @yield('scripts')
 </body>
 </html>
