@@ -37,12 +37,12 @@ class Project extends Model
         $category_id = $this->attributes['category_id'];
 
         // 定義されていなければ空文字を返す
-        if (!isset(self::CATEGORY[$category_id])) {
+        if (!isset(self::CATEGORIES[$category_id])) {
             return '';
         }
 
         // 配列からステータス値をキーに探索して値を返す
-        return self::CATEGORY[$category_id]['category_name'];
+        return self::CATEGORIES[$category_id]['category_name'];
     }
 
     // ステータスに対応するクラスの返却
@@ -52,12 +52,12 @@ class Project extends Model
         $category_id = $this->attributes['category_id'];
 
         // 定義されていなければ空文字を返す
-        if (!isset(self::CATEGORY[$category_id])) {
+        if (!isset(self::CATEGORIES[$category_id])) {
             return '';
         }
 
         // 配列からステータス値をキーに探索して値を返す
-        return self::CATEGORY[$category_id]['category_class'];
+        return self::CATEGORIES[$category_id]['category_class'];
     }
 
 

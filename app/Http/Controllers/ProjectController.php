@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Project;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProject;
 use App\Http\Requests\EditProject;
@@ -11,17 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
-
     // プロジェクト作成画面
     public function showCreateForm()
     {
-        // ログインユーザーに紐づくプロジェクト、カテゴリーを取得
-        $projects = Auth::user()->projects()->get();
-        // $categories = Auth::user()->categories()->get();
-
-
-
-        return view('projects.create', compact('projects',));
+        return view('projects.create');
     }
 
     // プロジェクトの作成
@@ -30,14 +22,15 @@ class ProjectController extends Controller
     {
         // Projectモデルのインスタンスを作成する
         $project = new Project();
-        $project->fill($request->all());
-
+        
         // $project_name = $request->project_name;
         // $project->category_id = $request->category_id;
+        // Auth::user()->projects()->save($project);
+        
+        // $project->fill($request->all());
 
         // ログインユーザーに紐づけて保存
-        // Auth::user()->projects()->save($project->fill($request->all()));
-        Auth::user()->projects()->save($project);
+        Auth::user()->projects()->save($project->fill($request->all()));
 
         // そのプロジェクトのタスク一覧画面にリダイレクト
         return redirect()->route('tasks.index', ['project_id' => $project->id])->with('flash_message', 'プロジェクトを作成しました');
@@ -49,8 +42,6 @@ class ProjectController extends Controller
         // 該当のプロジェクトIDのデータを取得し、ビューテンプレートに返却
         $edit_project = Auth::user()->projects()->find($project_id);
         // $categories = Auth::user()->categories()->get();
-
-
 
         // ログインユーザーに紐づくプロジェクトを取得
         if ($edit_project) {
