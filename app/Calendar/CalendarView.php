@@ -160,7 +160,7 @@ class CalendarView
   /**
    * 次の月を取得
    */
-  public function getNextMonth()
+  public function getNext()
   {
     // addMonthsNoOverflow()で翌月の情報を取得
     return $this->carbon->copy()->addMonthsNoOverflow()->format('Y-m');
@@ -168,8 +168,15 @@ class CalendarView
   /**
    * 前の月を取得
    */
-  public function getPreviousMonth()
+  public function getPrevious()
   {
     return $this->carbon->copy()->subMonthsNoOverflow()->format('Y-m');
+  }
+  /**
+   * 選択中の日付を取得
+   */
+  public function getDate()
+  {
+    return $this->carbon->format('Y-m-d');
   }
 }

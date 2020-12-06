@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-  @include('share.spectrum.styles')
+  @include('plugins.spectrum.styles')
 @endsection
 
 @section('content')
@@ -63,5 +63,5 @@
 @endsection
 
 @section('scripts')
-  @include('share.spectrum.scripts')
+  @include('plugins.spectrum.scripts')
 @endsection

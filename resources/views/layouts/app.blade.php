@@ -17,8 +17,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
-    @yield('styles')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -79,5 +79,6 @@
             {{-- <router-view></router-view> --}}
         </main>
     </div>
+    @yield('scripts')
 </body>
 </html>

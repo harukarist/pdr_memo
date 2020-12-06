@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-  @include('share.flatpickr.styles')
+  @include('plugins.flatpickr.styles')
 @endsection
 
 @section('content')
@@ -43,5 +43,5 @@
 @endsection
 
 @section('scripts')
-  @include('share.flatpickr.scripts')
+  @include('plugins.flatpickr.scripts')
 @endsection

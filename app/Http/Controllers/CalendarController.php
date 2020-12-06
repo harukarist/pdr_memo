@@ -14,17 +14,14 @@ class CalendarController extends Controller
 {
   public function show(Request $request)
   {
-
     //Requestのinput()でクエリーのdateを受け取る
     $date = $request->input("date");
 
-    if ($date && preg_match("/^[0-9]{4}-[0-9]{2}$/", $date)) {
+    if ($date && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])$/", $date)) {
       //dateがYYYY-MMの場合はYYYY-MM-01に変換
       $date = $date . "-01";
-    } elseif ($date && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $date)) {
-      //dateがYYYY-MM-DDの場合はそのまま
-      $date = $date;
-    } else {
+    } elseif (!($date && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/", $date))) {
+      //dateがYYYY-MM-DDでない場合はnull
       $date = null;
     }
 

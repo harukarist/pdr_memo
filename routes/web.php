@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     // CalendarController
     Route::get('/reports/weekly', 'WeeklyController@show')->name('reports.weekly');
     Route::get('/reports/calendar', 'CalendarController@show')->name('reports.calendar');
-    Route::get('/reports/daily', 'WeeklyController@day')->name('reports.daily');
+    // Route::get('/reports/daily', 'WeeklyController@day')->name('reports.daily');
 
     // TaskController
     // タスク一覧
