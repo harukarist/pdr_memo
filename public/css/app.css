@@ -199,11 +199,23 @@ mark {
   overflow: hidden;
 }
 
+.calendar table td .day {
+  margin-bottom: 0;
+}
+
 .calendar table td.day-reviewed {
   background-color: #A09791;
 }
 
 .calendar table td.day-today {
+  background-color: #DEA585;
+}
+
+.calendar table td.day-today .day {
+  font-weight: bold;
+}
+
+.calendar table td.day-target {
   background-color: #BEB7B3;
 }
 
@@ -248,10 +260,6 @@ mark {
   font-size: 8px;
   letter-spacing: 0em;
   line-height: 1;
-}
-
-.calendar table td .day {
-  margin-bottom: 0;
 }
 
 .calendar table td .review-hour {
