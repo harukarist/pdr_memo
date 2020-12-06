@@ -22,6 +22,7 @@ class ReviewsTableSeeder extends Seeder
                 'good_text' => "goodテキスト{$num}",
                 'problem_text' => "problemテキスト{$num}",
                 'try_text' => "tryテキスト{$num}",
+                'flow_level' => $num,
                 'started_at' => Carbon::now(),
                 'actual_time' => 35,
                 'prep_id' => $prep->id,
