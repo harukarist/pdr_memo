@@ -18,15 +18,15 @@ class ProjectController extends Controller
 
     // プロジェクトの作成
     // FormRequestクラスでバリデーションチェック
-    public function create(CreateProject $request)
+    public function post(CreateProject $request)
     {
         // Projectモデルのインスタンスを作成する
         $project = new Project();
-        
+
         // $project_name = $request->project_name;
         // $project->category_id = $request->category_id;
         // Auth::user()->projects()->save($project);
-        
+
         // $project->fill($request->all());
 
         // ログインユーザーに紐づけて保存

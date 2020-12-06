@@ -9,7 +9,7 @@
     <h5 class="c-heading__title">プロジェクトの追加</h5>
     <div class="c-form__wrapper">
       {{-- 入力フォーム --}}
-      <form action="{{ route('projects.create') }}" method="post">
+      <form method="POST" action="{{ route('projects.post') }}">
         @csrf
           {{-- バリデーションエラー --}}
           @if($errors->any())

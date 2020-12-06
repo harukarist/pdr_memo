@@ -27,7 +27,7 @@ class CreateProject extends FormRequest
         return [
             'project_name' => 'required|max:191',
             'project_color' => 'required',
-            'project_target' =>  'max:191',
+            'project_target' =>  'nullable|max:191',
             'category_id' =>  'required|min:1|numeric',
         ];
     }

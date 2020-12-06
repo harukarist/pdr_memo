@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     // ProjectController
     // プロジェクト作成
     Route::get('/projects/create', 'ProjectController@showCreateForm')->name('projects.create');
-    Route::post('/projects/create', 'ProjectController@create');
+    Route::post('/projects/create', 'ProjectController@post')->name('projects.post');
     // プロジェクト編集
     Route::get('/projects/{project_id}/edit', 'ProjectController@showEditForm')->name('projects.edit');
     Route::patch('/projects/{project_id}/edit', 'ProjectController@edit');

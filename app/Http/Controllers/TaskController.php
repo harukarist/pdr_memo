@@ -28,85 +28,6 @@ class TaskController extends Controller
             JSON_UNESCAPED_UNICODE
         );
     }
-
-    public function summary($current_project)
-    {
-        $counter = [];
-        // ログインユーザIDを取得
-        $user_id = Auth::id();
-        // プロジェクトに紐づくタスクを取得
-        $project_tasks = $current_project->tasks()->orderBy('tasks.created_at', 'asc')->get();
-
-        // 該当プロジェクトに紐づく達成時間を取得
-        $records = DB::table('reviews')
-            ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-            ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-            ->select('actual_time')
-            ->where('preps.user_id', '=', $user_id)
-            ->where('tasks.project_id', '=', $current_project->id)
-            ->get();
-
-        // 達成時間の合計と回数、タスク件数を取得
-        $counter = [
-            'reviewed_count' => $records->count('actual_time'),
-            'reviewed_hours' => round(($records->sum('actual_time')) / 60, 1),
-            'completed_count' => $project_tasks->where('status', '=', 4)->count(),
-            'doing_count' => $project_tasks->where('status', '=', 3)->count(),
-            'prepped_count' => $project_tasks->where('status', '=', 2)->count(),
-            'waiting_count' => $project_tasks->where('status', '=', 1)->count(),
-        ];
-
-
-        // 記録開始日
-        if (count($project_tasks)) {
-            $first_date = $project_tasks->first()->created_at;
-            $dt = Carbon::tomorrow();
-            $df = new Carbon($first_date);
-            $counter['days_count'] = $df->diffInDays($dt);
-            $counter['first_date'] = $first_date;
-        } else {
-            $counter['days_count'] = 0;
-        }
-
-        // 今後の予定時間、予定ステップ数
-        $tasks_ongoing = $project_tasks->where('status', '<', 4);
-        $remained_minutes = 0;
-        $remained_steps = 0;
-        if (isset($tasks_ongoing)) {
-            foreach ($tasks_ongoing as $task) {
-                // 各Prepの残り時間、残り回数を計算
-                $done_minutes = 0;
-                $done_steps = 0;
-                // echo ($task->task_name . '<br>');
-                if (isset($task->preps)) {
-                    foreach ($task->preps as $prep) {
-                        // Prepの予想時間
-                        $prep_minutes = ($prep->unit_time) * ($prep->estimated_steps);
-                        if (isset($prep->reviews)) {
-                            foreach ($prep->reviews as $review) {
-                                // Prepの実行済み時間、実行回数
-                                $done_minutes = $done_minutes + $review->actual_time;
-                                $done_steps = $done_steps + 1;
-                                // echo ('実行回数' . $done_steps . ' ');
-                                // echo ('実行時間' . $done_minutes . '<br>');
-                            }
-                        }
-                        $remained_minutes = $remained_minutes + ($prep_minutes - $done_minutes);
-                        $remained_steps = $remained_steps + ($prep->estimated_steps - $done_steps);
-                    }
-                }
-            }
-        }
-        if ($remained_minutes) {
-            $counter['remained_hours'] = round(($remained_minutes) / 60, 1);
-            $counter['remained_steps'] = $remained_steps;
-        } else {
-            $counter['remained_hours'] = 0;
-            $counter['remained_steps'] = 0;
-        }
-        return $counter;
-    }
-
     // タスク一覧表示
     public function index(int $project_id, Request $request)
     {
@@ -191,7 +112,7 @@ class TaskController extends Controller
         $task->save();
 
         // 編集対象のタスクが属するプロジェクトのタスク一覧にリダイレクト
-        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', 'タスクを変更しました');
+        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('content_flash_message', 'タスクを変更しました');
     }
 
     // タスク削除処理
@@ -202,6 +123,86 @@ class TaskController extends Controller
         Task::destroy($task_id);
 
         // 削除対象のタスクが属するプロジェクトのタスク一覧にリダイレクト
-        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', 'タスクを削除しました');
+        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('content_flash_message', 'タスクを削除しました');
+    }
+
+
+    // サマリー表示
+    public function summary($current_project)
+    {
+        $counter = [];
+        // ログインユーザIDを取得
+        $user_id = Auth::id();
+        // プロジェクトに紐づくタスクを取得
+        $project_tasks = $current_project->tasks()->orderBy('tasks.created_at', 'asc')->get();
+
+        // 該当プロジェクトに紐づく達成時間を取得
+        $records = DB::table('reviews')
+            ->join('preps', 'preps.id', '=', 'reviews.prep_id')
+            ->join('tasks', 'tasks.id', '=', 'preps.task_id')
+            ->select('actual_time')
+            ->where('preps.user_id', '=', $user_id)
+            ->where('tasks.project_id', '=', $current_project->id)
+            ->get();
+
+        // 達成時間の合計と回数、タスク件数を取得
+        $counter = [
+            'reviewed_count' => $records->count('actual_time'),
+            'reviewed_hours' => round(($records->sum('actual_time')) / 60, 1),
+            'completed_count' => $project_tasks->where('status', '=', 4)->count(),
+            'doing_count' => $project_tasks->where('status', '=', 3)->count(),
+            'prepped_count' => $project_tasks->where('status', '=', 2)->count(),
+            'waiting_count' => $project_tasks->where('status', '=', 1)->count(),
+        ];
+
+
+        // 記録開始日
+        if (count($project_tasks)) {
+            $first_date = $project_tasks->first()->created_at;
+            $dt = Carbon::tomorrow();
+            $df = new Carbon($first_date);
+            $counter['days_count'] = $df->diffInDays($dt);
+            $counter['first_date'] = $first_date;
+        } else {
+            $counter['days_count'] = 0;
+        }
+
+        // 今後の予定時間、予定ステップ数
+        $tasks_ongoing = $project_tasks->where('status', '<', 4);
+        $remained_minutes = 0;
+        $remained_steps = 0;
+        if (isset($tasks_ongoing)) {
+            foreach ($tasks_ongoing as $task) {
+                // 各Prepの残り時間、残り回数を計算
+                $done_minutes = 0;
+                $done_steps = 0;
+                // echo ($task->task_name . '<br>');
+                if (isset($task->preps)) {
+                    foreach ($task->preps as $prep) {
+                        // Prepの予想時間
+                        $prep_minutes = ($prep->unit_time) * ($prep->estimated_steps);
+                        if (isset($prep->reviews)) {
+                            foreach ($prep->reviews as $review) {
+                                // Prepの実行済み時間、実行回数
+                                $done_minutes = $done_minutes + $review->actual_time;
+                                $done_steps = $done_steps + 1;
+                                // echo ('実行回数' . $done_steps . ' ');
+                                // echo ('実行時間' . $done_minutes . '<br>');
+                            }
+                        }
+                        $remained_minutes = $remained_minutes + ($prep_minutes - $done_minutes);
+                        $remained_steps = $remained_steps + ($prep->estimated_steps - $done_steps);
+                    }
+                }
+            }
+        }
+        if ($remained_minutes) {
+            $counter['remained_hours'] = round(($remained_minutes) / 60, 1);
+            $counter['remained_steps'] = $remained_steps;
+        } else {
+            $counter['remained_hours'] = 0;
+            $counter['remained_steps'] = 0;
+        }
+        return $counter;
     }
 }
