@@ -78,6 +78,7 @@ class WeeklyView extends CalendarView
     $html[] = '</table>';
     $html[] = '</div>';
 
+    // 配列の要素を空文字で連結
     return implode("", $html);
   }
   /**
@@ -90,6 +91,8 @@ class WeeklyView extends CalendarView
     $week->holidays = $this->holidays;
     $week->path = $this->path;
     $week->today = $this->today;
+    $week->target_day = $this->carbon->copy();
+
     $week->reviews = $this->reviews;
     return $week;
   }

@@ -141,15 +141,18 @@ class CalendarView
   // 週を作成
   protected function getWeek(Carbon $date, $index = 0)
   {
+    // 週の開始日と週番号を渡して週を作成
     $week = new CalendarWeek($date, $index);
     $week->holidays = $this->holidays;
     $week->path = $this->path;
     $week->today = $this->today;
+    $week->target_day = $this->carbon->copy();
 
     // 週の開始日〜終了日を取得
     $start = $date->copy()->startOfWeek()->format("Ymd");
     $end = $date->copy()->endOfWeek()->format("Ymd");
 
+    // 週オブジェクトに該当週のレビュー情報をセット
     $week->reviews = $this->reviews->filter(
       function ($value, $key) use ($start, $end) {
         return $key >= $start && $key <= $end;

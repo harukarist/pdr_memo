@@ -17,6 +17,7 @@ class CalendarWeek
 	public $reviews = [];
 	public $path = null;
 	public $today;
+	public $target_day;
 
 	function __construct($date, $index = 0)
 	{
@@ -79,6 +80,7 @@ class CalendarWeek
 		// 休日判定
 		$day->checkHoliday($setting);
 		$day->checkToday($this->today);
+		$day->checkTarget($this->target_day);
 
 		// 該当日の休日情報があれば渡す
 		if (isset($this->holidays[$day->getDateKey()])) {

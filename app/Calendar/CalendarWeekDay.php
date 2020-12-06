@@ -11,6 +11,7 @@ class CalendarWeekDay
   protected $carbon;
   protected $isHoliday = false;
   protected $isToday = false;
+  protected $isTarget = false;
   public $holidayName = null;
   public $review = null;
   public $path = null;
@@ -42,6 +43,13 @@ class CalendarWeekDay
       $this->isToday = true;
     }
   }
+  // 指定日かどうかを判定
+  function checkTarget($date)
+  {
+    if ($this->carbon->format("Ymd") === $date->format("Ymd")) {
+      $this->isTarget = true;
+    }
+  }
 
   // CSSクラス名を出力
   function getClassName()
@@ -58,6 +66,10 @@ class CalendarWeekDay
     // 今日の日付の場合
     if ($this->isToday) {
       $classNames[] = "day-today";
+    }
+    // 指定日の場合
+    if ($this->isTarget) {
+      $classNames[] = "day-target";
     }
     // レビューがある場合
     if ($this->review) {
