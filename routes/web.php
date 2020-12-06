@@ -45,7 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects/{project_id}/tasks/done', 'TaskController@index')->name('tasks.done');
     // タスク作成
     Route::post('/projects/{project_id}/tasks', 'TaskController@create')->name('tasks.create');
-    // Route::post('/projects/{project_id}/tasks', 'TaskController@taskAdd')->name('tasks.add');
     // タスク編集
     Route::get('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@showEditForm')->name('tasks.edit');
     Route::patch('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@edit');

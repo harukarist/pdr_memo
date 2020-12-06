@@ -20,12 +20,11 @@
        </div>
    </div>
 
+   {{-- PDR --}}
    <div class="row justify-content-center">
-       @include('reports.pdr_lists',['projects'=>$projects])
+       {{-- @include('reports.pdr_lists',['projects'=>$projects]) --}}
+       @include('reports.lists',['lists'=>$lists,'category'=>$category])
    </div>
 </div>
-{{-- PDR --}}
-
-{{-- @include('reports.lists',['lists'=>$lists,'category'=>$category]) --}}
 
 @endsection

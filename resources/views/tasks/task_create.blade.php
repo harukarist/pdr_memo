@@ -30,7 +30,7 @@
       </div>
       <div class="form-group form-inline col-auto">
         <label for="due_date">期限</label>
-        <input type="text" name="due_date" id="flatpickr" class="form-control ml-2" value="{{ old('due_date') }}">
+        {{-- <input type="text" name="due_date" id="flatpickr" class="form-control ml-2" value="{{ old('due_date') }}"> --}}
         <input type="date" name="due_date" id="due_date" class="form-control ml-2 @error('due_date') is-invalid @enderror" value="{{ old('due_date') }}">
 
       </div>
