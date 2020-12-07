@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Report;
 use App\Review;
 use App\Project;
 use Carbon\Carbon;
@@ -30,14 +31,13 @@ class CalendarController extends Controller
 
     // 指定月のカレンダーを生成
     $calendar = new CalendarView($date);
-    // 指定日の記録を表示
-    $report = new ReportView($date);
-    $lists = $report->getDailyList();
 
-    $category = Project::CATEGORIES;
+    // タスク一覧を取得
+    $report = new Report($date);
+    $lists = $report->getReviewsWithDay();
 
 
     // 作成したオブジェクトをViewに渡す
-    return view('reports.calendar', compact('calendar', 'lists', 'category'));
+    return view('reports.calendar', compact('calendar', 'lists'));
   }
 }

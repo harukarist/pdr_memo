@@ -49,4 +49,8 @@ class Prep extends Model
     {
         return $this->hasMany('App\Review');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

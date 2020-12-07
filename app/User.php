@@ -51,11 +51,10 @@ class User extends Authenticatable
     }
     public function reviews()
     {
-        return $this->hasManyThrough('App\Review', 'App\Prep');
+        return $this->hasMany('App\Review');
     }
     public function categories()
     {
         return $this->hasMany('App\Category');
     }
-
 }

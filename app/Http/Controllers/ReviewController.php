@@ -137,7 +137,7 @@ class ReviewController extends Controller
         $started_date = $dt->toDateString();
         $started_time = $dt->format('H:i');
 
-        return view('reviews.add', compact('projects','started_date','started_time'));
+        return view('reviews.add', compact('projects', 'started_date', 'started_time'));
     }
 
     // 記録追加処理
@@ -178,6 +178,6 @@ class ReviewController extends Controller
             $task->update(['status' => 3]);
         }
         // 一覧画面にリダイレクト
-        return redirect()->route('records.index')->with('flash_message', '記録を追加しました');
+        return redirect()->route('reports.calendar')->with('flash_message', '記録を追加しました');
     }
 }

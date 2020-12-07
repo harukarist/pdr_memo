@@ -29,14 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
     Route::get('/home', 'HomeController@index')->name('home');
 
-    // RecordController
-    Route::get('/records', 'RecordController@index')->name('records.index');
-    Route::get('/list', 'TaskController@list');
-
-    // CalendarController
-    Route::get('/reports/weekly', 'WeeklyController@show')->name('reports.weekly');
+    // 記録一覧
+    Route::get('/reports/weekly', 'WeeklyController@showWeekly')->name('reports.weekly');
+    Route::get('/reports/daily', 'WeeklyController@showDaily')->name('reports.daily');
     Route::get('/reports/calendar', 'CalendarController@show')->name('reports.calendar');
-    // Route::get('/reports/daily', 'WeeklyController@day')->name('reports.daily');
 
     // TaskController
     // タスク一覧

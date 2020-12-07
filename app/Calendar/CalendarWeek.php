@@ -15,6 +15,7 @@ class CalendarWeek
 
 	public $holidays = [];
 	public $reviews = [];
+	public $totals = [];
 	public $path = null;
 	public $today;
 	public $target_day;
@@ -82,15 +83,33 @@ class CalendarWeek
 		$day->checkToday($this->today);
 		$day->checkTarget($this->target_day);
 
+		// 日付のキーを取得
+		$date_key = $day->getDateKey();
+
 		// 該当日の休日情報があれば渡す
-		if (isset($this->holidays[$day->getDateKey()])) {
-			$day->holidayName = $this->holidays[$day->getDateKey()];
+		if (isset($this->holidays[$date_key])) {
+			$day->holidayName = $this->holidays[$date_key];
 		}
 		// 該当日のレビュー情報があれば渡す
-		if (isset($this->reviews[$day->getDateKey()])) {
-			$day->review = $this->reviews[$day->getDateKey()];
+		if (isset($this->reviews)) {
+			foreach ($this->reviews as $category_id => $review) {
+				// 該当日のレコードがあればセット
+				if (isset($review[$date_key])) {
+					$day->reviews[$category_id] = $review[$date_key];
+					// echo($id);
+				}
+			}
 		}
-
+		if (isset($this->totals)) {
+			foreach ($this->totals as $key => $val) {
+				// echo($val->hour);
+				// 該当日のレコードがあればセット
+				if ($key == $date_key) {
+					$day->total_hour = $val->hour;
+					$day->flow_level = $val->flow_level;
+				}
+			}
+		}
 		return $day;
 	}
 }

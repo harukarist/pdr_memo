@@ -4,7 +4,6 @@ namespace App\Calendar;
 use Carbon\Carbon;
 use App\Calendar\HolidaySetting;
 use App\Calendar\CalendarWeekDay;
-use App\Calendar\CalendarWeekBlankDay;
 
 // 週のカレンダーを出力
 class WeeklyWeek extends CalendarWeek

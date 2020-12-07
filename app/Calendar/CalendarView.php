@@ -2,17 +2,18 @@
 // 名前空間を設定
 namespace App\Calendar;
 
+use App\Report;
 use Carbon\Carbon;
 use App\Calendar\CalendarWeek;
 use App\Calendar\HolidaySetting;
 use App\Calendar\CalendarWeekDay;
-use App\Review;
 
 // カレンダー表示の親クラス
 class CalendarView
 {
   protected $carbon;
-  protected $reviews = []; //実績時間のデータを保持
+  protected $reviews = []; //カテゴリ別実績時間のデータを保持
+  protected $totals = []; //トータル時間のデータを保持
   protected $holidays = []; //祝日名を保持
   protected $path = null;
   protected $today;
@@ -49,8 +50,12 @@ class CalendarView
     $setting->loadHoliday($this->carbon->format("Y"));
     $this->holidays = $setting->getHolidayNames();
 
-    // 指定月のReviewの読み込み
-    $this->reviews = Review::getSumTimeMonthly($this->carbon->format("Y"), $this->carbon->format("m"));
+    // 指定月の実績時間の読み込み
+    $report = new Report($this->carbon->format("Y-m-d"));
+    $this->reviews = $report->getTimeWithMonthByCategory($this->carbon->format("Y"), $this->carbon->format("m"));
+    $this->totals = $report->getTimeWithMonth($this->carbon->format("Y"), $this->carbon->format("m"));
+    // dd($this->totals, $this->reviews);
+
 
     //カレンダー最上段を描画
     $html = [];
@@ -153,13 +158,21 @@ class CalendarView
     $end = $date->copy()->endOfWeek()->format("Ymd");
 
     // 週オブジェクトに該当週のレビュー情報をセット
-    $week->reviews = $this->reviews->filter(
+    foreach ($this->reviews as $id => $review) {
+      $week->reviews[$id] = $review->filter(
+        function ($value, $key) use ($start, $end) {
+          return $key >= $start && $key <= $end;
+        }
+      );
+    }
+    $week->totals = $this->totals->filter(
       function ($value, $key) use ($start, $end) {
         return $key >= $start && $key <= $end;
       }
     );
     return $week;
   }
+
   /**
    * 次の月を取得
    */

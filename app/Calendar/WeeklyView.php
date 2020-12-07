@@ -2,15 +2,15 @@
 
 namespace App\Calendar;
 
-use App\Review;
+use App\Report;
 use Carbon\Carbon;
 use App\Calendar\CalendarView;
 use App\Calendar\HolidaySetting;
 
 // 週次レポート
+// CalendarViewを継承
 class WeeklyView extends CalendarView
 {
-
   /**
    * タイトルを生成
    */
@@ -42,8 +42,10 @@ class WeeklyView extends CalendarView
     $startDay = $this->carbon->copy()->startOfWeek()->format("Y-m-d");
     $lastDay = $this->carbon->copy()->endOfWeek()->format("Y-m-d");
 
-    // 指定週のReviewの読み込み
-    $this->reviews = Review::getSumTimeWeekly($startDay, $lastDay);
+    // 指定週の実績時間の読み込み
+    $report = new Report($this->carbon);
+    $this->reviews = $report->getTimeWithWeekByCategory($startDay, $lastDay);
+    $this->totals = $report->getTimeWithWeek($startDay, $lastDay);
 
     //カレンダー最上段を描画
     $html = [];
@@ -94,6 +96,7 @@ class WeeklyView extends CalendarView
     $week->target_day = $this->carbon->copy();
 
     $week->reviews = $this->reviews;
+    $week->totals = $this->totals;
     return $week;
   }
 

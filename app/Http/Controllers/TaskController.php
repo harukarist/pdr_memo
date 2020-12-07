@@ -105,10 +105,12 @@ class TaskController extends Controller
         $task = Auth::user()->tasks()->find($task_id);
 
         // 該当のタスクデータをフォームの入力値で書き換えて保存
-        $task->task_name = $request->task_name;
-        $task->status = $request->status;
-        $task->priority = $request->priority;
-        $task->due_date = $request->due_date;
+        // $task->task_name = $request->task_name;
+        // $task->status = $request->status;
+        // $task->priority = $request->priority;
+        // $task->due_date = $request->due_date;
+
+        $task->fill($request->all());
         $task->save();
 
         // 編集対象のタスクが属するプロジェクトのタスク一覧にリダイレクト

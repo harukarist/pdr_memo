@@ -262,8 +262,45 @@ mark {
   line-height: 1;
 }
 
-.calendar table td .review-hour {
-  font-size: 16px;
+.calendar table td .category-wrapper {
+  display: inline-block;
+  margin: 0;
+  padding: 0.1em 0.5rem;
+  letter-spacing: 0em;
+  line-height: 1;
+  color: #FCFCFC;
+}
+
+.calendar table td .category-name {
+  font-size: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.calendar table td .category-hour {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
+
+.calendar table td .total-hour {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0em;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.calendar table td mark {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.calendar table td .fas {
+  font-size: 8px;
+  margin-right: 5px;
 }
 
 /*!

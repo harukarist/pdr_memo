@@ -124,4 +124,8 @@ class Task extends Model
     {
         return $this->hasMany('App\Prep');
     }
+    public function reviews()
+    {
+        return $this->hasManyThrough('App\Review', 'App\Prep');
+    }
 }

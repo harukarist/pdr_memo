@@ -52,7 +52,7 @@
       {{-- Prep --}}
       <div class="p-pdr__prep-wrapper col-md p-1">
         <div class="p-pdr__prep-detail d-flex justify-content-between mb-2">
-          <small class="pt-1">
+          {{-- <small class="pt-1"> --}}
             <span>
               <i class="far fa-clipboard" aria-hidden="true"></i>
               Prep-{{ $loop->iteration }}
@@ -67,11 +67,13 @@
             = {{ ($prep->unit_time)*($prep->estimated_steps) ?? '' }}分
             </mark>
             <span class="badge badge-light">{{ $prep->category->category_name ?? '' }}</span>
-          </small>
+          {{-- </small> --}}
           <a href="{{ route('preps.edit', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $prep->id ]) }}" class="mr-2"><small><i class="fas fa-pencil-alt" aria-hidden="true"></i></small></a>
         </div>
         <div class="p-pdr__prep-text">
-          <small><p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p></small>
+          {{-- <small> --}}
+            <p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p>
+          {{-- </small> --}}
         </div>
         <div class="p-pdr__do d-flex justify-content-center py-2">
           {{-- Do --}}
@@ -86,7 +88,7 @@
         @foreach($prep->reviews()->orderBy('started_at','asc')->get() as $review)
         <div class="p-pdr__review-wrapper mb-2">
           <div class="p-pdr__review-header d-flex justify-content-between mb-2 border-bottom">
-            <small>
+            {{-- <small> --}}
               <span>
                 <i class="fas fa-medal" aria-hidden="true"></i>
                 Review-{{ $loop->iteration }}
@@ -102,11 +104,11 @@
 
               <span class="badge badge-light">{{ $review->category->category_name ?? '' }}
               </span>
-            </small>
+            {{-- </small> --}}
             <a href="{{ route('reviews.edit', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $review->prep_id,'review_id'=>$review->id ]) }}" class="mr-2"><small><i class="fas fa-pencil-alt" aria-hidden="true"></i></small></a>
           </div>
           <div class="p-pdr__review-text">
-            <small>
+            {{-- <small> --}}
               <p class="mb-0">
               {!! nl2br(e($review->review_text)) !!}
               </p>
@@ -139,10 +141,7 @@
 
                 </div>
               @endif
-            </small>
-          </div>
-          <div class="p-pdr__review-footer d-flex pt-1">
-
+            {{-- </small> --}}
           </div>
         </div>   
         @endforeach

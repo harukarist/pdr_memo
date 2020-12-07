@@ -66,8 +66,41 @@
 				line-height: 1.0;
 			}
 		}
-		.review-hour {
-			font-size: 16px;
+		.category-wrapper {
+			display: inline-block;
+			margin: 0;
+			padding: 0.1em 0.5rem;
+			letter-spacing: 0em;
+			line-height: 1.0;
+			color: $bg-color--white;
+			// border-radius: 0.2rem;
+		}
+		.category-name {
+			font-size: 8px;
+			padding: 0;
+			margin: 0;
+		}
+		.category-hour {
+			font-size: 12px;
+			font-weight: bold;
+			padding: 0;
+			margin: 0;
+		}
+		.total-hour {
+			font-size: 12px;
+			font-weight: bold;
+			letter-spacing: 0em;
+			line-height: 1.0;
+			padding: 0;
+			margin: 0;
+		}
+		mark {
+			display: block;
+			margin-bottom: 5px;
+		}
+		.fas {
+			font-size: 8px;
+			margin-right: 5px;
 		}
 
 		

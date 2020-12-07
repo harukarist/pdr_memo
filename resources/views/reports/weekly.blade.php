@@ -2,9 +2,9 @@
 @section('content')
 <div class="container c-container">
 <h5 class="mb-4 text-center">これまでの記録</h5>
-   <div class="row justify-content-center">
-       <div class="col-md-8">
-           <div class="card">
+    <div class="row justify-content-center mb-2">
+        <div class="col-md-10">
+            <div class="card">
                 <div class="card-header text-center">
                     <a class="btn btn-outline-secondary float-left" href="{{ route('reports.weekly',['date' => $weekly->getPrevious()]) }}">前の週</a>
                     
@@ -17,14 +17,12 @@
                     <a class="small" href="{{ route('reports.calendar',['date' => $weekly->getDate()]) }}">カレンダーを表示</a>
                 </div>
             </div>
-       </div>
-   </div>
+        </div>
+    </div>
 
-   {{-- PDR --}}
-   <div class="row justify-content-center">
-       {{-- @include('reports.pdr_lists',['projects'=>$projects]) --}}
-       @include('reports.lists',['lists'=>$lists,'category'=>$category])
-   </div>
+    <div class="row justify-content-center">
+       @include('reports.lists',['lists'=>$lists])
+    </div>
 </div>
 
 @endsection

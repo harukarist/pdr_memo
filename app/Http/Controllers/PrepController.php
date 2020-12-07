@@ -63,10 +63,12 @@ class PrepController extends Controller
         // リクエストで受け取ったIDのPrepを削除
         $current_task = Auth::user()->tasks()->find($task_id);
         $current_task->preps()->find($prep_id)->delete();
-        $current_task->update(['status' => 1]);
+        // タスクのステータスを更新
+        if(!($current_task->preps()->count())){
+            $current_task->update(['status' => 1]);
+        }
         // Prep::find($prep_id)->delete();
         // Prep::destroy($prep_id);
-        // タスクのステータスを更新
 
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '計画を削除しました');
     }

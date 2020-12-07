@@ -2,7 +2,9 @@
 
 namespace App\Calendar;
 
+use App\Project;
 use Carbon\Carbon;
+use App\Calendar\HolidaySetting;
 
 // その日のカレンダーを出力する
 // CalendarWeekクラスから呼び出される
@@ -13,7 +15,9 @@ class CalendarWeekDay
   protected $isToday = false;
   protected $isTarget = false;
   public $holidayName = null;
-  public $review = null;
+  public $reviews = [];
+  public $total_hour = null;
+  public $flow_level = null;
   public $path = null;
 
   // コンストラクタ
@@ -72,7 +76,7 @@ class CalendarWeekDay
       $classNames[] = "day-target";
     }
     // レビューがある場合
-    if ($this->review) {
+    if ($this->reviews) {
       $classNames[] = "day-reviewed";
     }
     return implode(" ", $classNames);
@@ -85,18 +89,37 @@ class CalendarWeekDay
   function render()
   {
 
+    $categories = Project::CATEGORIES;
+
     // format()関数に「j」を指定して、先頭にゼロをつけない日付を取得
     $day = [];
 
-    $day[] = '<a href="' . $this->path . '?date=' . $this->carbon->format("Y-m-d") . ' " class="day-link">';
+    // $day[] = '<a href="' . $this->path . '?date=' . $this->carbon->format("Y-m-d") . ' " class="day-link">';
+    $day[] = '<a href="/reports/daily?date=' . $this->carbon->format("Y-m-d") . ' " class="day-link">';
     $day[] = '<p class="day">' . $this->carbon->format("j") . '</p>';
 
     if ($this->holidayName) {
       $day[] = '<span class="day-name">' . $this->holidayName . '</span>';
     }
-    if ($this->review) {
-      $day[] = '<mark class="review-hour">' . $this->review->hour . ' h</mark>';
+    if (isset($this->total_hour)) {
+      $day[] = '<p class="total-hour">';
+      $day[] = '<mark class="text-primary">
+      <i class="fas fa-stopwatch" aria-hidden="true"></i>' .
+        $this->total_hour . ' h</mark>';
+      $day[] = '<mark class="text-success">
+      <i class="fas fa-spa" aria-hidden="true"></i>' .
+        $this->flow_level .  '</mark>';
+      $day[] = '</p>';
     }
+    if (isset($this->reviews)) {
+      foreach ($this->reviews as $id => $review) {
+        $day[] = '<div class="category-wrapper category-' . $id . '"><p class="category-name">' .
+          $categories[$id]['category_name'] . '</p>';
+        $day[] = '<p class="category-hour">' .
+          $review->hour . ' h</p></div><br>';
+      }
+    }
+
     $day[] = '</a>';
     return implode("", $day);
   }
