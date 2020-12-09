@@ -21,12 +21,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/list', 'TaskController@list');
+Route::get('/list', 'Api\TaskListController@list');
 
 // タスク完了
-Route::put('/tasks/{task_id}/done', 'TaskController@done');
+Route::put('/tasks/{task_id}/done', 'Api\TaskListController@done');
 // タスク未完了
-Route::put('/tasks/{task_id}/undone', 'TaskController@undone');
+Route::put('/tasks/{task_id}/undone', 'Api\TaskListController@undone');
+// タスク削除
+Route::delete('/tasks/{task_id}/delete', 'Api\TaskListController@delete');
+// 優先度を変更
+Route::put('/tasks/{task_id}/priority/{priority_level}', 'Api\TaskListController@changePriority');
+Route::put('/tasks/{task_id}/edit', 'Api\TaskListController@edit');
 
 
-// Route::get('/projects/{project_id}/tasks', 'TaskController@index');
+// Route::get('/projects/{project_id}/tasks', 'TaskListController@index');
