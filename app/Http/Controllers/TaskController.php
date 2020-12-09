@@ -15,19 +15,52 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function list()
+    // --------------------------------------------------------
+    // API
+    // タスク編集処理
+    public function done(int $task_id, Request $request)
     {
-        $user_id = Auth::id();
-        $tasks = Project::with('tasks.preps.reviews')->where('projects.user_id', $user_id)->get();
-        return response()->json(
-            [
-                'tasks' => $tasks,
-            ],
-            200,
-            [],
-            JSON_UNESCAPED_UNICODE
-        );
+        // リクエストのIDからタスクデータを取得
+        // $task = Task::find($task_id);
+        $task = Auth::user()->tasks()->find($task_id);
+
+        // 該当のタスクデータをフォームの入力値で書き換えて保存
+        $task->status = 4;
+        $task->save();
     }
+    // タスク編集処理
+    public function undone(int $task_id, Request $request)
+    {
+        // リクエストのIDからタスクデータを取得
+        // $task = Task::find($task_id);
+        $task = Auth::user()->tasks()->find($task_id);
+
+        // 該当のタスクデータをフォームの入力値で書き換えて保存
+        $task->status = 3;
+        $task->save();
+    }
+    // タスク削除処理
+    public function deleteApi(int $task_id, Request $request)
+    {
+        Task::destroy($task_id);
+    }
+
+    // public function list()
+    // {
+    //     $user_id = Auth::id();
+    //     $tasks = Project::with('tasks.preps.reviews')->where('projects.user_id', $user_id)->get();
+    //     return response()->json(
+    //         [
+    //             'tasks' => $tasks,
+    //         ],
+    //         200,
+    //         [],
+    //         JSON_UNESCAPED_UNICODE
+    //     );
+    // }
+
+
+    // --------------------------------------------------------
     // タスク一覧表示
     public function index(int $project_id, Request $request)
     {
@@ -63,6 +96,7 @@ class TaskController extends Controller
         }
 
 
+        // 開始からの記録を集計
         $counter = $this->summary($current_project, $project_id);
         // dd($counter);
         return view('tasks.index', compact('projects', 'current_project', 'tasks', 'counter', 'has_done'));
@@ -142,15 +176,16 @@ class TaskController extends Controller
         $records = DB::table('reviews')
             ->join('preps', 'preps.id', '=', 'reviews.prep_id')
             ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-            ->select('actual_time')
+            ->select('actual_time', 'started_at')
             ->where('preps.user_id', '=', $user_id)
+            ->where('reviews.deleted_at', null)
             ->where('tasks.project_id', '=', $current_project->id)
             ->get();
 
         // 達成時間の合計と回数、タスク件数を取得
         $counter = [
             'reviewed_count' => $records->count('actual_time'),
-            'reviewed_hours' => round(($records->sum('actual_time')) / 60, 1),
+            'reviewed_hour' => round(($records->sum('actual_time')) / 60, 1),
             'completed_count' => $project_tasks->where('status', '=', 4)->count(),
             'doing_count' => $project_tasks->where('status', '=', 3)->count(),
             'prepped_count' => $project_tasks->where('status', '=', 2)->count(),
@@ -158,31 +193,32 @@ class TaskController extends Controller
         ];
 
 
-        // 記録開始日
-        if (count($project_tasks)) {
-            $first_date = $project_tasks->first()->created_at;
+        // 達成開始日
+        if (isset($records[0])) {
+            $started_at = $records->first()->started_at;
             $dt = Carbon::tomorrow();
-            $df = new Carbon($first_date);
+            $df = new Carbon($started_at);
             $counter['days_count'] = $df->diffInDays($dt);
-            $counter['first_date'] = $first_date;
+            $counter['started_at'] = Carbon::parse($started_at)->format("Y/m/d(D)");
         } else {
             $counter['days_count'] = 0;
         }
+        // dd($started_at);
 
         // 今後の予定時間、予定ステップ数
         $tasks_ongoing = $project_tasks->where('status', '<', 4);
-        $remained_minutes = 0;
-        $remained_steps = 0;
-        if (isset($tasks_ongoing)) {
+        $done_minutes = 0;
+        $done_steps = 0;
+        $prep_minutes = 0;
+        $prep_steps = 0;
+        if (isset($tasks_ongoing[0])) {
             foreach ($tasks_ongoing as $task) {
                 // 各Prepの残り時間、残り回数を計算
-                $done_minutes = 0;
-                $done_steps = 0;
-                // echo ($task->task_name . '<br>');
                 if (isset($task->preps)) {
                     foreach ($task->preps as $prep) {
                         // Prepの予想時間
-                        $prep_minutes = ($prep->unit_time) * ($prep->estimated_steps);
+                        $prep_minutes = ($prep->unit_time * $prep->estimated_steps) + $prep_minutes;
+                        $prep_steps = $prep->estimated_steps + $prep_steps;
                         if (isset($prep->reviews)) {
                             foreach ($prep->reviews as $review) {
                                 // Prepの実行済み時間、実行回数
@@ -192,17 +228,18 @@ class TaskController extends Controller
                                 // echo ('実行時間' . $done_minutes . '<br>');
                             }
                         }
-                        $remained_minutes = $remained_minutes + ($prep_minutes - $done_minutes);
-                        $remained_steps = $remained_steps + ($prep->estimated_steps - $done_steps);
                     }
                 }
             }
+            // dd($remained_minutes, $prep_minutes, $done_minutes);
         }
+        $remained_minutes = $prep_minutes - $done_minutes;
+        $remained_steps = $prep_steps - $done_steps;
         if ($remained_minutes) {
-            $counter['remained_hours'] = round(($remained_minutes) / 60, 1);
+            $counter['remained_hour'] = round(($remained_minutes) / 60, 1);
             $counter['remained_steps'] = $remained_steps;
         } else {
-            $counter['remained_hours'] = 0;
+            $counter['remained_hour'] = 0;
             $counter['remained_steps'] = 0;
         }
         return $counter;

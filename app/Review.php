@@ -13,6 +13,13 @@ class Review extends Model
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
 
+    protected $dates = [
+        'started_at',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     // ロックをかけないカラム
     protected $fillable = ['review_text', 'good_text', 'problem_text', 'try_text', 'flow_level', 'actual_time', 'category_id', 'started_at'];
 

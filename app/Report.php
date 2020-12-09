@@ -20,6 +20,60 @@ class Report
     $this->carbon = new Carbon($date, 'Asia/Tokyo');
   }
 
+  //開始からのプロジェクト別の合計実績時間を取得
+  public function getTotalTimeByProject()
+  {
+    $projects = Auth::user()->projects;
+
+    if (isset($projects[0])) {
+      foreach ($projects as $project) {
+        $records = DB::table('reviews')
+          ->join('preps', 'preps.id', '=', 'reviews.prep_id')
+          ->join('tasks', 'tasks.id', '=', 'preps.task_id')
+          ->select('actual_time', 'started_at')
+          ->where('preps.user_id', '=', $this->user_id)
+          ->where('reviews.deleted_at', null)
+          ->where('tasks.project_id', '=', $project->id)
+          ->get();
+
+        $first_date = $records->first()->started_at;
+        $dt = Carbon::tomorrow();
+        $df = new Carbon($first_date);
+
+        $total_time[$project->project_name] = [
+          'total_hour' => round(($records->sum('actual_time')) / 60, 1),
+          'total_count' => $records->count('actual_time'),
+          'days_count' => $df->diffInDays($dt),
+          'first_date' => $first_date
+        ];
+      }
+    } else {
+      $total_time = null;
+    }
+    return $total_time;
+  }
+
+  //指定月の日別の実績時間を取得
+  public function getTotalTimeByCategory()
+  {
+    foreach ($this->categories as $category) {
+      $records = DB::table('reviews')
+        ->join('preps', 'preps.id', '=', 'reviews.prep_id')
+        ->join('tasks', 'tasks.id', '=', 'preps.task_id')
+        ->select('actual_time')
+        ->where('preps.user_id', '=', $this->user_id)
+        ->where('reviews.deleted_at', null)
+        ->where('reviews.category_id', '=', $category['id'])
+        ->get();
+      $total_time[$category['id']] = [
+        'total_hour' => round(($records->sum('actual_time')) / 60, 1),
+        'total_count' => $records->count('actual_time'),
+      ];
+    }
+    // dd($total_time);
+
+    return $total_time;
+  }
 
   //指定月の日別の実績時間を取得
   public function getTimeWithMonth($year, $month)

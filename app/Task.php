@@ -106,14 +106,14 @@ class Task extends Model
         return Carbon::parse($value)->format("m/d H:i");
     }
     // 期限日の整形
-    public function getFormattedDueDateAttribute()
-    {
-        if ($this->attributes['due_date']) {
-            setlocale(LC_ALL, 'ja_JP.UTF-8');
-            return Carbon::createFromFormat('Y-m-d', $this->attributes['due_date'])
-                ->formatLocalized('%m/%d(%a)');
-        }
-    }
+    // public function getFormattedDueDateAttribute()
+    // {
+    //     if ($this->attributes['due_date']) {
+    //         setlocale(LC_ALL, 'ja_JP.UTF-8');
+    //         return Carbon::createFromFormat('Y-m-d', $this->attributes['due_date'])
+    //             ->formatLocalized('%m/%d(%a)');
+    //     }
+    // }
 
     // リレーション
     public function project()

@@ -28,9 +28,12 @@ class WeeklyController extends Controller
     $report = new Report($date);
     $lists = $report->getReviewsWithWeek();
     $records = $report->getTimeWithWeekByProject();
+    $total_time['project'] = $report->getTotalTimeByProject();
+    $total_time['category'] = $report->getTotalTimeByCategory();
+    // dd($total_time);
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.weekly', compact('weekly', 'lists','records'));
+    return view('reports.weekly', compact('weekly', 'lists','records','total_time'));
   }
 
 
