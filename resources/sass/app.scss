@@ -2,11 +2,11 @@
 // // Fonts
 // @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
 
 // Base
 @import 'base';
+// Variables
+@import 'variables';
 
 // Component
 @import 'object/component/container';
@@ -16,6 +16,7 @@
 
 // Project
 @import 'object/project/navbar';
+@import 'object/project/tasklist';
 @import 'object/project/progressbar';
 @import 'object/project/record';
 @import 'object/project/counter';

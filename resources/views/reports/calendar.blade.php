@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="container c-container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-center mb-2">
+        <div class="col-md-10">
             <div class="card">
                 {{-- CalendarViewで作った関数を利用して、タイトルとカレンダー本体をわけて出力 --}}
                 <div class="card-header text-center">

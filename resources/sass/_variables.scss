@@ -24,3 +24,161 @@ $light-gray: #b6bdc2;
 $fa-font-path: "../webfonts";
 
 
+.datepicker {
+  z-index: 10;
+  div > input {
+    border: 1px ridge #333333;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+}
+
+
+/* リスト全体のアニメーション */
+/* 表示・非表示アニメーション中 */
+.slide-list-enter-active, .slide-list-leave-active {
+  transition: all .5s ease-in-out;
+}
+/* 表示アニメーション開始時 */
+.slide-list-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+/* 非表示アニメーション後 */
+.slide-list-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+
+/* 個別タスクのアニメーション */
+/* 表示・非表示アニメーション中 */
+.slide-item-enter-active, .slide-item-leave-active {
+  transition: all .5s ease-in-out;
+}
+/* 表示アニメーション開始時 */
+.slide-item-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+/* 非表示アニメーション後 */
+.slide-item-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+
+
+.formArea {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: right;
+}
+.formArea__is-error {
+  color: #B9CAE5;
+}
+
+.entryBox {
+  width: 100%;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #201b1b;
+  color: #A5A5A5;
+  transition: .2s ease-in-out;
+}
+.entryBox:hover {
+  background: #242424;
+  color: #A5A5A5;
+}
+.entryBox:focus-within {
+  background: #242424;
+  color: #A5A5A5;
+}
+.entryBox__input {
+  padding: 5px 10px;
+  height: 60px;
+  font-size: 18px;
+  width: calc(100% - 50px);
+  box-sizing: border-box;
+  color: inherit;
+  background: inherit;
+  border: none;
+}
+.entryBox__input:focus {
+  outline: none;
+}
+.entryBox__btn {
+  color: #54615b;
+  text-align: right;
+  padding: 10px;
+  font-size: 28px;
+  width: 30px;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+}
+.entryBox:hover .entryBox__btn {
+  transform: scale(1.1);
+  color: #486b5b;
+}
+.entryBox__btn:hover {
+  transform: scale(1.1);
+  color: #729e8a;
+}
+
+.searchBox__wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.searchBox {
+  width: 80%;
+  padding: 5px 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #505050;
+  transition: .2s ease-in-out;
+  transform-origin: left;
+}
+.searchBox:hover {
+  border-bottom: 1px solid #486b5b;
+  color: #729e8a;
+}
+
+.searchBox__icon {
+  font-size: 18px;
+  width: 20px;
+  margin: 20px 5px 20px 15px;
+  color: #54615b;
+}
+.searchBox__icon:hover {
+  transform: scale(1.2,1.2);
+  color: #729e8a;
+}
+.searchBox__icon.active {
+  transform: scale(1.2,1.2);
+  color: #729e8a;
+}
+
+.searchBox__wrapper:hover .searchBox__input {
+  color: #729e8a;
+}
+.searchBox__input {
+  width: calc(100% - 40px);
+  height: 100%;
+  border: none;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  font-size: 16px;
+  background: inherit;
+  border: none;
+  color: #729e8a;
+}
+.searchBox__input:focus {
+  outline: none;
+  color: #729e8a;
+}
+

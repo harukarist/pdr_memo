@@ -1,18 +1,3 @@
-
-
-
-  <div class="p-tasklist__title mb-2">
-    <i class="fas fa-folder-open" style="color:{{ $current_project->project_color }}" aria-hidden="true"></i>
-    {{ $current_project->project_name ?? ''}} のタスクリスト
-  </div>
-
-  {{-- 目標 --}}
-  @isset($current_project->project_target)
-  <div class="p-tasklist__target alert alert-success p-2 mb-2">
-    {{ $current_project->project_target ?? ''}} 
-  </div>
-  @endisset
-
     
   @if($counter)
   
@@ -24,7 +9,7 @@
           <span class="p-counter__number">{{ $counter['days_count'] ?? 0 }}</span> 日目
         </small>
         @if($counter['days_count'])
-        <span class="p-counter__number small ml-2">最初の記録：{{ $counter['first_date']->format('Y/m/d') ?? '' }}</span>
+        <span class="p-counter__number small ml-2">最初の達成：{{ $counter['started_at'] ?? '' }}</span>
         @endif
       </div>
     </div>
@@ -34,7 +19,7 @@
           <i class="fas fa-medal" aria-hidden="true"></i>
           達成度<br>
           <span class="p-counter__number">
-            {{ $counter['reviewed_hours'] ?? 0 }}
+            {{ $counter['reviewed_hour'] ?? 0 }}
           </span>
           h /
           <span class="p-counter__number">
@@ -68,7 +53,7 @@
           <i class="far fa-clipboard" aria-hidden="true"></i>
           残り<br>
           <span class="p-counter__number">
-            {{ $counter['days_count'] ?? 0 }} 
+            {{ $counter['remained_hour'] ?? 0 }} 
           </span>
           h / 
           <span class="p-counter__number">

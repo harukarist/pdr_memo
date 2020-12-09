@@ -52,3 +52,6 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+import vuejsDatepicker from "vuejs-datepicker";
+import { en, ja } from "vuejs-datepicker/dist/locale";

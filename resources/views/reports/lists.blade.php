@@ -22,13 +22,12 @@
           @endcomponent
         </div>
       </div>
-      @elseif(empty($reviews[0]) && $loop->first)
+      @endif
+      @endforeach
+      @elseif(empty($lists[0]) && $loop->first)
       <div class="p-record__wrapper text-center mb-4">
         記録はまだありません
       </div>
-      @endif
-    @endforeach
-    @else
     @endif
   </section>
 </div>

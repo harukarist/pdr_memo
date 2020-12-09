@@ -44,6 +44,189 @@ mark {
   font-weight: bold;
 }
 
+.datepicker {
+  z-index: 10;
+}
+
+.datepicker div > input {
+  border: 1px ridge #333333;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* リスト全体のアニメーション */
+
+/* 表示・非表示アニメーション中 */
+
+.slide-list-enter-active,
+.slide-list-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+
+/* 表示アニメーション開始時 */
+
+.slide-list-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+/* 非表示アニメーション後 */
+
+.slide-list-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+/* 個別タスクのアニメーション */
+
+/* 表示・非表示アニメーション中 */
+
+.slide-item-enter-active,
+.slide-item-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+
+/* 表示アニメーション開始時 */
+
+.slide-item-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+/* 非表示アニメーション後 */
+
+.slide-item-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.formArea {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.formArea__is-error {
+  color: #B9CAE5;
+}
+
+.entryBox {
+  width: 100%;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #201b1b;
+  color: #A5A5A5;
+  transition: 0.2s ease-in-out;
+}
+
+.entryBox:hover {
+  background: #242424;
+  color: #A5A5A5;
+}
+
+.entryBox:focus-within {
+  background: #242424;
+  color: #A5A5A5;
+}
+
+.entryBox__input {
+  padding: 5px 10px;
+  height: 60px;
+  font-size: 18px;
+  width: calc(100% - 50px);
+  box-sizing: border-box;
+  color: inherit;
+  background: inherit;
+  border: none;
+}
+
+.entryBox__input:focus {
+  outline: none;
+}
+
+.entryBox__btn {
+  color: #54615b;
+  text-align: right;
+  padding: 10px;
+  font-size: 28px;
+  width: 30px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.entryBox:hover .entryBox__btn {
+  transform: scale(1.1);
+  color: #486b5b;
+}
+
+.entryBox__btn:hover {
+  transform: scale(1.1);
+  color: #729e8a;
+}
+
+.searchBox__wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.searchBox {
+  width: 80%;
+  padding: 5px 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #505050;
+  transition: 0.2s ease-in-out;
+  transform-origin: left;
+}
+
+.searchBox:hover {
+  border-bottom: 1px solid #486b5b;
+  color: #729e8a;
+}
+
+.searchBox__icon {
+  font-size: 18px;
+  width: 20px;
+  margin: 20px 5px 20px 15px;
+  color: #54615b;
+}
+
+.searchBox__icon:hover {
+  transform: scale(1.2, 1.2);
+  color: #729e8a;
+}
+
+.searchBox__icon.active {
+  transform: scale(1.2, 1.2);
+  color: #729e8a;
+}
+
+.searchBox__wrapper:hover .searchBox__input {
+  color: #729e8a;
+}
+
+.searchBox__input {
+  width: calc(100% - 40px);
+  height: 100%;
+  border: none;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  font-size: 16px;
+  background: inherit;
+  border: none;
+  color: #729e8a;
+}
+
+.searchBox__input:focus {
+  outline: none;
+  color: #729e8a;
+}
+
 .c-container {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -96,6 +279,107 @@ mark {
 
 .c-navbar__item {
   margin-right: 10px;
+}
+
+.p-task__wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.p-task__checkbox {
+  cursor: pointer;
+}
+
+.p-task__checkbox:hover {
+  color: #B0673E;
+}
+
+.p-task__checkbox.isDone {
+  opacity: 0.4;
+}
+
+.p-task__taskName {
+  cursor: pointer;
+}
+
+.p-task__taskName:hover {
+  color: #B0673E;
+}
+
+.p-task__taskName.isDone {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+
+.p-task__taskName.isDone.active {
+  color: #B0673E;
+  opacity: 1;
+}
+
+.p-task__taskName:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.p-task__editArea {
+  overflow: hidden;
+}
+
+.p-task__editArea:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.p-task__editBox {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: inherit;
+  outline: none;
+  background: #CCC;
+}
+
+.p-task__datepicker {
+  position: relative;
+  z-index: 20;
+}
+
+.p-task__icon {
+  cursor: pointer;
+  transition: 0.2s ease-in-out transform;
+  font-size: 80%;
+  color: #CCC;
+}
+
+.p-task__icon:hover {
+  transform: scale(1.2);
+  transition: 0.2s ease-in-out transform;
+  color: #847972;
+  opacity: 1;
+}
+
+.p-task__icon.fa-star.isShow {
+  color: #B0673E;
+  transform: scale(1.1);
+}
+
+.p-task__icon.active {
+  color: #847972;
+  transform: scale(1.3);
+  transition: 0.1s ease-in-out transform;
+  opacity: 1;
 }
 
 .progressbar {
@@ -213,10 +497,6 @@ mark {
 
 .calendar table td.day-today .day {
   font-weight: bold;
-}
-
-.calendar table td.day-target {
-  background-color: #BEB7B3;
 }
 
 .calendar table td.day-blank {

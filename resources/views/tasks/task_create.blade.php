@@ -26,7 +26,7 @@
               {{ $val['priority_name'] }}
             </option>
           @endforeach
-        </select>
+      </select>
       </div>
       <div class="form-group form-inline col-auto">
         <label for="due_date">期限</label>

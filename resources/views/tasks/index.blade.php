@@ -32,6 +32,18 @@
         <div class="p-tasklist__wrapper">
 
           
+  <div class="p-tasklist__title mb-2">
+    <i class="fas fa-folder-open" style="color:{{ $current_project->project_color }}" aria-hidden="true"></i>
+    {{ $current_project->project_name ?? ''}} のタスクリスト
+  </div>
+
+  {{-- 目標 --}}
+  @isset($current_project->project_target)
+  <div class="p-tasklist__target alert alert-success p-2 mb-2">
+    {{ $current_project->project_target ?? ''}} 
+  </div>
+  @endisset
+  
           {{-- サマリー --}}
             @include('tasks.task_summary',['counter'=>$counter,'current_project'=>$current_project])
           
@@ -47,7 +59,7 @@
           
             {{-- タスクリスト --}}
             @if(count($tasks))
-              @include('tasks.task_pdr',['tasks'=>$tasks])
+              @include('tasks.task_list',['tasks'=>$tasks])
             @endif
           </div>
         </div>
@@ -62,6 +74,6 @@
   </div>
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
   @include('plugins.flatpickr.scripts')
-@endsection
+@endsection --}}

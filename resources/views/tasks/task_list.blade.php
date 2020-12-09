@@ -1,40 +1,33 @@
-
 @foreach($tasks as $task)
+
+{{-- <task-item :task-data="{{ $task }}"></task-item> --}}
+
+{{-- <transition name="slide-item" tag="div"> --}}
 <div class="p-tasklist__item">
   {{-- Task --}}
-  <div class="p-task__wrapper row justify-content-between p-2 mt-3 mx-0 bg-white">
-    <div class="d-flex col-sm-9">
-      <div class="p-task__checkbox pr-2">
-        @if(!empty($task->status) && $task->status == 4)
-        <i class="far fa-check-circle {{ $task->priority_class ?? '' }}" aria-hidden="true"></i>
-        @else
-        <i class="far fa-circle {{ $task->priority_class ?? '' }}" aria-hidden="true"></i>
-        @endif
+  <div class="p-task__wrapper d-flex justify-content-between p-2 mt-3 mx-0 bg-white">
+      {{-- タスク名をVueコンポーネントで表示 --}}
+      <task-item task-id="{{ $task->id }}" task-status="{{ $task->status }}" task-name="{{ $task->task_name }}" priority="{{ $task->priority }}" due-date="{{ $task->due_date}}"></task-item>
+    {{-- <div class="p-task__details">
+      @if($task->status != 4 && $task->priority > 0)
+      <div class="p-task__priority d-inline-block">
+        <small class="ml-2 {{ $task->priority_class ?? '' }}">
+          @forelse(range(1,$task->priority) as $num)
+          <i class="fas fa-star" aria-hidden="true"></i>
+          @empty
+          @endforelse
+        </small>
       </div>
-      <div class="p-task__taskname">
-        {{-- タスク名 --}}
-        @if($task->status == 4)<del>@endif
-        {{ $task->task_name ?? '' }}
-        @if($task->status == 4)</del>@endif
-        @if($task->status != 4 && $task->priority > 0)
-        <div class="p-task__priority d-inline-block">
-          <small class="ml-2 {{ $task->priority_class ?? '' }}">
-            @forelse(range(1,$task->priority) as $num)
-            <i class="fas fa-star" aria-hidden="true"></i>
-            @empty
-            @endforelse
-          </small>
-        </div>
-        @endif
-        @isset($task->formatted_due_date)
-        <span class="badge badge-light">
-          <i class="fas fa-calendar-day" aria-hidden="true"></i>
-        {{ $task->formatted_due_date ?? '' }}
-        </span>
-        @endisset
-      </div>
-    </div>
-    <div class="p-task__action col-sm-3 text-right">
+      @endif
+      @isset($task->formatted_due_date)
+      <span class="badge badge-light">
+        <i class="fas fa-calendar-day" aria-hidden="true"></i>
+      {{ $task->formatted_due_date ?? '' }}
+      {{ $task->due_date ?? '' }}
+      </span>
+      @endisset
+    </div> --}}
+    <div class="p-task__action text-right">
       <a href="{{ route('tasks.edit', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">
         <i class="fas fa-pencil-alt small px-2" aria-hidden="true"></i>
       </a>
@@ -152,4 +145,5 @@
   </div>
   @endif
 </div>
+{{-- </transition> --}}
 @endforeach

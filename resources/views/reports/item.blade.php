@@ -2,9 +2,9 @@
 @if(isset($review->id))
 
 @if(isset($review->id))
-<div class="p-report__reviews px-4 py-2 mb-3">
+<div class="p-report__reviews bg-light px-4 py-2 mb-3">
     {{-- Review-Header --}}
-    <div class="p-report__review-header d-flex justify-content-between mb-2 border-bottom">
+    <div class="p-report__review-header d-flex mb-2 border-bottom">
         <span>
           <i class="fas fa-medal" aria-hidden="true"></i>
           Review-{{ $loop->remaining + 1}}
@@ -18,6 +18,8 @@
         {{ $review->flow_level ?? '-' }}
         </mark>
 
+        <span class="badge badge-light">{{ $review->prep->task->project->project_name ?? '' }}
+        </span>
         <span class="badge badge-light">{{ $review->category->category_name ?? '' }}
         </span>
 

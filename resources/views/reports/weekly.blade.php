@@ -20,6 +20,9 @@
         </div>
     </div>
 
+    {{-- <div class="row justify-content-center">
+       @include('tasks.task_summary',['counter'=>$total_time])
+    </div> --}}
     <div class="row justify-content-center">
        @include('reports.lists',['lists'=>$lists])
     </div>

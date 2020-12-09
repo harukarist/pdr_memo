@@ -1,0 +1,90 @@
+.p-task {
+  &__wrapper {
+    // overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__checkbox {
+    cursor: pointer;
+    &:hover {
+      color: $font-color--accent;
+    }
+    &.isDone {
+      opacity: .4;
+    }
+  }
+  &__taskName {
+    cursor: pointer;
+    &:hover {
+      color: $font-color--accent;
+    }
+    &.isDone {
+      text-decoration: line-through;
+      opacity: .4;
+      &.active {
+        color: $font-color--accent;
+        opacity: 1;
+      }
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1
+    }
+  }
+  &__editArea{
+    overflow: hidden;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1
+    }
+  }
+  &__editBox {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: inherit;
+    outline: none;
+    background: $bg-color--gray;
+  }
+  &__datepicker {
+    position: relative;
+    z-index: 20;
+  }
+  &__icon {
+    cursor: pointer;
+    transition: .2s ease-in-out transform;
+    font-size: 80%;
+    color: $font-color--gray;
+    &:hover {
+      transform: scale(1.2);
+      transition: .2s ease-in-out transform;
+      color: $font-color--link;
+      opacity: 1;
+    }
+    &.fa-star.isShow {
+      color: $font-color--accent;
+      transform: scale(1.1);
+    }
+    &.active {
+      color: $font-color--link;
+      transform: scale(1.3);
+      transition: .1s ease-in-out transform;
+      opacity: 1;
+    }
+
+  }
+
+}
