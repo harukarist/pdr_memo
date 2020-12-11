@@ -63,8 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
     // カテゴリー削除
     Route::delete('/categories/{category_id}/delete', 'CategoryController@delete')->name('categories.delete');
 
-
-
     // ProjectController
     // プロジェクト作成
     Route::get('/projects/create', 'ProjectController@showCreateForm')->name('projects.create');
@@ -79,11 +77,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Prep作成
     Route::get('/projects/{project_id}/tasks/{task_id}/preps/create', 'PrepController@showCreateForm')->name('preps.create');
     Route::post('/projects/{project_id}/tasks/{task_id}/preps/create', 'PrepController@create');
-
     // Prep編集
     Route::get('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/edit', 'PrepController@showEditForm')->name('preps.edit');
     Route::patch('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/edit', 'PrepController@edit');
-
     // Prep削除
     Route::delete('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/delete', 'PrepController@delete')->name('preps.delete');
 

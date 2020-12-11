@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 // Vue.component('header-component', HeaderComponent);
 Vue.component('task-list', require('./components/TaskList.vue').default);
+Vue.component('task-menu', require('./components/TaskMenu.vue').default);
 Vue.component('reports-prep', require('./components/ReportsPrep.vue').default);
 
 /**

@@ -43,15 +43,15 @@
                     <div class="navbar-nav">
                         @guest
                         {{-- 未ログイン --}}
-                            <a class="c-navbar__item nav-item nav-link" href="{{ route('login') }}">
+                            <a class="c-navbar__item nav-item nav-link text-dark" href="{{ route('login') }}">
                                 <i class="fas fa-sign-in-alt mr-1" aria-hidden="true"></i>ログイン</a>
-                            <a class="c-navbar__item nav-item nav-link" href="{{ route('register') }}">
+                            <a class="c-navbar__item nav-item nav-link text-dark" href="{{ route('register') }}">
                                 <i class="fas fa-user-plus mr-1" aria-hidden="true"></i>ユーザー登録</a>
                         @else
                         {{-- ログイン後 --}}
                             {{-- <p class="c-navbar__item nav-item">こんにちは, {{ Auth::user()->name }}さん</p> --}}
                             {{-- ｜ --}}
-                            <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link">
+                            <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link text-dark">
                                 <i class="fas fa-list-ul mr-1" aria-hidden="true"></i>タスクリスト</a>
 
                                 <div class="d-block d-sm-none">
@@ -69,10 +69,10 @@
                                       </li>
                                     </ul>
                                 </div>
-                            <a href="{{ route('reports.weekly') }}" class="c-navbar__item nav-item nav-link">
+                            <a href="{{ route('reports.weekly') }}" class="c-navbar__item nav-item nav-link text-dark">
                                 <i class="fas fa-medal mr-1" aria-hidden="true"></i>これまでの記録</a>
 
-                            <a href="{{ route('logout') }}" id="js-logout" class="c-navbar__link navbar-item nav-link" onclick="event.preventDefault();
+                            <a href="{{ route('logout') }}" id="js-logout" class="c-navbar__link navbar-item nav-link text-dark" onclick="event.preventDefault();
                             document.getElementById('js-logout-form').submit();">
                             <i class="fas fa-sign-out-alt mr-1" aria-hidden="true"></i>ログアウト</a>
                             <form id="js-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

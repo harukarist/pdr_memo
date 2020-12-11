@@ -1,6 +1,6 @@
 @foreach($projects as $project)
-<li class="p-menu__item list-group-item py-2 px-3 list-group-item-action {{ $current_project->id === $project->id ? 'list-group-item-info' : '' }}">
-  <a href="{{ route('tasks.index', ['project_id' => $project->id]) }}" class="text-decoration-none">
+<li class="p-menu__item list-group-item py-2 px-0 list-group-item-action {{ $current_project->id === $project->id ? 'list-group-item-info' : '' }}">
+  <a href="{{ route('tasks.index', ['project_id' => $project->id]) }}" class="text-decoration-none text-dark">
     <div class="col-10 d-inline-block">
       <span style="color:{{ $project->project_color }}">
       @if($current_project->id === $project->id)

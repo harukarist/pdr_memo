@@ -29,8 +29,12 @@ class PrepController extends Controller
         $prep = new Prep();
         $prep->task_id = $task_id;
         Auth::user()->preps()->save($prep->fill($request->all()));
+
         // タスクのステータスを更新
-        Auth::user()->tasks()->find($task_id)->update(['status' => 2]);
+        $current_task = Auth::user()->tasks->find($task_id);
+        $current_task->status = 2;
+        $current_task->save();
+        // Auth::user()->tasks->find($task_id)->update(['status' => '2']);
 
         // 一覧画面にリダイレクト
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '計画を登録しました');
@@ -65,12 +69,13 @@ class PrepController extends Controller
         // リクエストで受け取ったIDのPrepを削除
         $current_task = Auth::user()->tasks()->find($task_id);
         $current_task->preps()->find($prep_id)->delete();
-        // タスクのステータスを更新
+
+        // 他にPrepがない場合はタスクのステータスを更新
         if (!($current_task->preps()->count())) {
-            $current_task->update(['status' => 1]);
+            // $current_task->update(['status' => 1]);
+            $current_task->status = 1;
+            $current_task->save();
         }
-        // Prep::find($prep_id)->delete();
-        // Prep::destroy($prep_id);
 
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '計画を削除しました');
     }
@@ -79,12 +84,14 @@ class PrepController extends Controller
     public function showDoForm(int $project_id, int $task_id, int $prep_id)
     {
         // ログインユーザーに紐づく該当IDのPrepを取得
-        // $do_prep = Auth::user()->tasks()->find($task_id)->prep()->find($prep_id);
         $current_task = Auth::user()->tasks()->find($task_id);
         $do_prep = $current_task->preps()->find($prep_id);
 
         // 該当タスクのステータスを着手中に変更
-        $current_task->update(['status' => 3]);
+        // $current_task->update(['status' => 3]);
+        $current_task->status = 3;
+        $current_task->save();
+
         // 開始日時を記録
         $started_at = Carbon::now();
         session(['started_at' => $started_at]);

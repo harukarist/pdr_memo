@@ -348,7 +348,7 @@ mark {
   box-sizing: border-box;
   font-size: inherit;
   outline: none;
-  background: #CCC;
+  background: #F4F4F4;
 }
 
 .p-task__datepicker {

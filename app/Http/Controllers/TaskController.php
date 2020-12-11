@@ -16,36 +16,6 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     // --------------------------------------------------------
-    // API
-    // タスク編集処理
-    public function done(int $task_id, Request $request)
-    {
-        // リクエストのIDからタスクデータを取得
-        // $task = Task::find($task_id);
-        $task = Auth::user()->tasks()->find($task_id);
-
-        // 該当のタスクデータをフォームの入力値で書き換えて保存
-        $task->status = 4;
-        $task->save();
-    }
-    // タスク編集処理
-    public function undone(int $task_id, Request $request)
-    {
-        // リクエストのIDからタスクデータを取得
-        // $task = Task::find($task_id);
-        $task = Auth::user()->tasks()->find($task_id);
-
-        // 該当のタスクデータをフォームの入力値で書き換えて保存
-        $task->status = 3;
-        $task->save();
-    }
-    // タスク削除処理
-    public function deleteApi(int $task_id, Request $request)
-    {
-        Task::destroy($task_id);
-    }
-
-    // --------------------------------------------------------
     // タスク一覧表示
     public function index(int $project_id, Request $request)
     {

@@ -1,53 +1,72 @@
 <template>
-  <transition name="slide-item" tag="div">
-    <div class="p-tasklist__item mb-3" v-show="!isDeleted">
-      <div
-        class="p-task__wrapper d-flex flex-column flex-md-row justify-content-between p-2 mx-0 bg-white"
-      >
-        <div class="p-task__main p-0 d-flex col-sm-4 col-md-5 col-xl-6 mx-0 px-0">
-          <!-- チェックボックス -->
-          <div
-            class="p-task__checkbox pr-2"
-            :class="{ isDone: isDone }"
-            @click="toggleDone"
-          >
-            <i :class="classCheckBox" aria-hiden="true"></i>
-          </div>
-          <div class="p-task__contents w-100">
-            <!-- タスク名 -->
-            <div
-              v-show="!showEditBox"
-              class="p-task__taskName"
-              :class="{ active: isActiveText, isDone: isDone }"
-              @mouseover="isActiveText = true"
-              @mouseleave="isActiveText = false"
-              @click="showEditBox = true"
-            >
-              {{ taskName_data }}
-              <i
-                class="p-task__icon fas fa-pencil-alt"
-                v-show="isActiveText"
-                aria-hidden="true"
-              ></i>
-            </div>
-            <!-- 編集ボックス -->
-            <div v-show="showEditBox" class="p-task__editArea col-12 mx-0 px-0">
-              <textarea
-                type="text"
-                class="p-task__editBox"
-                :value="taskName_data"
-                @keyup.shift.enter="checkKeyUp($event)"
-              >
-              </textarea>
-              <p class="text-muted small">Shift+Enterで変更</p>
-            </div>
-          </div>
-        </div>
-        <slot name="task-action"></slot>
-      </div>
-      <slot name="prep-review"></slot>
+<div>
+  <div class="p-task__menu d-flex col-auto m-0 p-0">
+    <!-- 優先度 -->
+    <div class="p-task__priority ml-1 mr-3">
+      <small class="m-0 p-0">
+        <i
+          class="p-task__icon fas fa-star"
+          :class="{
+            active: scale >= 1,
+            isShow: priority_level >= 1,
+          }"
+          @mouseover="scale = 1"
+          @mouseleave="scale = 0"
+          @click="changePriority(taskId, 1)"
+          aria-hidden="true"
+        ></i>
+        <i
+          class="p-task__icon fas fa-star"
+          :class="{
+            active: scale >= 2,
+            isShow: priority_level >= 2,
+          }"
+          @mouseover="scale = 2"
+          @mouseleave="scale = 0"
+          @click="changePriority(taskId, 2)"
+          aria-hidden="true"
+        ></i>
+        <i
+          class="p-task__icon fas fa-star"
+          :class="{
+            active: scale >= 3,
+            isShow: priority_level >= 3,
+          }"
+          @mouseover="scale = 3"
+          @mouseleave="scale = 0"
+          @click="changePriority(taskId, 3)"
+          aria-hidden="true"
+        ></i>
+      </small>
     </div>
-  </transition>
+    <!-- 期限日設定 -->
+    <div class="p-task__due-date" @click="showDatePicker = !showDatePicker">
+      <i
+        class="p-task__icon fas fa-calendar-day"
+        aria-hidden="true"
+        :class="{ active: inputDueDate }"
+      ></i>
+      <span class="badge badge-light"> {{ dueDate_data }}</span>
+    </div>
+    <!-- タスク削除 -->
+    <span class="ml-2">
+      <i
+        @click="deleteTask(taskId)"
+        class="p-task__icon fas fa-trash-alt"
+        aria-hidden="true"
+      ></i>
+    </span>
+  </div>
+  <div v-show="showDatePicker">
+    <input
+      type="date"
+      name="due_date"
+      id="due_date"
+      class="form-control"
+      v-model="inputDueDate"
+    />
+  </div>
+</div>
 </template>
 
 <script>
@@ -55,7 +74,7 @@ import vuejsDatepicker from "vuejs-datepicker";
 import { en, ja } from "vuejs-datepicker/dist/locale";
 
 export default {
-  name: "TaskList",
+  name: "TaskMenu",
   components: {
     "vuejs-datepicker": vuejsDatepicker,
   },
