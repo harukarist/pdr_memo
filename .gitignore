@@ -12,11 +12,4 @@ npm-debug.log
 yarn-error.log
 /_memo
 .vscode
-public/sample-prep.html
-public/sample-prep2.html
-public/sample-review.html
-public/js/app.js
-public/sample-review.html
-public/css/app.js
-resources/js/app.js
-public/js/app.js
+
