@@ -22,9 +22,7 @@ class ReportController extends Controller
     // タスク一覧を取得
     $report = new Report($date);
     $lists = $report->getReviewsWithWeek();
-    // $records = $report->getTimeWithWeekByProject();
     $summaries = $report->getSummaries();
-    // $summaries['category'] = $report->getTotalByCategory();
     // dd($total_time);
     // dd($records);
 
@@ -50,8 +48,7 @@ class ReportController extends Controller
     $lists = $report->getReviewsWithDay();
     // dd($lists);
 
-    // $records = $report->getTimeWithWeekByProject();
-    $summaries = $report->getTotalByProject();
+    $summaries = $report->getSummaries();
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
     return view('reports.daily', compact('weekly', 'lists', 'summaries'));
