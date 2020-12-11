@@ -2,10 +2,12 @@
 @section('content')
 <div class="container c-container">
 <h5 class="mb-4 text-center">これまでの記録</h5>
+    @if(isset($summaries['projects'])&&isset($summaries['categories']))
     <div class="row justify-content-center mb-2">
-        @include('reports.report_summary',['totals'=>$total_time['projects']])
-        @include('reports.report_summary',['totals'=>$total_time['categories']])
+        @include('reports.summary_project',['summaries'=>$summaries['projects']])
+        @include('reports.summary_category',['summaries'=>$summaries['categories']])
     </div>
+    @endif
     <div class="row justify-content-center mb-2">
         <div class="col-md-10">
             <div class="card">
