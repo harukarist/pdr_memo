@@ -25,6 +25,7 @@
 
 <script>
 export default {
+  name: "RepoortsPrep",
   data() {
     return {
       showPrep: false,

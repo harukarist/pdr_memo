@@ -139,6 +139,7 @@ import vuejsDatepicker from "vuejs-datepicker";
 import { en, ja } from "vuejs-datepicker/dist/locale";
 
 export default {
+  name: "TaskList",
   components: {
     "vuejs-datepicker": vuejsDatepicker,
   },
