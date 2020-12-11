@@ -47,7 +47,7 @@
           
 
            {{-- タスク作成フォーム --}}
-          <div class="p-tasklist__create mb-5">
+          <div class="p-tasklist__create mb-4 p-2 @if(!count($tasks)) border border-primary @endif">
             @include('components.flash_message')
             @include('tasks.task_create',['project_id'=>$current_project->id])
           </div>
@@ -58,6 +58,10 @@
             {{-- タスクリスト --}}
             @if(count($tasks))
               @include('tasks.task_list',['tasks'=>$tasks])
+            @else
+            <div class="p-task__notask alert alert-primary mt-4">
+              タスクがまだありません。登録しましょう！
+            </div>
             @endif
           </div>
         </div>
