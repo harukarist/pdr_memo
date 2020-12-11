@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Prep;
-use App\Task;
 use App\Report;
-use App\Review;
-use App\Project;
 use Carbon\Carbon;
-use App\Calendar\ReportView;
 use App\Calendar\WeeklyView;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Calendar\CalendarView;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
-class WeeklyController extends Controller
+class ReportController extends Controller
 {
   public function showWeekly(Request $request)
   {
+    // 対象の日付を取得
     $date = $this->getDate($request);
 
     //WeeklyViewクラスで指定週のカレンダーを生成
@@ -27,21 +22,24 @@ class WeeklyController extends Controller
     // タスク一覧を取得
     $report = new Report($date);
     $lists = $report->getReviewsWithWeek();
-    $records = $report->getTimeWithWeekByProject();
-    $total_time['project'] = $report->getTotalTimeByProject();
-    $total_time['category'] = $report->getTotalTimeByCategory();
+    // $records = $report->getTimeWithWeekByProject();
+    $summaries = $report->getSummaries();
+    // $summaries['category'] = $report->getTotalByCategory();
     // dd($total_time);
+    // dd($records);
+
+
+    $dt = new Carbon($date);
+    $startDay = $dt->copy()->startOfWeek()->format("Y/m/d(D)");
+    $lastDay = $dt->copy()->endOfWeek()->format("Y/m/d(D)");
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.weekly', compact('weekly', 'lists','records','total_time'));
+    return view('reports.weekly', compact('weekly', 'lists', 'summaries', 'startDay', 'lastDay'));
   }
-
-
-
-
 
   public function showDaily(Request $request)
   {
+    // 対象の日付を取得
     $date = $this->getDate($request);
 
     //WeeklyViewクラスで指定週のカレンダーを生成
@@ -50,12 +48,31 @@ class WeeklyController extends Controller
     // タスク一覧を取得
     $report = new Report($date);
     $lists = $report->getReviewsWithDay();
+    // dd($lists);
 
+    // $records = $report->getTimeWithWeekByProject();
+    $summaries = $report->getTotalByProject();
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.weekly', compact('weekly', 'lists'));
+    return view('reports.daily', compact('weekly', 'lists', 'summaries'));
   }
 
+  public function showCalendar(Request $request)
+  {
+    // 対象の日付を取得
+    $date = $this->getDate($request);
+
+    // 指定月のカレンダーを生成
+    $calendar = new CalendarView($date);
+
+    // タスク一覧を取得
+    $report = new Report($date);
+    $lists = $report->getReviewsWithDay();
+
+
+    // 作成したオブジェクトをViewに渡す
+    return view('reports.calendar', compact('calendar', 'lists'));
+  }
 
   // 対象の日付を設定
   public function getDate(Request $request)

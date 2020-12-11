@@ -25,7 +25,7 @@ class Prep extends Model
     }
 
     // ロックをかけないカラム
-    protected $fillable = ['prep_text', 'unit_time', 'estimated_steps', 'category_id'];
+    protected $fillable = ['prep_text', 'unit_time', 'estimated_steps'];
 
     // 更新時に親の更新日時も更新
     // protected $touches = ['task'];
@@ -40,10 +40,6 @@ class Prep extends Model
     public function task()
     {
         return $this->belongsTo('App\Task');
-    }
-    public function category()
-    {
-        return $this->belongsTo('App\Category');
     }
     public function reviews()
     {

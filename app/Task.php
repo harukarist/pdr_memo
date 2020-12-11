@@ -28,7 +28,7 @@ class Task extends Model
     ];
 
     // ロックをかけないカラム
-    protected $fillable = ['task_name', 'due_date', 'status', 'priority'];
+    protected $fillable = ['task_name', 'due_date', 'priority'];
 
     // リレーション先のレコードも論理削除
     protected static function boot()

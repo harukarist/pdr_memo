@@ -88,22 +88,6 @@
           </div>
         </div>
 
-        <!-- カテゴリー -->
-        <div class="form-group form-inline mb-3">
-          <label for="category_id" class="mb-0">カテゴリー</label>
-          <div class="pl-3">
-            <div class="form-check form-check-inline">
-              @forelse(\App\Project::CATEGORIES as $category)
-                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $current_task->project->category_id == $category['id'] ) checked @endif>
-                <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
-                  <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
-                </label>
-              @empty
-              @endforelse
-            </div>
-          </div>
-        </div>
-
         <!-- 送信 -->
         <div class="text-center">
           <button type="submit" class="btn btn-primary">計画を登録！</button>

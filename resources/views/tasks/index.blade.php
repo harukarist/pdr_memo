@@ -7,9 +7,8 @@
 
 @section('content')
   <div class="container-fluid">
-    <div class="test" id="heatmap"></div>
     <div class="row pt-4">
-      <div class="l-left__wrapper col-md-3 mb-3">
+      <div class="l-left__wrapper d-none d-sm-block col-sm-3 mb-3">
         <div class="p-menu__wrapper">
           <div class="p-menu__project">
             {{-- プロジェクト一覧 --}}
@@ -28,21 +27,20 @@
           </div>
         </div>
       </div>
-      <div class="l-right__wrapper col-md-9">
+      <div class="l-right__wrapper col-sm-9">
         <div class="p-tasklist__wrapper">
 
-          
-  <div class="p-tasklist__title mb-2">
-    <i class="fas fa-folder-open" style="color:{{ $current_project->project_color }}" aria-hidden="true"></i>
-    {{ $current_project->project_name ?? ''}} のタスクリスト
-  </div>
+          <div class="p-tasklist__title mb-2">
+            <i class="fas fa-folder-open" style="color:{{ $current_project->project_color }}" aria-hidden="true"></i>
+            {{ $current_project->project_name ?? ''}} のタスクリスト
+          </div>
 
-  {{-- 目標 --}}
-  @isset($current_project->project_target)
-  <div class="p-tasklist__target alert alert-success p-2 mb-2">
-    {{ $current_project->project_target ?? ''}} 
-  </div>
-  @endisset
+          {{-- 目標 --}}
+          @isset($current_project->project_target)
+          <div class="p-tasklist__target alert alert-success p-2 mb-2">
+            {{ $current_project->project_target ?? ''}} 
+          </div>
+          @endisset
   
           {{-- サマリー --}}
             @include('tasks.task_summary',['counter'=>$counter,'current_project'=>$current_project])

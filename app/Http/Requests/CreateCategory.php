@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-// CreateProjectを継承
-class EditProject extends CreateProject
+use Illuminate\Foundation\Http\FormRequest;
+
+class CreateCategory extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,6 +13,7 @@ class EditProject extends CreateProject
      */
     public function authorize()
     {
+        // リクエストを受け取る
         return true;
     }
 
@@ -22,6 +24,8 @@ class EditProject extends CreateProject
      */
     public function rules()
     {
-        return parent::rules();
+        return [
+            'category_name' => 'required|max:191',
+        ];
     }
 }

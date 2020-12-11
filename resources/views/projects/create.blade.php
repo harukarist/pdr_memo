@@ -23,13 +23,13 @@
           @endif
         {{-- プロジェクト名 --}}
         <div class="form-group">
-          <label for="category_id">プロジェクト名</label>
+          <label for="project_name">プロジェクト名</label>
               <input type="text" class="form-control @error('project_name') is-invalid @enderror" name="project_name" id="project_name"　value="{{ old('project_name') }}"/>
         </div>
 
         {{-- プロジェクトの目標 --}}
         <div class="form-group">
-          <label for="category_id">目標</label>
+          <label for="project_target">目標</label>
               <input type="text" class="form-control @error('project_target') is-invalid @enderror" name="project_target" id="project_target"　value="{{ old('project_target') }}"/>
         </div>
 
@@ -43,15 +43,18 @@
         {{-- メインカテゴリー --}}
         <div class="form-group">
           <label for="category_id">メインカテゴリー</label>
-          <div class="pl-1">
-            <div class="form-check form-check-inline">
-              @foreach(\App\Project::CATEGORIES as $category)
-                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id']) checked @endif>
-                <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
-                  <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
+          <div class="pl-1 mb-2">
+            @foreach($categories as $category)
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input ml-4 @error('category_id') is-invalid @enderror" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id) checked @endif>
+                <label class="custom-control-label" for="{{ $category->id }}">
+                  <span class="c-form__category badge p-1 align-self-center">{{ $category->category_name }}</span>
                 </label>
+              </div>
               @endforeach
             </div>
+          <div class="pl-1">
+            <a href="{{ route('categories.create') }}">カテゴリーを編集する</a>
           </div>
         </div>
           <button type="submit" class="btn btn-primary">作成</button>

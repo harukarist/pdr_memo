@@ -21,7 +21,7 @@
     </div>
 
     <div class="row justify-content-center">
-        @include('reports.lists',['lists'=>$lists])
+        @include('reports.lists_daily',['lists'=>$lists])
     </div>
 </div>
 

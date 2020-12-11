@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
-// CreateProjectを継承
-class EditProject extends CreateProject
+use App\Category;
+use Illuminate\Validation\Rule;
+
+// CreateCategoryを継承
+class EditCategory extends CreateCategory
 {
     /**
      * Determine if the user is authorized to make this request.

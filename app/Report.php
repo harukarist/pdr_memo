@@ -16,78 +16,136 @@ class Report
   function __construct($date)
   {
     $this->user_id = Auth::getUser()->id;
-    $this->categories = Project::CATEGORIES;
+    $this->categories = Auth::user()->categories;
+    $this->projects = Auth::user()->projects;
     $this->carbon = new Carbon($date, 'Asia/Tokyo');
   }
 
   //開始からのプロジェクト別の合計実績時間を取得
-  public function getTotalTimeByProject()
+  public function getSummaries()
   {
-    $projects = Auth::user()->projects;
+    // プロジェクト作成済みの場合はデータを集計
+    // プロジェクトが未作成の場合、$this->projectsはnull
 
-    if (isset($projects[0])) {
-      foreach ($projects as $project) {
-        $records = DB::table('reviews')
-          ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-          ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-          ->select('actual_time', 'started_at')
-          ->where('preps.user_id', '=', $this->user_id)
-          ->where('reviews.deleted_at', null)
-          ->where('tasks.project_id', '=', $project->id)
-          ->get();
+    $records = DB::table('reviews')
+      ->join('preps', 'preps.id', '=', 'reviews.prep_id')
+      ->join('tasks', 'tasks.id', '=', 'preps.task_id')
+      ->select('actual_time', 'started_at', 'tasks.status', 'tasks.project_id', 'reviews.category_id')
+      ->where('reviews.user_id', '=', $this->user_id)
+      ->where('reviews.deleted_at', null)
+      ->where('tasks.deleted_at', null)
+      ->orderBy('started_at', 'ASC')
+      ->get();
 
-        $first_date = $records->first()->started_at;
-        $dt = Carbon::tomorrow();
-        $df = new Carbon($first_date);
+    $started_at = $records->first()->started_at;
+    $dt = Carbon::tomorrow();
+    $df = new Carbon($started_at);
+    // dd($records);
 
-        $total_time[$project->project_name] = [
-          'total_hour' => round(($records->sum('actual_time')) / 60, 1),
-          'total_count' => $records->count('actual_time'),
-          'days_count' => $df->diffInDays($dt),
-          'first_date' => $first_date
-        ];
+    if ($this->projects) {
+      foreach ($this->projects as $project) {
+        // プロジェクト別
+        $project_records = $records->where('project_id', '=', $project->id);
+
+        // dd($project_records);
+
+        if (count($project_records)) {
+          $started_at = $project_records->first()->started_at;
+          // dd($started_at);
+          $dt = Carbon::tomorrow();
+          $df = new Carbon($started_at);
+
+          $total_time['projects'][$project->project_name] =
+            [
+              'total_hour' => round(($project_records->sum('actual_time')) / 60, 1),
+              'total_count' => $project_records->count('actual_time'),
+              'total_count' => $project_records->count('actual_time'),
+              'completed_count' => $project_records->where('status', '=', 4)->count(),
+              'days_count' => $df->diffInDays($dt) + 1,
+              'started_at' => $df->format('Y/m/d'),
+            ];
+
+          if ($this->categories) {
+            foreach ($this->categories as $category) {
+              // プロジェクト・カテゴリー別
+              $total_time['projects'][$project->project_name]['categories'][$category->category_name] =
+                [
+                  'total_hour' => round(($project_records->where('category_id', '=', $category->id)->sum('actual_time')) / 60, 1),
+                  'total_count' => $project_records->where('category_id', '=', $category->id)->count('actual_time'),
+                  'completed_count' => $project_records->where('category_id', '=', $category->id)->where('status', '=', 4)->count(),
+                ];
+            }
+          }
+        }
+      }
+    }
+    if ($this->categories) {
+      foreach ($this->categories as $category) {
+        // カテゴリ別
+        $category_records = $records->where('category_id', '=', $category->id);
+        // dd($category_records);
+        if (count($category_records)) {
+          $started_at = $category_records->first()->started_at;
+          // dd($started_at);
+          $dt = Carbon::tomorrow();
+          $df = new Carbon($started_at);
+
+          $total_time['categories'][$category->category_name] =
+            [
+              'total_hour' => round(($category_records->sum('actual_time')) / 60, 1),
+              'total_count' => $category_records->count('actual_time'),
+              'completed_count' => $category_records->where('status', '=', 4)->count(),
+              'days_count' => $df->diffInDays($dt) + 1,
+              'started_at' => $df->format('Y/m/d'),
+            ];
+        }
       }
     } else {
-      $total_time = null;
+      $total_time = '';
     }
+    // dd($total_time);
     return $total_time;
   }
 
   //指定月の日別の実績時間を取得
-  public function getTotalTimeByCategory()
-  {
-    foreach ($this->categories as $category) {
-      $records = DB::table('reviews')
-        ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-        ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-        ->select('actual_time')
-        ->where('preps.user_id', '=', $this->user_id)
-        ->where('reviews.deleted_at', null)
-        ->where('reviews.category_id', '=', $category['id'])
-        ->get();
-      $total_time[$category['id']] = [
-        'total_hour' => round(($records->sum('actual_time')) / 60, 1),
-        'total_count' => $records->count('actual_time'),
-      ];
-    }
-    // dd($total_time);
+  // public function getTotalByCategory()
+  // {
+  //   if ($this->categories) {
+  //     foreach ($this->categories as $category) {
+  //       $records = DB::table('reviews')
+  //         ->join('preps', 'preps.id', '=', 'reviews.prep_id')
+  //         ->join('tasks', 'tasks.id', '=', 'preps.task_id')
+  //         ->select('actual_time', 'started_at', 'tasks.status', 'reviews.category_id')
+  //         ->where('reviews.user_id', '=', $this->user_id)
+  //         ->where('reviews.category_id', '=', $category->id)
+  //         ->where('reviews.deleted_at', null)
+  //         ->where('tasks.deleted_at', null)
+  //         ->get();
 
-    return $total_time;
-  }
+  //       $total_time[$category->category_name] = [
+  //         'total_hour' => round(($records->sum('actual_time')) / 60, 1),
+  //         'total_count' => $records->count('actual_time'),
+  //         'completed_count' => $records->where('tasks.status', '=', 4)->count(),
+  //       ];
+  //     }
+  //   } else {
+  //     $total_time = '';
+  //   }
+  //   // dd($total_time);
+  //   return $total_time;
+  // }
 
   //指定月の日別の実績時間を取得
   public function getTimeWithMonth($year, $month)
   {
     $time = DB::table('reviews')
-      ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-      ->join('tasks', 'tasks.id', '=', 'preps.task_id')
       ->select(
-        DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
-        DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
+        DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+        DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
         DB::raw('ROUND(SUM(flow_level)/COUNT(flow_level),1) as flow_level')
       )
-      ->where('preps.user_id', '=', $this->user_id)
-      ->where('reviews.deleted_at', null)
+      ->where('user_id', '=', $this->user_id)
+      ->where('deleted_at', null)
       ->whereYear('started_at', '=', $year)
       ->whereMonth('started_at', '=', $month)
       ->groupBy('target_date')
@@ -99,23 +157,26 @@ class Report
   //指定月の日別の実績時間を取得
   public function getTimeWithMonthByProject($year, $month)
   {
-    $projects = Auth::user()->projects;
 
-    foreach ($projects as $project) {
-      $time_by_project[$project->id] = DB::table('reviews')
-        ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-        ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-        ->select(
-          DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
-          DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
-        )
-        ->where('preps.user_id', '=', $this->user_id)
-        ->where('reviews.deleted_at', null)
-        ->where('tasks.project_id', '=', $project->id)
-        ->whereYear('started_at', '=', $year)
-        ->whereMonth('started_at', '=', $month)
-        ->groupBy('target_date')
-        ->get()->keyBy('target_date');
+    if ($this->projects) {
+      foreach ($this->projects as $project) {
+        $time_by_project[$project->id] = DB::table('reviews')
+          ->join('preps', 'preps.id', '=', 'reviews.prep_id')
+          ->join('tasks', 'tasks.id', '=', 'preps.task_id')
+          ->select(
+            DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+            DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
+          )
+          ->where('reviews.user_id', '=', $this->user_id)
+          ->where('reviews.deleted_at', null)
+          ->where('tasks.project_id', '=', $project->id)
+          ->whereYear('started_at', '=', $year)
+          ->whereMonth('started_at', '=', $month)
+          ->groupBy('target_date')
+          ->get()->keyBy('target_date');
+      }
+    } else {
+      $time_by_project = '';
     }
     // dd($time_by_project);
 
@@ -125,22 +186,24 @@ class Report
   // カレンダーに表示するカテゴリー別の時間表示
   public function getTimeWithMonthByCategory($year, $month)
   {
-    // カテゴリー配列をループして各idをキーとした配列に分けて集計
-    foreach ($this->categories as $category) {
-      $time_by_category[$category['id']] = DB::table('reviews')
-        ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-        ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-        ->select(
-          DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
-          DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
-        )
-        ->where('preps.user_id', '=', $this->user_id)
-        ->where('reviews.deleted_at', null)
-        ->where('reviews.category_id', '=', $category['id'])
-        ->whereYear('started_at', '=', $year)
-        ->whereMonth('started_at', '=', $month)
-        ->groupBy('target_date')
-        ->get()->keyBy('target_date');
+    if ($this->categories) {
+      // カテゴリー配列をループして各idをキーとした配列に分けて集計
+      foreach ($this->categories as $category) {
+        $time_by_category[$category->id] = DB::table('reviews')
+          ->select(
+            DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+            DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
+          )
+          ->where('user_id', '=', $this->user_id)
+          ->where('deleted_at', null)
+          ->where('category_id', '=', $category->id)
+          ->whereYear('started_at', '=', $year)
+          ->whereMonth('started_at', '=', $month)
+          ->groupBy('target_date')
+          ->get()->keyBy('target_date');
+      }
+    } else {
+      $time_by_category = '';
     }
     // dd($time_by_category);
 
@@ -152,15 +215,13 @@ class Report
   public function getTimeWithWeek($startDay, $lastDay)
   {
     $actual_times = DB::table('reviews')
-      ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-      ->join('tasks', 'tasks.id', '=', 'preps.task_id')
       ->select(
-        DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
-        DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
+        DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+        DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
         DB::raw('ROUND(SUM(flow_level)/COUNT(flow_level),1) as flow_level')
       )
-      ->where('preps.user_id', '=', $this->user_id)
-      ->where('reviews.deleted_at', null)
+      ->where('user_id', '=', $this->user_id)
+      ->where('deleted_at', null)
       ->whereDate('started_at', '<=', $lastDay)
       ->whereDate('started_at', '>=', $startDay)
       ->groupby('target_date')
@@ -173,22 +234,24 @@ class Report
   //指定週の日別のカテゴリー別の実績時間を取得
   public function getTimeWithWeekByCategory($startDay, $lastDay)
   {
-    // カテゴリー配列をループして各idをキーとした配列に分けて集計
-    foreach ($this->categories as $category) {
-      $time_by_category[$category['id']] = DB::table('reviews')
-        ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-        ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-        ->select(
-          DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
-          DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
-        )
-        ->where('preps.user_id', '=', $this->user_id)
-        ->where('reviews.deleted_at', null)
-        ->where('reviews.category_id', '=', $category['id'])
-        ->whereDate('started_at', '<=', $lastDay)
-        ->whereDate('started_at', '>=', $startDay)
-        ->groupBy('target_date')
-        ->get()->keyBy('target_date');
+    if ($this->categories) {
+      // カテゴリー配列をループして各idをキーとした配列に分けて集計
+      foreach ($this->categories as $category) {
+        $time_by_category[$category->id] = DB::table('reviews')
+          ->select(
+            DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+            DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
+          )
+          ->where('user_id', '=', $this->user_id)
+          ->where('deleted_at', null)
+          ->where('category_id', '=', $category->id)
+          ->whereDate('started_at', '<=', $lastDay)
+          ->whereDate('started_at', '>=', $startDay)
+          ->groupBy('target_date')
+          ->get()->keyBy('target_date');
+      }
+    } else {
+      $time_by_category = '';
     }
     // dd($time_by_category);
     return $time_by_category;
@@ -200,28 +263,31 @@ class Report
     $startDay = $this->carbon->copy()->startOfWeek();
     $lastDay = $this->carbon->copy()->endOfWeek();
 
-    $projects = Auth::user()->projects;
-
-    for ($i = 0; true; $i++) {
-      foreach ($projects as $project) {
-        $time_by_project[$startDay->format("Ymd")][$project->project_name] = DB::table('reviews')
-          ->join('preps', 'preps.id', '=', 'reviews.prep_id')
-          ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-          ->select(
-            DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
-            DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
-          )
-          ->where('preps.user_id', '=', $this->user_id)
-          ->where('reviews.deleted_at', null)
-          ->where('tasks.project_id', '=', $project->id)
-          ->whereDate('started_at', '=', $startDay->format("Y-m-d"))
-          ->groupBy('target_date')
-          ->get()->keyBy('target_date');
+    if ($this->projects) {
+      for ($i = 0; true; $i++) {
+        foreach ($this->projects as $project) {
+          $time_by_project[$startDay->format("Ymd")][$project->project_name] = DB::table('reviews')
+            ->join('preps', 'preps.id', '=', 'reviews.prep_id')
+            ->join('tasks', 'tasks.id', '=', 'preps.task_id')
+            ->select(
+              DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+              DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
+            )
+            ->where('reviews.user_id', '=', $this->user_id)
+            ->where('reviews.deleted_at', null)
+            ->where('tasks.project_id', '=', $project->id)
+            ->whereDate('started_at', '=', $startDay)
+            ->groupBy('target_date')
+            ->get()->keyBy('target_date');
+        }
+        // 週の最終日から1日ずつ週の頭までループ
+        $date = $startDay->addDays(1);
+        if ($date > $lastDay) {
+          break;
+        }
       }
-      $date = $startDay->addDays(1);
-      if ($date > $lastDay) {
-        break;
-      }
+    } else {
+      $time_by_project = '';
     }
 
     // dd($time_by_project);
@@ -236,7 +302,10 @@ class Report
     $lastDay = $this->carbon->copy()->endOfWeek();
 
     for ($i = 0; true; $i++) {
-      $reviews_with_week[$lastDay->format('Y/m/d(D)')] = Review::with('prep.task.project')
+      $reviews_with_week[$lastDay->format('Y/m/d(D)')]
+        = Review::with('prep.task.project')
+        ->where('reviews.user_id', '=', $this->user_id)
+        ->where('reviews.deleted_at', null)
         ->whereDate('started_at', '=', $lastDay->format("Y-m-d"))
         ->orderBy('started_at', 'DESC')
         ->get();
@@ -255,7 +324,10 @@ class Report
   public function getReviewsWithDay()
   {
     $day = $this->carbon->copy();
-    $reviews_with_day[$day->format('Y/m/d(D)')] = Review::with('prep.task.project')
+    $reviews_with_day[$day->format('Y/m/d(D)')]
+      = Review::with('prep.task.project')
+      ->where('reviews.user_id', '=', $this->user_id)
+      ->where('reviews.deleted_at', null)
       ->whereDate('started_at', '=', $day->format("Y-m-d"))
       ->orderBy('started_at', 'DESC')
       ->get();
@@ -267,13 +339,13 @@ class Report
 
   // public function getTasksWithWeekByProject($startDay, $lastDay)
   // {
-  //   $projects = Auth::user()->projects;
+  //   
 
-  //   foreach ($projects as $project) {
+  //   foreach ($this->projects as $project) {
   //     $tasks_by_project[$project->id] = DB::table('tasks')
   //       ->join('preps', 'tasks.id', '=', 'preps.task_id')
   //       ->join('reviews', 'preps.id', '=', 'reviews.prep_id')
-  //       ->where('preps.user_id', '=', $this->user_id)
+  //       ->where('reviews.user_id', '=', $this->user_id)
   //       ->where('tasks.project_id', '=', $project->id)
   //       ->whereDate('tasks.updated_at', '<=', $lastDay)
   //       ->whereDate('tasks.updated_at', '>=', $startDay)
@@ -291,9 +363,9 @@ class Report
   // プロジェクトごとの１日の実施タスクを取得
   // public function getTasksWithDayByProject($day)
   // {
-  //   $projects = Auth::user()->projects;
+  //   
 
-  //   foreach ($projects as $project) {
+  //   foreach ($this->projects as $project) {
   //     $tasks_by_project[$project->id] = Task::with('preps.reviews')
   //       ->where('tasks.project_id', '=', $project->id)
   //       ->where('tasks.status', '>=', '3')

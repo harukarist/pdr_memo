@@ -45,21 +45,6 @@ class TaskController extends Controller
         Task::destroy($task_id);
     }
 
-    // public function list()
-    // {
-    //     $user_id = Auth::id();
-    //     $tasks = Project::with('tasks.preps.reviews')->where('projects.user_id', $user_id)->get();
-    //     return response()->json(
-    //         [
-    //             'tasks' => $tasks,
-    //         ],
-    //         200,
-    //         [],
-    //         JSON_UNESCAPED_UNICODE
-    //     );
-    // }
-
-
     // --------------------------------------------------------
     // タスク一覧表示
     public function index(int $project_id, Request $request)
@@ -140,7 +125,6 @@ class TaskController extends Controller
 
         // 該当のタスクデータをフォームの入力値で書き換えて保存
         // $task->task_name = $request->task_name;
-        // $task->status = $request->status;
         // $task->priority = $request->priority;
         // $task->due_date = $request->due_date;
 
@@ -156,7 +140,12 @@ class TaskController extends Controller
     {
         // リクエストで受け取ったIDのタスクをソフトデリート
         // Task::find($task_id)->delete();
-        Task::destroy($task_id);
+        $deleting_task = Auth::user()->tasks->find($task_id);
+        $deleting_task->reviews()->delete();
+        $deleting_task->preps()->delete();
+        $deleting_task->delete();
+
+        // Task::destroy($task_id);
 
         // 削除対象のタスクが属するプロジェクトのタスク一覧にリダイレクト
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('content_flash_message', 'タスクを削除しました');
@@ -198,7 +187,7 @@ class TaskController extends Controller
             $started_at = $records->first()->started_at;
             $dt = Carbon::tomorrow();
             $df = new Carbon($started_at);
-            $counter['days_count'] = $df->diffInDays($dt);
+            $counter['days_count'] = $df->diffInDays($dt) + 1;
             $counter['started_at'] = Carbon::parse($started_at)->format("Y/m/d(D)");
         } else {
             $counter['days_count'] = 0;

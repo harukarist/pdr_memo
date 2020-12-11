@@ -5,7 +5,7 @@
   <h5 class="mb-4">これまでの記録</h5>
   @yield('calendar')
   <section class="mb-5">
-    <a href="{{ route('reviews.add') }}" class="btn btn-outline-secondary btn-block mb-4">
+    <a href="{{ route('records.add') }}" class="btn btn-outline-secondary btn-block mb-4">
       記録を追加
     </a>
     @forelse($lists as $list)

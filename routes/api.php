@@ -32,6 +32,7 @@ Route::delete('/tasks/{task_id}/delete', 'Api\TaskListController@delete');
 // 優先度を変更
 Route::put('/tasks/{task_id}/priority/{priority_level}', 'Api\TaskListController@changePriority');
 Route::put('/tasks/{task_id}/edit', 'Api\TaskListController@edit');
+Route::put('/tasks/{task_id}/changeDueDate', 'Api\TaskListController@changeDueDate');
 
 
 // Route::get('/projects/{project_id}/tasks', 'TaskListController@index');

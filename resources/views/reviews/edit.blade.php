@@ -36,7 +36,7 @@
               {{ $editing_review->prep->unit_time }}分 × 
               {{ $editing_review->prep->estimated_steps }}ステップ
               </mark>
-              <span class="badge badge-light">{{ $editing_review->prep->category->category_name }}</span>
+              <span class="badge badge-light">{{ $editing_review->category->category_name }}</span>
             </small>
           </div>
           <div class="p-guide__prep-text">
@@ -164,20 +164,20 @@
         <div class="form-group form-inline col-auto mb-3">
           <label for="category_id" class="mb-0">カテゴリー</label>
           <div class="pl-3">
-            <div class="form-check form-check-inline">
-              @forelse(\App\Project::CATEGORIES as $category)
-                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $editing_review->category_id == $category['id']) checked @endif>
-                <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
-                  <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
+            @forelse($categories as $category)
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input ml-4 @error('category_id') is-invalid @enderror" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $editing_review->category_id == $category->id) checked @endif>
+                <label class="custom-control-label" for="{{ $category->id }}">
+                  <span class="c-form__category badge p-1 align-self-center">{{ $category->category_name }}</span>
                 </label>
+              </div>
               @empty
               @endforelse
-            </div>
           </div>
         </div>
 
         {{-- タスクを完了に切り替え --}}
-        <div class="form-check col-auto mb-4 ml-4">
+        <div class="form-check mb-4 ml-4">
           <span class="d-flex">
           <input class="form-check-input align-self-center" type="checkbox" name="task_completed" id="task_completed" @if(old('task_completed') === 'on' || $current_task->status == 4 ) checked @endif>
           <label class="form-check-label align-self-center" for="task_completed">タスクを完了済みにする</label>

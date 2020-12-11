@@ -24,7 +24,6 @@ class PrepsTableSeeder extends Seeder
                 'estimated_steps' => $num,
                 'user_id' => $user->id,
                 'task_id' => $task->id,
-                'category_id' => $category->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

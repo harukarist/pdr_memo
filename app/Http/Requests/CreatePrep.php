@@ -27,7 +27,6 @@ class CreatePrep extends FormRequest
             'prep_text' => 'max:1000',
             'unit_time' => 'required|min:0|numeric|digits_between:1, 3',
             'estimated_steps' => 'required|min:0|numeric|digits_between:1, 3',
-            'category_id' => 'required|min:1|numeric',
         ];
     }
 }

@@ -58,14 +58,14 @@
 
       {{-- プロジェクト名 --}}
       <div class="form-group">
-        <label for="category_id">プロジェクト名</label>
+        <label for="project_name">プロジェクト名</label>
             {{-- 直前の入力値がない場合はテーブルの値を表示 --}}
             <input type="text" class="form-control @error('project_name') is-invalid @enderror" name="project_name" id="project_name" value="{{ old('project_name') ?? $edit_project->project_name }}" />                    
       </div>
 
       {{-- プロジェクトの目標 --}}
       <div class="form-group">
-        <label for="category_id">目標</label>
+        <label for="project_target">目標</label>
             <input type="text" class="form-control @error('project_target') is-invalid @enderror" name="project_target" id="project_target"　value="{{ old('project_target') ?? $edit_project->project_target }}"/>
       </div>
 
@@ -79,14 +79,15 @@
       <div class="form-group">
         <label for="category_id">メインカテゴリー</label>
         <div class="pl-1">
-          <div class="form-check form-check-inline">
-            @foreach(\App\Project::CATEGORIES as $category)
-              <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id'] || $edit_project->category_id == $category['id']) checked @endif>
-              <label class="form-check-label pr-4 " for="{{ $category['id'] }}">
-                <span class="c-form__category badge p-1 align-self-center">{{ $category['category_name'] }}</span>
+          @foreach($categories as $category)
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input ml-4 @error('category_id') is-invalid @enderror" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id || $edit_project->category_id == $category->id) checked @endif>
+              <label class="custom-control-label" for="{{ $category->id }}">
+                <span class="c-form__category badge p-1 align-self-center">{{ $category->category_name }}</span>
               </label>
+            </div>
             @endforeach
-          </div>
+          <a href="{{ route('categories.create') }}">カテゴリーを編集する</a>
         </div>
       </div>
       <div class="form-group">

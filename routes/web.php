@@ -30,9 +30,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     // 記録一覧
-    Route::get('/reports/weekly', 'WeeklyController@showWeekly')->name('reports.weekly');
-    Route::get('/reports/daily', 'WeeklyController@showDaily')->name('reports.daily');
-    Route::get('/reports/calendar', 'CalendarController@show')->name('reports.calendar');
+    Route::get('/reports/weekly', 'ReportController@showWeekly')->name('reports.weekly');
+    Route::get('/reports/daily', 'ReportController@showDaily')->name('reports.daily');
+    Route::get('/reports/calendar', 'ReportController@showCalendar')->name('reports.calendar');
+    // 記録の追加
+    Route::get('/records/add', 'RecordController@showAddForm')->name('records.add');
+    Route::post('/records/add', 'RecordController@add');
+    // 記録の追加
+    Route::get('/records/edit', 'RecordController@showEditForm')->name('records.edit');
+    Route::patch('/records/edit', 'RecordController@edit');
 
     // TaskController
     // タスク一覧
@@ -46,6 +52,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/projects/{project_id}/tasks/{task_id}/edit', 'TaskController@edit');
     // タスク削除
     Route::delete('/projects/{project_id}/tasks/{task_id}/delete', 'TaskController@delete')->name('tasks.delete');
+
+    // CategoryController
+    // カテゴリー作成
+    Route::get('/categories/create', 'CategoryController@showCreateForm')->name('categories.create');
+    Route::post('/categories/create', 'CategoryController@create');
+    // カテゴリー編集
+    Route::get('/categories/{category_id}/edit', 'CategoryController@showEditForm')->name('categories.edit');
+    Route::patch('/categories/{category_id}/edit', 'CategoryController@edit');
+    // カテゴリー削除
+    Route::delete('/categories/{category_id}/delete', 'CategoryController@delete')->name('categories.delete');
+
+
 
     // ProjectController
     // プロジェクト作成
@@ -82,9 +100,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/edit', 'ReviewController@edit');
     // Review削除
     Route::delete('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/delete', 'ReviewController@delete')->name('reviews.delete');
-    // 記録の追加
-    Route::get('/reviews/add', 'ReviewController@showAddForm')->name('reviews.add');
-    Route::post('/reviews/add', 'ReviewController@add');
 });
 
 // 会員登録・ログイン・ログアウト・パスワード再設定

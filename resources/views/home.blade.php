@@ -6,7 +6,7 @@
       <div class="col">
         <div class="card mt-5">
           <div class="card-header">
-            ようこそ！まずはプロジェクトを作成しましょう
+            ようこそ！まずはプロジェクトを作成しましょう！
           </div>
           <div class="card-body">
             <div class="text-center">

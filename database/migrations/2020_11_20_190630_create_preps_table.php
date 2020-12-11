@@ -20,7 +20,6 @@ class CreatePrepsTable extends Migration
             $table->integer('estimated_steps');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('task_id')->unsigned();
-            $table->bigInteger('category_id')->unsigned();
             $table->timestamps();
 
             // 外部キーを設定
@@ -28,8 +27,6 @@ class CreatePrepsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('task_id')->references('id')->on('tasks')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')
-                ->onUpdate('cascade')->onDelete('restrict');
 
             // ソフトデリートを定義
             $table->softDeletes();

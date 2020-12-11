@@ -1,16 +1,15 @@
 <div class="col-md-10">
   <section class="mb-5">
-    <a href="{{ route('reviews.add') }}" class="btn btn-outline-secondary btn-block mb-4">
+    <a href="{{ route('records.add') }}" class="btn btn-outline-secondary btn-block mb-4">
       記録を追加
     </a>
   </section>
   <section class="mb-5">
     @php
-    // dd(count($lists))
+    // dd($lists)
     @endphp
-    @if(isset($lists))
     @foreach($lists as $date => $reviews)
-      @if(isset($reviews[0]))
+    @if(count($reviews))
       {{-- タスクリスト --}}
       <div class="p-record__wrapper mb-4">
         <div class="p-record__date border-bottom mb-4 px-2 d-flex">
@@ -22,12 +21,18 @@
           @endcomponent
         </div>
       </div>
-      @endif
-      @endforeach
-      @elseif(empty($lists[0]) && $loop->first)
-      <div class="p-record__wrapper text-center mb-4">
-        記録はまだありません
+    @else
+      <div class="p-record__wrapper mb-4">
+        <div class="p-record__date border-bottom mb-4 px-2 d-flex">
+          <h5>{{ $date ?? '' }}</h5>
+        </div>
+        <div class="p-record__contents">
+          <div class="p-report__reviews px-4 py-2 mb-3">
+          記録はまだありません
+          </div>
+        </div>
       </div>
     @endif
+  @endforeach
   </section>
 </div>

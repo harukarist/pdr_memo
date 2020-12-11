@@ -3,8 +3,8 @@
 <div class="container c-container">
 <h5 class="mb-4 text-center">これまでの記録</h5>
     <div class="row justify-content-center mb-2">
-        @include('reports.summary_project',['summaries'=>$summaries['projects']])
-        @include('reports.summary_category',['summaries'=>$summaries['categories']])
+        @include('reports.report_summary',['totals'=>$total_time['projects']])
+        @include('reports.report_summary',['totals'=>$total_time['categories']])
     </div>
     <div class="row justify-content-center mb-2">
         <div class="col-md-10">
@@ -25,7 +25,7 @@
     </div>
 
     <div class="row justify-content-center">
-       @include('reports.lists_weekly',['lists'=>$lists,'startDay'=>$startDay, 'lastDay'=>$lastDay])
+       @include('reports.lists_daily',['lists'=>$lists])
     </div>
 </div>
 

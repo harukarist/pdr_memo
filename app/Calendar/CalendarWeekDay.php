@@ -3,8 +3,10 @@
 namespace App\Calendar;
 
 use App\Project;
+use App\Category;
 use Carbon\Carbon;
 use App\Calendar\HolidaySetting;
+use Illuminate\Support\Facades\Auth;
 
 // その日のカレンダーを出力する
 // CalendarWeekクラスから呼び出される
@@ -15,6 +17,7 @@ class CalendarWeekDay
   protected $isToday = false;
   protected $isTarget = false;
   public $holidayName = null;
+  public $categories = [];
   public $reviews = [];
   public $total_hour = null;
   public $flow_level = null;
@@ -25,6 +28,7 @@ class CalendarWeekDay
   {
     // 引数で指定された日付のオブジェクトを生成
     $this->carbon = new Carbon($date);
+    $this->categories = Category::getUsersCategories();
   }
 
   // データを取得するためのdate_keyを生成
@@ -88,14 +92,11 @@ class CalendarWeekDay
   // カレンダーの日の内部を出力
   function render()
   {
-
-    $categories = Project::CATEGORIES;
-
     // format()関数に「j」を指定して、先頭にゼロをつけない日付を取得
     $day = [];
 
-    // $day[] = '<a href="' . $this->path . '?date=' . $this->carbon->format("Y-m-d") . ' " class="day-link">';
-    $day[] = '<a href="/reports/daily?date=' . $this->carbon->format("Y-m-d") . ' " class="day-link">';
+    $day[] = '<a href="' . $this->path . '?date=' . $this->carbon->format("Y-m-d") . ' " class="day-link">';
+    // $day[] = '<a href="/reports/daily?date=' . $this->carbon->format("Y-m-d") . ' " class="day-link">';
     $day[] = '<p class="day">' . $this->carbon->format("j") . '</p>';
 
     if ($this->holidayName) {
@@ -113,8 +114,8 @@ class CalendarWeekDay
     }
     if (isset($this->reviews)) {
       foreach ($this->reviews as $id => $review) {
-        $day[] = '<div class="category-wrapper category-' . $id . '"><p class="category-name">' .
-          $categories[$id]['category_name'] . '</p>';
+        $day[] = '<div class="category-wrapper category-' . $id . '"><p class="category-name mb-1">' .
+          $this->categories[$id]['category_name'] . '</p>';
         $day[] = '<p class="category-hour">' .
           $review->hour . ' h</p></div><br>';
       }

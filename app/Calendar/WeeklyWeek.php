@@ -1,15 +1,17 @@
 <?php
+
 namespace App\Calendar;
 
 use Carbon\Carbon;
+use App\Calendar\CalendarWeek;
+use App\Calendar\WeeklyWeekDay;
 use App\Calendar\HolidaySetting;
-use App\Calendar\CalendarWeekDay;
 
 // 週のカレンダーを出力
 class WeeklyWeek extends CalendarWeek
 {
 	/**
-	 * @return CalendarWeekDay[]
+	 * @return WeeklyWeekDay
 	 */
 	// 週の開始日〜終了日までを作成
 	function getDays(HolidaySetting $setting)
@@ -31,5 +33,12 @@ class WeeklyWeek extends CalendarWeek
 			$tmpDay->addDay(1);
 		}
 		return $days;
+	}
+
+	function createDay(Carbon $date)
+	{
+		// カレンダー日オブジェクトを生成
+		$day = new WeeklyWeekDay($date);
+		return $day;
 	}
 }

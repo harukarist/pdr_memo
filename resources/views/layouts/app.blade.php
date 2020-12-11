@@ -53,6 +53,22 @@
                             {{-- ｜ --}}
                             <a href="{{ route('home') }}" class="c-navbar__item nav-item nav-link">
                                 <i class="fas fa-list-ul mr-1" aria-hidden="true"></i>タスクリスト</a>
+
+                                <div class="d-block d-sm-none">
+                                    <ul class="list-group list-group-flush mt-2 mb-4">
+                                    @php
+                                        $projects = Auth::user()->projects;
+                                    @endphp
+                                    @if($projects)
+                                    @include('tasks.project_nav',['projects'=>$projects, 'current_project'=>$projects->first()])
+                                    @endif
+                                    <li class="list-group-item p-1">
+                                        <a href="{{ route('projects.create') }}" class="btn btn-outline-secondary btn-block">
+                                          プロジェクトを追加
+                                        </a>
+                                      </li>
+                                    </ul>
+                                </div>
                             <a href="{{ route('reports.weekly') }}" class="c-navbar__item nav-item nav-link">
                                 <i class="fas fa-medal mr-1" aria-hidden="true"></i>これまでの記録</a>
 

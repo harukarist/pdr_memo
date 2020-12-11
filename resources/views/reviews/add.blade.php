@@ -5,7 +5,7 @@
   <h5 class="mb-4">記録を追加</h5>
 
   <section class="mb-4">
-    <form method="POST" action="{{ route('reviews.add') }}">
+    <form method="POST" action="{{ route('records.add') }}">
     @csrf
 
       {{-- バリデーションエラー --}}
@@ -30,7 +30,7 @@
 
       <div class="form-group">
         <label for="task_name">タスク名</label>
-        <input type="text" class="form-control" name="task_name" id="task_name" value="{{ old('task_name') }}" />
+        <input type="text" class="form-control @error('task_name') is-invalid @enderror" name="task_name" id="task_name" value="{{ old('task_name') }}" />
       </div>
 
       <div class="form-group">
@@ -125,20 +125,20 @@
         <div class="form-group form-inline col-auto mb-3">
           <label for="category_id" class="mb-0">カテゴリー</label>
           <div class="pl-3">
-            <div class="form-check form-check-inline">
-              @forelse(\App\Project::CATEGORIES as $category)
-                <input type="radio" class="form-check-input" name="category_id" id="{{ $category['id'] }}" value="{{ $category['id'] }}" @if(old('category_id')== $category['id']||$category['id']==1) checked @endif>
-                <label class="form-check-label pr-4" for="{{ $category['id'] }}">
-                  <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category['category_name'] }}</h4>
+            @forelse($categories as $category)
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input ml-4 @error('category_id') is-invalid @enderror" name="category_id" id="{{ $category->id }}" value="{{ $category->id }}" @if(old('category_id')== $category->id||$category->id==1) checked @endif>
+                <label class="custom-control-label" for="{{ $category->id }}">
+                  <h4 class="c-form__category badge {{ $category['category_class'] }} p-1">{{ $category->category_name }}</h4>
                 </label>
+              </div>
               @empty
               @endforelse
-            </div>
           </div>
         </div>
 
         {{-- タスクを完了に切り替え --}}
-        <div class="form-check col-auto mb-4 ml-4">
+        <div class="form-check mb-4 ml-4">
           <input class="form-check-input" type="checkbox" name="task_completed" id="task_completed" checked>
           <label class="form-check-label" for="task_completed">タスクを完了済みにする</label>
         </div>

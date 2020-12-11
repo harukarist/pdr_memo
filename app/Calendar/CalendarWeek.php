@@ -74,8 +74,9 @@ class CalendarWeek
 	 */
 	function getDay(Carbon $date, HolidaySetting $setting)
 	{
+
 		// カレンダー日オブジェクトを生成
-		$day = new CalendarWeekDay($date);
+		$day = $this->createDay($date);
 		$day->path = $this->path;
 
 		// 休日判定
@@ -110,6 +111,13 @@ class CalendarWeek
 				}
 			}
 		}
+		return $day;
+	}
+
+	function createDay(Carbon $date)
+	{
+		// カレンダー日オブジェクトを生成
+		$day = new CalendarWeekDay($date);
 		return $day;
 	}
 }

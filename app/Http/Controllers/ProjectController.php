@@ -3,17 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Category;
+use App\Http\Requests\EditProject;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProject;
-use App\Http\Requests\EditProject;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CategoryController;
 
 class ProjectController extends Controller
 {
     // プロジェクト作成画面
     public function showCreateForm()
     {
-        return view('projects.create');
+        // ログインユーザーに紐づくカテゴリーを取得
+        $categories = Auth::user()->categories()->get();
+
+        if (empty($categories->count())) {
+            CategoryController::createUsersCategory('Input');
+            CategoryController::createUsersCategory('Output');
+            CategoryController::createUsersCategory('Etc');
+            $categories = Auth::user()->categories()->get();
+        }
+        return view('projects.create', compact('categories'));
     }
 
     // プロジェクトの作成
@@ -22,12 +33,6 @@ class ProjectController extends Controller
     {
         // Projectモデルのインスタンスを作成する
         $project = new Project();
-
-        // $project_name = $request->project_name;
-        // $project->category_id = $request->category_id;
-        // Auth::user()->projects()->save($project);
-
-        // $project->fill($request->all());
 
         // ログインユーザーに紐づけて保存
         Auth::user()->projects()->save($project->fill($request->all()));
@@ -41,13 +46,11 @@ class ProjectController extends Controller
     {
         // 該当のプロジェクトIDのデータを取得し、ビューテンプレートに返却
         $edit_project = Auth::user()->projects()->find($project_id);
-        // $categories = Auth::user()->categories()->get();
+        // ログインユーザーに紐づくカテゴリーを取得
+        $categories = Auth::user()->categories()->get();
 
-        // ログインユーザーに紐づくプロジェクトを取得
         if ($edit_project) {
-            $projects = Auth::user()->projects()->get();
-
-            return view('projects.edit', compact('edit_project', 'projects',));
+            return view('projects.edit', compact('edit_project', 'categories'));
         } else {
             return redirect()->route('home');
         }

@@ -22,6 +22,7 @@ class ReviewController extends Controller
         // ログインユーザーに紐づく該当IDのレコードを取得
         $current_task = Auth::user()->tasks()->find($task_id);
         $done_prep = $current_task->preps()->find($prep_id);
+        $categories = Auth::user()->categories()->get();
 
         if ($request->session()->has('started_at')) {
             // セッションに記録した開始時刻の値を取得して破棄
@@ -36,11 +37,14 @@ class ReviewController extends Controller
 
         // 現在時刻と開始時刻の差を実際にかかった時間とする
         $actual_time = $sa->diffInMinutes($dt);
+        if (empty($actual_time)) {
+            $actual_time = $done_prep->unit_time;
+        }
 
         // タスク実行回数を取得
         $done_count = $current_task->done_count;
 
-        return view('reviews.create', compact('done_prep', 'current_task',  'started_date', 'started_time', 'done_count', 'actual_time'));
+        return view('reviews.create', compact('done_prep', 'current_task', 'categories', 'started_date', 'started_time', 'done_count', 'actual_time'));
     }
 
     // review登録処理
@@ -52,6 +56,7 @@ class ReviewController extends Controller
         $review = new Review();
         // 該当のPrepIDを登録
         $review->prep_id = $prep_id;
+        $review->user_id = Auth::id();
 
         // 入力された日付、時刻からdateTimeを生成
         $review->started_at = Carbon::createFromFormat(
@@ -76,6 +81,7 @@ class ReviewController extends Controller
         // ログインユーザーに紐づく該当IDのreviewを取得
         $editing_review = Auth::user()->preps()->find($prep_id)->reviews()->find($review_id);
         $current_task = Auth::user()->tasks()->find($task_id);
+        $categories = Auth::user()->categories()->get();
 
         if (!empty($editing_review->started_at)) {
             $sa = new Carbon($editing_review->started_at);
@@ -86,14 +92,15 @@ class ReviewController extends Controller
         $started_date = $sa->toDateString();
         $started_time = $sa->format('H:i');
 
-        return view('reviews.edit', compact('editing_review', 'current_task',  'started_date', 'started_time'));
+        return view('reviews.edit', compact('editing_review', 'current_task', 'categories', 'started_date', 'started_time'));
     }
 
     // review編集処理
     public function edit(int $project_id, int $task_id, int $prep_id, int $review_id, EditReview $request)
     {
         // リクエストのIDからreviewデータを取得
-        $editing_review = Auth::user()->reviews()->find($review_id);
+        $editing_review = Auth::user()->preps()->find($prep_id)->reviews()->find($review_id);
+        // $editing_review = Auth::user()->reviews()->find($review_id);
         $current_prep = Auth::user()->preps()->find($prep_id);
 
         // 入力された日付、時刻からdateTimeを生成
@@ -108,7 +115,8 @@ class ReviewController extends Controller
         }
 
         // 該当のreviewデータをフォームの入力値で書き換えて保存
-        $current_prep->reviews()->save($editing_review->fill($request->all()));
+        $editing_review->fill($request->all());
+        $editing_review->save();
 
         // 編集対象のreviewが属するreviewのreview一覧にリダイレクト
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを変更しました');
@@ -126,58 +134,4 @@ class ReviewController extends Controller
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを削除しました');
     }
 
-    // 記録追加画面を表示
-    public function showAddForm()
-    {
-        // ログインユーザーに紐づく該当IDのレコードを取得
-        $projects = Auth::user()->projects()->get();
-
-        $dt = Carbon::now();
-        // 開始時刻を日付と時刻に分ける
-        $started_date = $dt->toDateString();
-        $started_time = $dt->format('H:i');
-
-        return view('reviews.add', compact('projects', 'started_date', 'started_time'));
-    }
-
-    // 記録追加処理
-    public function add(AddReview $request)
-    {
-        // 選択されたプロジェクトに紐づくタスクを作成
-        $project = Auth::user()->projects()->find($request->project_id);
-        $task = new Task();
-        $task->task_name = $request->task_name;
-        $project->tasks()->save($task);
-
-        // 作成したタスクに紐づくPrepを作成
-        $prep = new Prep();
-        $prep->task_id = $task->id;
-        $prep->prep_text = $request->prep_text;
-        $prep->unit_time = $request->unit_time;
-        $prep->estimated_steps = $request->estimated_steps;
-        $prep->category_id = $request->category_id;
-        Auth::user()->preps()->save($prep);
-
-        // タスクのステータスを更新
-        Auth::user()->tasks()->find($task->id)->update(['status' => 2]);
-
-        $review = new Review();
-        // 入力された日付、時刻からdateTimeを生成
-        $review->started_at = Carbon::createFromFormat(
-            'Y-m-d H:i',
-            $request->started_date . ' ' . $request->started_time
-        );
-
-        // その他の項目をfillで登録
-        $prep->reviews()->save($review->fill($request->all()));
-
-        // 完了済みチェックがonの場合はタスクのステータスを4（完了）に切り替え
-        if ($request->task_completed) {
-            $task->update(['status' => 4]);
-        } else {
-            $task->update(['status' => 3]);
-        }
-        // 一覧画面にリダイレクト
-        return redirect()->route('reports.calendar')->with('flash_message', '記録を追加しました');
-    }
 }

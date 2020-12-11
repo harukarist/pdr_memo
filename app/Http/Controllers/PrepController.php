@@ -18,8 +18,9 @@ class PrepController extends Controller
         // ログインユーザーに紐づくタスク、カテゴリーを取得
         $tasks = Auth::user()->tasks()->get();
         $current_task = Auth::user()->tasks()->find($task_id);
+        $categories = Auth::user()->categories()->get();
 
-        return view('preps.create', compact('tasks', 'current_task'));
+        return view('preps.create', compact('tasks', 'current_task', 'categories'));
     }
 
     // Prep登録処理
@@ -41,8 +42,9 @@ class PrepController extends Controller
         // ログインユーザーに紐づく該当IDのレコードを取得
         $current_task = Auth::user()->tasks()->find($task_id);
         $editing_prep = $current_task->preps()->find($prep_id);
+        $categories = Auth::user()->categories()->get();
 
-        return view('preps.edit', compact('editing_prep', 'current_task'));
+        return view('preps.edit', compact('editing_prep', 'current_task', 'categories'));
     }
 
     // Prep編集処理
@@ -64,7 +66,7 @@ class PrepController extends Controller
         $current_task = Auth::user()->tasks()->find($task_id);
         $current_task->preps()->find($prep_id)->delete();
         // タスクのステータスを更新
-        if(!($current_task->preps()->count())){
+        if (!($current_task->preps()->count())) {
             $current_task->update(['status' => 1]);
         }
         // Prep::find($prep_id)->delete();

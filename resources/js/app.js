@@ -20,8 +20,8 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('header-component', HeaderComponent);
-Vue.component('task-item', require('./components/TaskItem.vue').default);
-// Vue.component('task-list', require('./components/TaskList.vue').default);
+Vue.component('task-list', require('./components/TaskList.vue').default);
+Vue.component('reports-prep', require('./components/ReportsPrep.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

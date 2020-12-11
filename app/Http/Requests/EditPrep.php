@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 // 親を継承
 class EditPrep extends CreatePrep
 {
@@ -24,9 +22,6 @@ class EditPrep extends CreatePrep
      */
     public function rules()
     {
-        // 親のルールを継承
-        $rule = parent::rules();
-
-        return $rule;
+        return parent::rules();
     }
 }
