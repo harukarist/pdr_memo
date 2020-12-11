@@ -1,5 +1,6 @@
 const express = require('express');
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 const app = express();
-app.use(express.static(__dirname + "/dist/"));
+const path = require('path')
+app.use(express.static(__dirname + "/public/"));
 app.listen(port);
