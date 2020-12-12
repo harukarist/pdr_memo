@@ -37,7 +37,7 @@
 
           {{-- 目標 --}}
           @isset($current_project->project_target)
-          <div class="p-tasklist__target alert alert-success p-2 mb-2">
+          <div class="p-tasklist__target alert alert-primary p-2 mb-2">
             {{ $current_project->project_target ?? ''}} 
           </div>
           @endisset

@@ -137,7 +137,7 @@ return [
     */
 
     'attributes' => [
-        "name" => "氏名",
+        "name" => "お名前",
         "email" => "メールアドレス",
         "password" => "パスワード",
         "password_confirmation" => "パスワード(確認用)",
@@ -161,6 +161,7 @@ return [
         'actual_time' => '実際に行った時間',
         'started_date' => '開始日',
         'started_time' => '開始時刻',
+        'new_email' => '新しいメールアドレス',
     ],
 
 ];

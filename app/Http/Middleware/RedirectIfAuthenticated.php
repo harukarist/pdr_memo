@@ -18,6 +18,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // 認証済みユーザがログイン画面やユーザ登録画面にアクセスした場合は
+        // ホーム画面へリダイレクト
         if (Auth::guard($guard)->check()) {
             return redirect('/home');
         }

@@ -43,12 +43,12 @@ class ChangeEmail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->subject('メールアドレスの変更')
-        ->view('profile.changeEmail') //メールテンプレート
-        ->action(
-            'メールアドレス変更',
-            url('reset',$this->token)
-        );
+            ->subject('メールアドレスの変更')
+            ->view('email.changeEmail') //メールテンプレート
+            ->action(
+                'メールアドレス変更',
+                url('reset', $this->token)
+            );
     }
 
     /**
