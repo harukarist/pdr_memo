@@ -26,7 +26,7 @@ return [
         'array'   => ':attributeは、:min個から:max個の間で指定してください。',
     ],
     'boolean'              => ':attributeは、trueかfalseを指定してください。',
-    'confirmed'            => ':attributeと、確認フィールドとが、一致していません。',
+    'confirmed'            => ':attributeと確認フィールドとが一致していません。',
     'date'                 => ':attributeには日付を指定してください。',
     'date_equals'          => ':attributeには、:dateと同じ日付を指定してください。',
     'date_format'          => ':attributeは:format形式で指定してください。',
