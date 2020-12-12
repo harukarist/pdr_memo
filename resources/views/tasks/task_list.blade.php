@@ -1,10 +1,10 @@
 @foreach($tasks as $task)
 
-<task-list task-id="{{ $task->id }}" task-status="{{ $task->status }}" task-name="{{ $task->task_name }}" priority="{{ $task->priority }}" due-date="{{ $task->due_date}}">
+<task-list task-id="{{ $task->id }}" task-status="{{ $task->status }}" task-name="{{ $task->task_name }}">
   
   <template v-slot:task-action>
     <div class="p-task__details d-flex ml-2">
-      <task-menu task-id="{{ $task->id }}" task-status="{{ $task->status }}" task-name="{{ $task->task_name }}" priority="{{ $task->priority }}" due-date="{{ $task->due_date}}">
+      <task-menu task-id="{{ $task->id }}" priority="{{ $task->priority }}" due-date="{{ $task->due_date}}">
       </task-menu>
       <div class="p-task__action col-auto text-right">
         {{-- <a href="{{ route('tasks.edit', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">
