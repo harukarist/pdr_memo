@@ -4,7 +4,7 @@
       <div
         class="p-task__wrapper d-flex flex-column flex-md-row justify-content-between p-2 mx-0 bg-white"
       >
-        <div class="p-task__main p-0 d-flex col-sm-4 col-md-5 col-xl-6 mx-0 px-0">
+        <div class="p-task__main p-0 d-flex col-auto mx-0 px-0">
           <!-- チェックボックス -->
           <div
             class="p-task__checkbox pr-2"
@@ -51,66 +51,29 @@
 </template>
 
 <script>
-import vuejsDatepicker from "vuejs-datepicker";
-import { en, ja } from "vuejs-datepicker/dist/locale";
-
 export default {
   name: "TaskList",
-  components: {
-    "vuejs-datepicker": vuejsDatepicker,
+  // props: ["taskId", "taskStatus", "taskName"],
+    props: {
+    taskId: { type: String },
+    taskStatus: { type: String },
+    taskName: { type: String },
   },
-  props: ["taskId", "taskStatus", "taskName", "priority", "dueDate"],
-  // props: {
-  //   taskId: { type: String },
-  //   taskStatus: { type: String },
-  //   taskName: { type: String },
-  //   priority: { type: String },
-  //   dueDate: { type: String },
-  // },
   data() {
     return {
-      en,
-      ja,
       isDone: this.taskStatus == 4 ? true : false,
       showEditBox: false,
       keyDownCode: "",
-      showMenu: false,
       isActiveText: false,
       isDeleted: false,
-      priority_level: this.priority,
-      scale: 0,
-      showDatePicker: false,
-      dueDate_data: this.dueDate,
       taskName_data: this.taskName,
-      isMust: false,
-      isSmall: false,
     };
   },
   computed: {
-    inputDueDate: {
-      get() {
-        return this.dueDate_data;
-      },
-      set(value) {
-        this.changeDueDate(value);
-      },
-    },
     classCheckBox() {
       return {
         "far fa-check-circle": this.isDone,
         "far fa-circle": !this.isDone,
-      };
-    },
-    classMustIcon: function () {
-      return {
-        "fas isOn": this.isMust,
-        "far isOff": !this.isMust,
-      };
-    },
-    classSmallIcon: function () {
-      return {
-        isOn: this.isSmall,
-        isOff: !this.isSmall,
       };
     },
   },
@@ -166,58 +129,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    changeDueDate(inputDueDate) {
-      axios
-        .put("/api/tasks/" + this.taskId + "/changeDueDate", {
-          due_date: inputDueDate,
-        })
-        .then((response) => {
-          this.dueDate_data = inputDueDate;
-          console.log("success", this.dueDate_data, this.taskId);
-          this.showDatePicker = !this.showDatePicker;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    // 削除
-    deleteTask(taskId) {
-      if (
-        confirm(
-          "タスクを削除すると、予定や振り返りのデータも一緒に削除されます。本当にこのタスクを削除しますか？"
-        )
-      )
-        axios
-          .delete("/api/tasks/" + taskId + "/delete")
-          .then((res) => {
-            console.log(taskId, " is deleted");
-            this.isDeleted = true;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    },
-    changePriority(taskId, scale) {
-      if (this.priority_level == scale) {
-        scale = 0;
-      }
-      axios
-        .put("/api/tasks/" + taskId + "/priority/" + scale)
-        .then((response) => {
-          this.priority_level = scale;
-          console.log(this.priority_level, "success");
-          scale = 0; //scaleを0に戻す
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    toggleMust: function () {
-      this.isMust = !this.isMust;
-    },
-    toggleSmall: function () {
-      this.isSmall = !this.isSmall;
     },
   },
 };
