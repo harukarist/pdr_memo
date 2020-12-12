@@ -86,7 +86,7 @@
                 {!! nl2br(e($review->review_text)) !!}
                 </p>
                 <small class="text-muted mb-1">
-                  {{ $review->started_at ?? '' }}〜
+                  {{ $review->started_at ?? '' }}〜{{ $review->finished_at ?? '' }}
                 </small>
                 @if($review->good_text||$review->problem_text||$review->try_text)
                   <div class="p-pdr__review-kpt border p-1 mt-1 mb-2">

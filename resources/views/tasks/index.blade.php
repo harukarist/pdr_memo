@@ -37,14 +37,15 @@
 
           {{-- 目標 --}}
           @isset($current_project->project_target)
-          <div class="p-tasklist__target alert alert-primary p-2 mb-2">
+          <div class="p-tasklist__target alert alert-success p-2 mb-2">
             {{ $current_project->project_target ?? ''}} 
           </div>
           @endisset
   
           {{-- サマリー --}}
+          @if($counter)
             @include('tasks.task_summary',['counter'=>$counter,'current_project'=>$current_project])
-          
+          @endif
 
            {{-- タスク作成フォーム --}}
           <div class="p-tasklist__create mb-4 p-2 @if(!count($tasks)) border border-primary @endif">
@@ -53,7 +54,7 @@
           </div>
           <div class="p-tasklist__list">
             {{-- タスクメニュー --}}
-            @include('tasks.task_nav')
+            @include('tasks.task_nav',['keyword'=>$keyword, 'active_status'=>$active_status])
           
             {{-- タスクリスト --}}
             @if(count($tasks))

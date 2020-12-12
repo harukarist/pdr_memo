@@ -85,7 +85,7 @@
         </header>
         {{-- フラッシュメッセージ --}}
         @if (session('flash_message'))
-            <div class="alert alert-success text-center" role="alert">
+            <div class="alert alert-primary text-center" role="alert">
                 {{ session('flash_message') }}
             </div>
         @endif

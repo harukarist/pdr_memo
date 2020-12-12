@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    // --------------------------------------------------------
     // タスク一覧表示
     public function index(int $project_id, Request $request)
     {
@@ -37,25 +36,53 @@ class TaskController extends Controller
             return view('home');
         }
 
-        if ($request->is('projects/*/tasks/done')) {
-            // 完了リストページからのリクエストの場合は完了タスクを表示
-            $tasks = $current_project->tasks()->where('status', '=', '4')
-                ->orderBy('updated_at', 'desc')->paginate(15);
-            $has_done = true;
+        // 検索リクエストがあった場合は検索キーワードを格納
+        if ($request->input('keyword')) {
+            $keyword = $request->input('keyword');
         } else {
-            // 未完了リストページからのリクエストの場合は未完了タスクを表示
-            $tasks = $current_project->tasks()->where('status', '<', '4')
-                ->orderBy('priority', 'desc')->orderBy('due_date', 'desc')->orderBy('updated_at', 'desc')
-                ->paginate(15);
-            $has_done = false;
+            $keyword = '';
         }
 
+        // タスクテーブルのクエリ発行
+        // $query = Task::query();
+        $query = $current_project->tasks();
+
+        // 検索キーワードがある場合
+        if (!empty($keyword)) {
+            $tasks = $query
+                ->where('task_name', 'LIKE', '%' . $keyword . '%')
+                ->orderBy('updated_at', 'desc')->paginate(15);
+            $active_status = 'ALL';
+        } else {
+            if ($request->is('projects/*/tasks/all')) {
+                // 全てのタスクにチェックがある場合は完了タスクを表示
+                $tasks = $query->orderBy('priority', 'desc')->orderBy('due_date', 'desc')
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate(15);
+                $active_status = 'ALL';
+            } elseif ($request->is('projects/*/tasks/done')) {
+                // 完了タスクにチェックがある場合は完了タスクを表示
+                $tasks = $query->where('status', '=', '4')
+                    ->orderBy('updated_at', 'desc')->paginate(15);
+                $active_status = 'DONE';
+            } else {
+                // 未完了タスクにチェックがある場合は未完了タスクを表示
+                $tasks = $query->where('status', '<', '4')
+                    ->orderBy('priority', 'desc')->orderBy('due_date', 'desc')
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate(15);
+                $active_status = 'UNDONE';
+            }
+        }
 
         // 開始からの記録を集計
         $counter = $this->summary($current_project, $project_id);
+
         // dd($counter);
-        return view('tasks.index', compact('projects', 'current_project', 'tasks', 'counter', 'has_done'));
+        return view('tasks.index', compact('projects', 'current_project', 'tasks', 'counter', 'active_status', 'keyword'));
     }
+
+
 
     // タスク作成処理
     public function create(int $project_id, CreateTask $request)

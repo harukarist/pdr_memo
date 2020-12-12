@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     // ホーム画面
     Route::get('/home', 'HomeController@index')->name('home');
 
+
     // 記録一覧
     Route::get('/reports/weekly', 'ReportController@showWeekly')->name('reports.weekly');
     Route::get('/reports/daily', 'ReportController@showDaily')->name('reports.daily');
@@ -43,6 +44,11 @@ Route::group(['middleware' => 'auth'], function () {
     // TaskController
     // タスク一覧
     Route::get('/projects/{project_id}/tasks', 'TaskController@index')->name('tasks.index');
+    Route::get('/projects/{project_id}/tasks/done', 'TaskController@index')->name('tasks.done');
+    Route::get('/projects/{project_id}/tasks/all', 'TaskController@index')->name('tasks.all');
+    // タスク検索
+    Route::get('/projects/{project_id}/tasks/search', 'TaskController@index')->name('tasks.search');
+
     // 完了済みタスク一覧
     Route::get('/projects/{project_id}/tasks/done', 'TaskController@index')->name('tasks.done');
     // タスク作成

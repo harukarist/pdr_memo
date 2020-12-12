@@ -90,4 +90,17 @@ class ReportController extends Controller
 
     return $date;
   }
+
+  // タスク検索処理
+  public function search(Request $request)
+  {
+    $keyword = $request->input('keyword');
+    $query = User::query();
+
+    if (!empty($keyword)) {
+      $query->where('task_name', 'like', '%' . $keyword . '&')->orWhere('status', 'like', '%' . $keyword . '&');
+    }
+    $data = $query->orderBy('priority', 'desc')->orderBy('due_date', 'desc')->orderBy('updated_at', 'desc')
+      ->paginate(15);
+  }
 }
