@@ -97,9 +97,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Review削除
     Route::delete('/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/delete', 'ReviewController@delete')->name('reviews.delete');
 
+    // プロフィール変更
+    Route::get('/profile', 'ChangeProfileController@showChangeProfileForm')->name('profile.change');
+    Route::patch('/profile', 'ChangeProfileController@changeProfile');
     // メールアドレス変更
-    Route::get('/profile', 'ChangeEmailController@showChangeEmailForm')->name('profile.reset');
-    Route::post('/profile', 'ChangeEmailController@sendChangeEmailLink');
+    Route::get('/email', 'ChangeEmailController@showChangeEmailForm')->name('email.change');
+    Route::patch('/email', 'ChangeEmailController@sendChangeEmailLink');
+    // 新規メールアドレスに更新
+    Route::get("reset/{token}", "ChangeEmailController@reset");
 });
 
 // 会員登録・ログイン・ログアウト・パスワード再設定

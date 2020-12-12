@@ -1,10 +1,10 @@
-me<?php
+<?php
 
 namespace App;
 
-use App\Notifications\ChangeEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ChangeEmail;
 
 // メールアドレス変更用モデル
 class EmailReset extends Model
