@@ -18,12 +18,12 @@ class ReviewController extends Controller
     // Review登録画面を表示
     public function showCreateForm(int $project_id, int $task_id, int $prep_id, Request $request)
     {
-        $dt = Carbon::now();
         // ログインユーザーに紐づく該当IDのレコードを取得
         $current_task = Auth::user()->tasks()->find($task_id);
         $done_prep = $current_task->preps()->find($prep_id);
         $categories = Auth::user()->categories()->get();
 
+        $dt = Carbon::now();
         if ($request->session()->has('started_at')) {
             // セッションに記録した開始時刻の値を取得して破棄
             $sa = $request->session()->pull('started_at');
@@ -58,11 +58,14 @@ class ReviewController extends Controller
         $review->prep_id = $prep_id;
         $review->user_id = Auth::id();
 
-        // 入力された日付、時刻からdateTimeを生成
+        // 入力された日付、時刻から開始日時のdateTimeを生成
         $review->started_at = Carbon::createFromFormat(
             'Y-m-d H:i',
             $request->started_date . ' ' . $request->started_time
         );
+        // 実際にかかった時間を足して終了日時のdateTimeを生成
+        $dt = new Carbon($review->started_at);
+        $review->finished_at = $dt->addMinutes($request->actual_time);
 
         // その他の項目をfillで登録
         $current_prep->reviews()->save($review->fill($request->all()));
@@ -101,13 +104,15 @@ class ReviewController extends Controller
         // リクエストのIDからreviewデータを取得
         $editing_review = Auth::user()->preps()->find($prep_id)->reviews()->find($review_id);
         // $editing_review = Auth::user()->reviews()->find($review_id);
-        $current_prep = Auth::user()->preps()->find($prep_id);
 
         // 入力された日付、時刻からdateTimeを生成
-        // $editing_review->started_at = Carbon::createFromFormat(
-        //     'Y-m-d H:i',
-        //     $request->started_date . ' ' . $request->started_time
-        // );
+        $editing_review->started_at = Carbon::createFromFormat(
+            'Y-m-d H:i',
+            $request->started_date . ' ' . $request->started_time
+        );
+        // 実際にかかった時間を足して終了日時のdateTimeを生成
+        $dt = new Carbon($editing_review->started_at);
+        $editing_review->finished_at = $dt->addMinutes($request->actual_time);
 
         // 完了済みチェックがonの場合はタスクのステータスを4（完了）に切り替え
         if ($request->task_completed) {
@@ -133,5 +138,4 @@ class ReviewController extends Controller
         // 削除対象のreviewが属するreviewのreview一覧にリダイレクト
         return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを削除しました');
     }
-
 }

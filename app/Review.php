@@ -21,7 +21,7 @@ class Review extends Model
     ];
 
     // ロックをかけないカラム
-    protected $fillable = ['review_text', 'good_text', 'problem_text', 'try_text', 'flow_level', 'actual_time', 'category_id', 'started_at'];
+    protected $fillable = ['review_text', 'good_text', 'problem_text', 'try_text', 'flow_level', 'actual_time', 'category_id'];
 
     const FLOW_LEVEL = [
         1 => ['value' => 1, 'level_name' => '集中できなかった'],
