@@ -182,7 +182,7 @@
 
       <!-- 送信 -->
       <div class="text-center">
-        <button type="submit" class="btn btn-primary">完了！</button>
+        <button type="submit" class="btn btn-primary">修正する</button>
       </div>
     </form>
 
