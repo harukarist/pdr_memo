@@ -85,7 +85,7 @@ class ReviewController extends Controller
             Auth::user()->projects()->find($project_id)->tasks()->where('id', $task_id)->update(['status' => 4]);
         }
         // 一覧画面にリダイレクト
-        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを登録しました');
+        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを登録しました。少し休憩して、次のタスクに移りましょう！');
     }
 
     // review編集画面を表示

@@ -47,7 +47,7 @@ class PrepController extends Controller
         // Auth::user()->tasks->find($task_id)->update(['status' => '2']);
 
         // 一覧画面にリダイレクト
-        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '計画を登録しました');
+        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '計画を登録しました。Doボタンから実行しましょう！');
     }
 
     // Prep編集画面を表示

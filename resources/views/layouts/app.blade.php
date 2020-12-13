@@ -72,12 +72,17 @@
                             <a href="{{ route('reports.weekly') }}" class="c-navbar__item nav-item nav-link text-dark">
                                 <i class="fas fa-medal mr-1" aria-hidden="true"></i>これまでの記録</a>
 
+                            <a href="{{ route('profile.change') }}" class="c-navbar__item nav-item nav-link text-dark">
+                                <i class="fas fa-user-edit mr-1" aria-hidden="true"></i>プロフィールの編集</a>
+                                
                             <a href="{{ route('logout') }}" id="js-logout" class="c-navbar__link navbar-item nav-link text-dark" onclick="event.preventDefault();
                             document.getElementById('js-logout-form').submit();">
                             <i class="fas fa-sign-out-alt mr-1" aria-hidden="true"></i>ログアウト</a>
                             <form id="js-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                             </form>
+                                </div>
+                            </li>
                         @endguest
                     </div>
                 </div>

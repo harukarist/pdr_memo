@@ -17,7 +17,7 @@
         
         <div class="form-group form-inline">
           <label for="name">新しいお名前</label>
-              <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"　value="{{ old('name') }}"/>
+              <input type="text" class="form-control ml-2 @error('name') is-invalid @enderror" name="name" id="name"　value="{{ old('name') }}"/>
               <button type="submit" class="btn btn-primary">変更</button>
 
               @error('name')
@@ -46,7 +46,7 @@
 
         <div class="form-group form-inline">
           <label for="new_email">新しいメールアドレス</label>
-              <input type="email" class="form-control @error('new_email') is-invalid @enderror" name="new_email" id="new_email"　value="{{ old('new_email') }}"/>
+              <input type="email" class="form-control ml-2 @error('new_email') is-invalid @enderror" name="new_email" id="new_email"　value="{{ old('new_email') }}"/>
               <button type="submit" class="btn btn-primary">変更</button>
               @error('new_email')
               <span class="invalid-feedback" role="alert">
