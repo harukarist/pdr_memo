@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('styles')
-  @include('plugins.flatpickr.styles')
-@endsection
-
 @section('content')
   <div class="container c-container">
     <h5 class="mb-4">タスクを修正する</h5>
@@ -80,8 +76,4 @@
       </form>
     </div>
   </div>
-@endsection
-
-@section('scripts')
-  @include('plugins.flatpickr.scripts')
 @endsection

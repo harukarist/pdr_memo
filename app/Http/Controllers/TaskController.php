@@ -207,7 +207,7 @@ class TaskController extends Controller
             $counter['days_count'] = $df->diffInDays($dt) + 1;
             $counter['started_at'] = Carbon::parse($started_at)->format("Y/m/d(D)");
         } else {
-            $counter['days_count'] = 0;
+            $counter['days_count'] = 1;
         }
         // dd($started_at);
 

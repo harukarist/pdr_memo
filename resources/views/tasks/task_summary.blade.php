@@ -6,7 +6,7 @@
     <div class="row m-0">
       <div class="col-12">
         <small>
-          <span class="p-counter__number">{{ $counter['days_count'] ?? 0 }}</span> 日目
+          <span class="p-counter__number">{{ $counter['days_count'] ?? 1 }}</span> 日目
         </small>
         @if($counter['days_count'])
         <span class="p-counter__number small ml-2">最初の達成：{{ $counter['started_at'] ?? '' }}</span>

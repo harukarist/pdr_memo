@@ -1,10 +1,6 @@
 
 @extends('layouts.app')
 
-@section('styles')
-  @include('plugins.flatpickr.styles')
-@endsection
-
 @section('content')
   <div class="container-fluid">
     <div class="row pt-4">
@@ -76,7 +72,3 @@
     </div>
   </div>
 @endsection
-
-{{-- @section('scripts')
-  @include('plugins.flatpickr.scripts')
-@endsection --}}

@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import TaskMenu from '../components/TaskMenu.vue'
+import TaskMenu from '../components/TaskMenu.vue';
 export default {
   name: "TaskList",
   components:{
