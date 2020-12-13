@@ -1,10 +1,10 @@
-@if($summaries)
-  @foreach($summaries as $project_name=>$summary)  
+@if(count($summaries))
+  @forelse($summaries as $project_name=>$summary)  
   @if(isset($summary))
   <div class="p-counter__wrapper bg-white mx-2 mb-4 p-2">
     <div class="row m-0">
       <small>
-        {{ $project_name }}
+        {{ $project_name ?? '' }}
         <span class="p-counter__number">{{ $summary['days_count'] ?? 0 }}</span> 日目
       </small>
     </div>
@@ -13,12 +13,12 @@
     </div>
 
     @if(isset($summary['categories']))
-      @foreach($summary['categories'] as $category_name => $category_item)
+      @forelse($summary['categories'] as $category_name => $category_item)
         {{-- カテゴリー別 --}}
         @if($category_item['total_hour'] )
           <div class="row m-0">
             <div class="col-12 p-0">
-              <span class="badge badge-light">{{ $category_name }}</span><br>
+              <span class="badge badge-light">{{ $category_name ? ''}}</span><br>
             </div>
           </div>
           <div class="row mx-2 mb-1">
@@ -27,10 +27,10 @@
                 <i class="fas fa-medal" aria-hidden="true"></i>
                 達成度<br>
                 <span class="p-counter__number">
-                {{ $category_item['total_hour'] }}
+                {{ $category_item['total_hour'] ?? 0 }}
                 </span> h /
                 <span class="p-counter__number">
-                {{ $category_item['total_count'] }}
+                {{ $category_item['total_count'] ?? 0 }}
                 </span> 回
                 </small>
               </div>
@@ -39,13 +39,14 @@
                 <i class="far fa-check-circle" aria-hidden="true"></i>
                 完了<br>
                 <span class="p-counter__number">
-                {{ $category_item['completed_count'] }}
+                {{ $category_item['completed_count'] ?? 0 }}
                 </span> 件<br>
                 </small>
               </div>
           </div>
         @endif
-      @endforeach
+      @empty
+      @endforelse
     @endif
 
     <div class="bg-light mt-2 p-1 align-self-end">
@@ -83,5 +84,6 @@
     </div>
   </div>
   @endif
-  @endforeach
+  @empty
+  @endforelse
 @endif

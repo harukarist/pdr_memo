@@ -1,11 +1,11 @@
-@if($summaries)
+@if(count($summaries))
 <div class="p-counter__wrapper bg-white mx-2 mb-4 p-2">
   <div class="row mx-1 mb-2">
     <div class="col-12 p-0">
       <span class="badge badge-secondary">カテゴリー別 Total</span><br>
     </div>
   </div>
-  @foreach($summaries as $category_name=>$summary)  
+  @forelse($summaries as $category_name=>$summary)  
   @if($summary['total_hour'])
     <div class="row m-0">
         <span class="badge badge-light">{{ $category_name }}</span>
@@ -37,6 +37,7 @@
       </div>
     </div>
     @endif
-    @endforeach
+    @empty
+    @endforelse
   </div>
 @endif
