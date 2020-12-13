@@ -1,7 +1,7 @@
     
   @if($counter)
   
-  <div class="p-counter__wrapper mx-0 mb-4">
+  <div class="p-tasklist__counter-wrapper mx-0 mb-4">
 
     <div class="row m-0">
       <div class="col-12">
