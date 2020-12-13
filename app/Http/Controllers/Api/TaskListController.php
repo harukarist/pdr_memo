@@ -41,7 +41,7 @@ class TaskListController extends Controller
         $task->save();
     }
     // 更新
-    public function edit($task_id, Request $request)
+    public function edit(int $task_id, Request $request)
     {
         $task = Auth::user()->tasks()->find($task_id);
 
@@ -50,7 +50,7 @@ class TaskListController extends Controller
         $task->save();
     }
     // 更新
-    public function changeDueDate($task_id, Request $request)
+    public function changeDueDate(int $task_id, Request $request)
     {
         $task = Auth::user()->tasks()->find($task_id);
 

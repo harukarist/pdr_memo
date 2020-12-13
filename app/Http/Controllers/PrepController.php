@@ -13,8 +13,13 @@ class PrepController extends Controller
 {
 
     // Prep登録画面を表示
-    public function showCreateForm(int $project_id, int $task_id)
+    public function showCreateForm($project_id, $task_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
+
         // ログインユーザーに紐づくタスク、カテゴリーを取得
         $tasks = Auth::user()->tasks()->get();
         $current_task = Auth::user()->tasks()->find($task_id);
@@ -24,8 +29,13 @@ class PrepController extends Controller
     }
 
     // Prep登録処理
-    public function create(int $project_id, int $task_id, CreatePrep $request)
+    public function create($project_id, $task_id, CreatePrep $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
+
         $prep = new Prep();
         $prep->task_id = $task_id;
         Auth::user()->preps()->save($prep->fill($request->all()));
@@ -41,8 +51,12 @@ class PrepController extends Controller
     }
 
     // Prep編集画面を表示
-    public function showEditForm(int $project_id, int $task_id, int $prep_id)
+    public function showEditForm($project_id, $task_id, $prep_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // ログインユーザーに紐づく該当IDのレコードを取得
         $current_task = Auth::user()->tasks()->find($task_id);
         $editing_prep = $current_task->preps()->find($prep_id);
@@ -52,8 +66,12 @@ class PrepController extends Controller
     }
 
     // Prep編集処理
-    public function edit(int $project_id, int $task_id, int $prep_id, EditPrep $request)
+    public function edit($project_id, $task_id, $prep_id, EditPrep $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストのIDからPrepデータを取得
         $editing_prep = Auth::user()->preps()->find($prep_id);
 
@@ -64,8 +82,12 @@ class PrepController extends Controller
     }
 
     // Prep削除処理
-    public function delete(int $project_id, int $task_id, int $prep_id)
+    public function delete($project_id, $task_id, $prep_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストで受け取ったIDのPrepを削除
         $current_task = Auth::user()->tasks()->find($task_id);
         $current_task->preps()->find($prep_id)->delete();
@@ -81,8 +103,13 @@ class PrepController extends Controller
     }
 
     // Do画面表示
-    public function showDoForm(int $project_id, int $task_id, int $prep_id)
+    public function showDoForm($project_id, $task_id, $prep_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
+
         // ログインユーザーに紐づく該当IDのPrepを取得
         $current_task = Auth::user()->tasks()->find($task_id);
         $do_prep = $current_task->preps()->find($prep_id);
@@ -92,17 +119,21 @@ class PrepController extends Controller
         $current_task->status = 3;
         $current_task->save();
 
-        // 開始日時を記録
-        $started_at = Carbon::now();
-        session(['started_at' => $started_at]);
+        // 開始日時をセッションに記録
+        $temp_started_at = Carbon::now();
+        session(['temp_started_at' => $temp_started_at]);
 
         // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
-        return view('preps.do', compact('do_prep', 'current_task', 'started_at'));
+        return view('preps.do', compact('do_prep', 'current_task', 'temp_started_at'));
     }
 
     // Do完了処理
-    public function done(int $project_id, int $task_id, int $prep_id)
+    public function done($project_id, $task_id, $prep_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // 該当タスクの実行カウンタを1インクリメント
         Auth::user()->tasks()->find($task_id)->increment('done_count');
 

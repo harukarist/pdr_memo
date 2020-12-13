@@ -39,8 +39,12 @@ class CategoryController extends Controller
     }
 
     // カテゴリー編集画面を表示
-    public function showEditForm(int $category_id)
+    public function showEditForm($category_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($category_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // 該当のカテゴリーIDのデータを取得し、ビューテンプレートに返却
         $edit_category = Auth::user()->categories()->find($category_id);
         $categories = Auth::user()->categories()->get();
@@ -53,8 +57,12 @@ class CategoryController extends Controller
     }
 
     // カテゴリー編集処理
-    public function edit(int $category_id, EditCategory $request)
+    public function edit($category_id, EditCategory $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($category_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストのIDからカテゴリーデータを取得
         $category = Auth::user()->categories()->find($category_id);
 
@@ -66,11 +74,16 @@ class CategoryController extends Controller
     }
 
     // カテゴリー削除処理
-    public function delete(int $category_id)
+    public function delete($category_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($category_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストで受け取ったIDのカテゴリーを削除
         // Category::find($category_id)->delete();
-        Category::destroy($category_id);
+        // Category::destroy($category_id);
+        Auth::user()->categories->find($category_id)->delete();
 
         // 削除対象のカテゴリーが属するカテゴリーのカテゴリー一覧にリダイレクト
         return redirect()->route('categories.create')->with('flash_message', 'カテゴリーを削除しました');

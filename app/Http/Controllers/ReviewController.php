@@ -16,17 +16,22 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     // Review登録画面を表示
-    public function showCreateForm(int $project_id, int $task_id, int $prep_id, Request $request)
+    public function showCreateForm($project_id, $task_id, $prep_id, Request $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // ログインユーザーに紐づく該当IDのレコードを取得
         $current_task = Auth::user()->tasks()->find($task_id);
         $done_prep = $current_task->preps()->find($prep_id);
         $categories = Auth::user()->categories()->get();
 
+        // 現在時刻を取得
         $dt = Carbon::now();
-        if ($request->session()->has('started_at')) {
+        if ($request->session()->has('temp_started_at')) {
             // セッションに記録した開始時刻の値を取得して破棄
-            $sa = $request->session()->pull('started_at');
+            $sa = $request->session()->pull('temp_started_at');
         } else {
             // セッションがない場合は現在時刻から予定単位時間を引いた時間を開始時間とする
             $sa = $dt->copy()->subMinutes($done_prep->unit_time);
@@ -34,6 +39,7 @@ class ReviewController extends Controller
         // 開始時刻を日付と時刻に分ける
         $started_date = $sa->toDateString();
         $started_time = $sa->format('H:i');
+        // dd($started_date, $started_time);
 
         // 現在時刻と開始時刻の差を実際にかかった時間とする
         $actual_time = $sa->diffInMinutes($dt);
@@ -48,8 +54,12 @@ class ReviewController extends Controller
     }
 
     // review登録処理
-    public function create(int $project_id, int $task_id, int $prep_id, CreateReview $request)
+    public function create($project_id, $task_id, $prep_id, CreateReview $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストのIDからprepデータを取得
         $current_prep = Auth::user()->preps()->find($prep_id);
 
@@ -75,12 +85,16 @@ class ReviewController extends Controller
             Auth::user()->projects()->find($project_id)->tasks()->where('id', $task_id)->update(['status' => 4]);
         }
         // 一覧画面にリダイレクト
-        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', 'Reviewを登録しました');
+        return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを登録しました');
     }
 
     // review編集画面を表示
-    public function showEditForm(int $project_id, int $task_id, int $prep_id, int $review_id)
+    public function showEditForm($project_id, $task_id, $prep_id, $review_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // ログインユーザーに紐づく該当IDのreviewを取得
         $editing_review = Auth::user()->preps()->find($prep_id)->reviews()->find($review_id);
         $current_task = Auth::user()->tasks()->find($task_id);
@@ -99,8 +113,12 @@ class ReviewController extends Controller
     }
 
     // review編集処理
-    public function edit(int $project_id, int $task_id, int $prep_id, int $review_id, EditReview $request)
+    public function edit($project_id, $task_id, $prep_id, $review_id, EditReview $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストのIDからreviewデータを取得
         $editing_review = Auth::user()->preps()->find($prep_id)->reviews()->find($review_id);
         // $editing_review = Auth::user()->reviews()->find($review_id);
@@ -128,8 +146,12 @@ class ReviewController extends Controller
     }
 
     // review削除処理
-    public function delete(int $project_id, int $task_id, int $prep_id, int $review_id)
+    public function delete($project_id, $task_id, $prep_id, $review_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストで受け取ったIDのreviewを削除
         Auth::user()->preps()->find($prep_id)->reviews()->find($review_id)->delete();
         // review::find($review_id)->delete();

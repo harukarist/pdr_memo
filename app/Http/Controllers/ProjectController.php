@@ -42,8 +42,12 @@ class ProjectController extends Controller
     }
 
     // プロジェクト編集画面を表示
-    public function showEditForm(int $project_id)
+    public function showEditForm($project_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // 該当のプロジェクトIDのデータを取得し、ビューテンプレートに返却
         $edit_project = Auth::user()->projects()->find($project_id);
         // ログインユーザーに紐づくカテゴリーを取得
@@ -57,8 +61,12 @@ class ProjectController extends Controller
     }
 
     // プロジェクト編集処理
-    public function edit(int $project_id, EditProject $request)
+    public function edit($project_id, EditProject $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストのIDからプロジェクトデータを取得
         $project = Auth::user()->projects()->find($project_id);
 
@@ -70,11 +78,17 @@ class ProjectController extends Controller
     }
 
     // プロジェクト削除処理
-    public function delete(int $project_id)
+    public function delete($project_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
         // リクエストで受け取ったIDのプロジェクトを削除
         // Project::find($project_id)->delete();
-        Project::destroy($project_id);
+        // Project::destroy($project_id);
+        Auth::user()->projects->find($project_id)->delete();
+
 
         // 削除対象のプロジェクトが属するプロジェクトのプロジェクト一覧にリダイレクト
         return redirect()->route('home')->with('flash_message', 'プロジェクトを削除しました');

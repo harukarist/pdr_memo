@@ -16,8 +16,13 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     // タスク一覧表示
-    public function index(int $project_id, Request $request)
+    public function index($project_id, Request $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
+
         // ログインユーザーに紐づくプロジェクトを取得
         $projects = Auth::user()->projects()->get();
         // 選択中のプロジェクトを取得
@@ -85,8 +90,13 @@ class TaskController extends Controller
 
 
     // タスク作成処理
-    public function create(int $project_id, CreateTask $request)
+    public function create($project_id, CreateTask $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
+
         // 選択されたプロジェクトIDのデータを取得
         $current_project = Auth::user()->projects()->find($project_id);
 
@@ -104,7 +114,7 @@ class TaskController extends Controller
     }
 
     // タスク編集画面を表示
-    public function showEditForm(int $project_id, int $task_id)
+    public function showEditForm($project_id, $task_id)
     {
         // 該当のタスクIDのデータを取得し、ビューテンプレートに返却
         // $task = Task::find($task_id);
@@ -114,8 +124,13 @@ class TaskController extends Controller
     }
 
     // タスク編集処理
-    public function edit(int $project_id, int $task_id, EditTask $request)
+    public function edit($project_id, $task_id, EditTask $request)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
+
         // リクエストのIDからタスクデータを取得
         // $task = Task::find($task_id);
         $task = Auth::user()->tasks()->find($task_id);
@@ -133,8 +148,13 @@ class TaskController extends Controller
     }
 
     // タスク削除処理
-    public function delete(int $project_id, int $task_id)
+    public function delete($project_id, $task_id)
     {
+        // パラメータが数字でない場合はリダイレクト
+        if (!ctype_digit($project_id . $task_id)) {
+            return redirect('home')->with('flash_message', '不正な操作が行われました');
+        }
+
         // リクエストで受け取ったIDのタスクをソフトデリート
         // Task::find($task_id)->delete();
         $deleting_task = Auth::user()->tasks->find($task_id);
@@ -149,7 +169,7 @@ class TaskController extends Controller
     }
 
 
-    // サマリー表示
+    // サマリー表示用のデータを取得
     public function summary($current_project)
     {
         $counter = [];
