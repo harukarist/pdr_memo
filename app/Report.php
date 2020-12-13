@@ -66,7 +66,7 @@ class Report
               'total_count' => $project_records->count('actual_time'),
               'completed_count' => $project_records->where('status', '=', 4)->count(),
               'days_count' => $df->diffInDays($dt) + 1,
-              'started_at' => $df->format('Y/m/d'),
+              'started_at' => $df->format('Y/m/d(D)'),
             ];
 
           if ($this->categories) {

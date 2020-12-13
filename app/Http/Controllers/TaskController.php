@@ -186,7 +186,9 @@ class TaskController extends Controller
             ->select('actual_time', 'started_at')
             ->where('preps.user_id', '=', $user_id)
             ->where('reviews.deleted_at', null)
+            ->where('tasks.deleted_at', null)
             ->where('tasks.project_id', '=', $current_project->id)
+            ->orderBy('started_at', 'ASC')
             ->get();
 
         // 達成時間の合計と回数、タスク件数を取得
