@@ -139,6 +139,7 @@ class TaskController extends Controller
         // $task->task_name = $request->task_name;
         // $task->priority = $request->priority;
         // $task->due_date = $request->due_date;
+        // $task->status = $request->status;
 
         $task->fill($request->all());
         $task->save();

@@ -66,6 +66,18 @@
             @endforeach
           </select>
         </div>
+        <label for="status">ステータス</label>
+        <select name="status" id="status" class="form-control  @error('status') is-invalid @enderror">
+          @foreach(\App\Task::STATUS as $key => $val)
+            <option
+                value="{{ $key }}"
+                {{ $key == old('status', $editing_task->status) ? 'selected' : '' }}
+            >
+              {{ $val['status_name'] }}
+            </option>
+          @endforeach
+        </select>
+      </div>
         <div class="form-group">
           <label for="due_date">期限</label>
           <input type="date" id="due_date" class="form-control @error('due_date') is-invalid @enderror" name="due_date" value="{{ old('due_date') ?? $editing_task->due_date  }}">

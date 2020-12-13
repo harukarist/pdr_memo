@@ -1,9 +1,6 @@
 <template>
-  <transition name="slide-item" tag="div">
     <div class="p-tasklist__item mb-3" v-show="!isDeleted">
-      <div
-        class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white"
-      >
+      <div class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white">
         <div class="p-task__main p-0 d-flex mx-0 px-0">
           <!-- チェックボックス -->
           <div
@@ -52,12 +49,9 @@
             :due-date="dueDate"
           >
           </task-menu>
-          <slot name="task-action"> </slot>
         </div>
       </div>
-      <slot name="prep-review"></slot>
     </div>
-  </transition>
 </template>
 
 <script>

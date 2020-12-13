@@ -1,17 +1,50 @@
 @foreach($tasks as $task)
+  <div class="p-tasklist__item mb-3">
+    <div class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white">
+      <div class="p-task__main p-0 d-flex mx-0 px-0">
+        <div class="p-task__checkbox pr-2">
+          @if(!empty($task->status) && $task->status == 4)
+          <i class="far fa-check-circle {{ $task->priority_class ?? '' }}" aria-hidden="true"></i>
+          @else
+          <i class="far fa-circle {{ $task->priority_class ?? '' }}" aria-hidden="true"></i>
+          @endif
+        </div>
 
-<task-list :task-id="{{ $task->id }}" :task-status="{{ $task->status }}" :task-name="{{ $task->task_name }}" :priority="{{ $task->priority }}" :due-date="{{ $task->due_date}}">
-  
-    <template v-slot:task-action>
+        <div class="p-task__taskname">
+          {{-- タスク名 --}}
+          @if($task->status == 4)<del>@endif
+          {{ $task->task_name ?? '' }}
+          @if($task->status == 4)</del>@endif
+          @if($task->status != 4 && $task->priority > 0)
+          <div class="p-task__priority d-inline-block">
+            <small class="ml-2 {{ $task->priority_class ?? '' }}">
+              @forelse(range(1,$task->priority) as $num)
+              <i class="fas fa-star" aria-hidden="true"></i>
+              @empty
+              @endforelse
+            </small>
+          </div>
+          @endif
+          @isset($task->formatted_due_date)
+          <span class="badge badge-light">
+            <i class="fas fa-calendar-day" aria-hidden="true"></i>
+          {{ $task->formatted_due_date ?? '' }}
+          </span>
+          @endisset
+        </div>
+      </div>
+      <div class="p-task__action col-sm-3 text-right">
+        <a href="{{ route('tasks.edit', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">
+          <i class="fas fa-pencil-alt small px-2" aria-hidden="true"></i>
+        </a>
+      </div>
       <div class="p-task__action text-right">
         <a href="{{ route('preps.create', ['project_id' => $task->project_id,'task_id' => $task->id]) }}" class="btn px-1 py-0 {{ $task->status > 1 ? 'btn-light' : 'btn-primary' }}">
           <i class="fas fa-caret-right" aria-hidden="true"></i>
           <small>{{ $task->status > 1 ? 'Prep追加' : 'Prep !' }}</small>
         </a>
       </div>
-    </template>
-
-  <template v-slot:prep-review>
+    </div>
     @if(count($task->preps))
     <div class="bg-white px-2 pb-2">
       @foreach($task->preps as $prep)
@@ -116,8 +149,5 @@
       @endforeach
     </div>
     @endif
-  </template>
-
-</task-list>
-  
+  </div>
 @endforeach
