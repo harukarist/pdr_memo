@@ -22,9 +22,13 @@
         <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
     </div>
     <div class="text-center">
-      <p>{{ $current_task->done_count + 1 }}回目</p>
-      <p>開始日時：{{ $started_at }}</p>
-      <p class="p-guide__text">{{ $do_prep->unit_time }}分間、集中して取り組みましょう！</p>
+      <p><span class="p-counter__number">
+        <i class="fas fa-stopwatch mr-1"></i>{{ $current_task->done_count + 1 }}回目
+      </span></p>
+      <p>開始日時：
+        <span class="p-counter__number">{{ $temp_started_at->format("m/d H:i") }}</span></p>
+      {{-- タイマー --}}
+      <countdown-timer unit-time="{{ $do_prep->unit_time }}"></countdown-timer>
     </div>
   </section>
 
@@ -33,10 +37,9 @@
   <section class="mb-5">
     <!-- Doneボタン -->
       <div class="text-center">
-        <p>完了しましたか？</p>
         <form method="POST" action="{{ route('preps.done', ['project_id' => $current_task->project_id,'task_id' => $current_task->id, 'prep_id' => $do_prep->id ]) }}">
           @csrf
-        <input type="hidden" name="started_at" value="{{ $started_at }}">
+        <input type="hidden" name="temp_started_at" value="{{ $temp_started_at }}">
         <input type="submit" class="btn btn-primary" value="完了！">
       </div>
   </section>
