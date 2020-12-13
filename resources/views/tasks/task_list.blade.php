@@ -45,7 +45,7 @@
           </div>
           <div class="p-pdr__do d-flex justify-content-center py-2">
             {{-- Do --}}
-            <a href="{{ route('preps.do', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $prep->id]) }}" class="btn px-1 py-0 my-2 {{ $task->status == 4 ? 'btn-secondary' : 'btn-success' }}">
+            <a href="{{ route('preps.do', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $prep->id]) }}" class="btn px-1 py-0 my-2 {{ $task->status == 4 ? 'btn-secondary' : 'btn-primary' }}">
             <i class="fas fa-caret-right mx-1" aria-hidden="true"></i>Do !</a>
   
           </div>
