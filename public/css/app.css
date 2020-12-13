@@ -461,8 +461,12 @@ mark {
   padding: 10px 5px;
 }
 
+.p-counter__wrapper {
+  width: 250px;
+}
+
 .p-counter__number {
-  font-size: 1rem;
+  font-size: 18px;
   font-weight: bold;
   color: #695B52;
 }

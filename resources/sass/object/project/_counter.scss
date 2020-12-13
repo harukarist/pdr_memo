@@ -1,6 +1,9 @@
 .p-counter {
+  &__wrapper {
+    width: 250px;
+  }
   &__number {
-    font-size: 1rem;
+    font-size: 18px;
     font-weight: bold;
     color: $font-color--main;
   }

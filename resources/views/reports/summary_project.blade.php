@@ -1,7 +1,7 @@
 @if($summaries)
   @foreach($summaries as $project_name=>$summary)  
   @if(isset($summary))
-  <div class="p-counter__wrapper bg-white col-5 mx-2 mb-4 p-2">
+  <div class="p-counter__wrapper bg-white mx-2 mb-4 p-2">
     <div class="row m-0">
       <small>
         {{ $project_name }}

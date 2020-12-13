@@ -1,5 +1,5 @@
 @if($summaries)
-<div class="p-counter__wrapper bg-white col-5 mx-2 mb-4 p-2">
+<div class="p-counter__wrapper bg-white mx-2 mb-4 p-2">
   <div class="row mx-1 mb-2">
     <div class="col-12 p-0">
       <span class="badge badge-secondary">カテゴリー別 Total</span><br>
