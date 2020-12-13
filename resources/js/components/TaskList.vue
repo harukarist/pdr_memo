@@ -1,10 +1,13 @@
 <template>
+  <transition name="slide-item" tag="div">
     <div class="p-tasklist__item mb-3" v-show="!isDeleted">
-      <div class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white">
-        <div class="p-task__main p-0 d-flex mx-0 px-0">
+      <div
+        class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white"
+      >
+        <div class="p-task__main flex-grow-1 p-0 d-flex mx-0 px-0">
           <!-- チェックボックス -->
           <div
-            class="p-task__checkbox pr-2"
+            class="p-task__checkbox px-2"
             :class="{ isDone: isDone }"
             @click="toggleDone"
           >
@@ -16,10 +19,16 @@
               v-show="!showEditBox"
               class="p-task__taskName"
               :class="{ active: isActiveText, isDone: isDone }"
+              @click="showEditBox = true"
+            >
+              <!-- <div
+              v-show="!showEditBox"
+              class="p-task__taskName"
+              :class="{ active: isActiveText, isDone: isDone }"
               @mouseover="isActiveText = true"
               @mouseleave="isActiveText = false"
               @click="showEditBox = true"
-            >
+            > -->
               {{ taskName_data }}
               <i
                 class="p-task__icon fas fa-pencil-alt"
@@ -31,9 +40,10 @@
             <div v-show="showEditBox" class="p-task__editArea col-12 mx-0 px-0">
               <textarea
                 type="text"
-                class="p-task__editBox"
+                class="p-task__editBox w-100"
                 :value="taskName_data"
-                @keyup.shift.enter="checkKeyUp($event)"
+                @keyup.shift.enter="editTaskName($event)"
+                @blur="showEditBox = false"
               >
               </textarea>
               <p class="text-muted small">Shift+Enterで変更</p>
@@ -49,17 +59,20 @@
             :due-date="dueDate"
           >
           </task-menu>
+          <slot name="task-action"></slot>
         </div>
       </div>
+      <slot name="prep-review"></slot>
     </div>
+  </transition>
 </template>
 
 <script>
-import TaskMenu from '../components/TaskMenu.vue';
+import TaskMenu from "../components/TaskMenu.vue";
 export default {
   name: "TaskList",
-  components:{
-    TaskMenu
+  components: {
+    TaskMenu,
   },
   // props: ["taskId", "taskStatus", "taskName"],
   props: {
@@ -100,7 +113,9 @@ export default {
       }
       this.showEditBox = false;
     },
-    editTaskName(text) {
+    editTaskName(e) {
+      let text = e.currentTarget.value;
+      if (text) {
       this.taskName_data = text;
       axios
         .put("/api/tasks/" + this.taskId + "/edit", {
@@ -108,11 +123,13 @@ export default {
         })
         .then((response) => {
           this.taskName_data = text;
+          this.showEditBox = false;
           console.log("success", this.taskName_data);
         })
         .catch((error) => {
           console.log(error);
         });
+      }
     },
     toggleDone() {
       if (this.isDone) {

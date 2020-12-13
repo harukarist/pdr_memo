@@ -81,8 +81,6 @@
                             <form id="js-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                             </form>
-                                </div>
-                            </li>
                         @endguest
                     </div>
                 </div>
