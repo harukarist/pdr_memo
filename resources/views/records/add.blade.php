@@ -61,7 +61,7 @@
       <!-- 実行時間 -->
       <div class="form-inline row mb-4">
         <div class="form-group col-auto">
-          <label for="started_at" class="pr-2">開始</label>
+          <label for="started_at" class="pr-2">開始日時</label>
           <div class="input-group">
             <input type="date" class="form-control @error('started_date') is-invalid @enderror" id="started_date" name="started_date" value="{{ old('started_date') ?? $started_date }}" />
           </div>

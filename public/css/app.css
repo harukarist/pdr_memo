@@ -587,6 +587,12 @@ mark {
   margin-right: 5px;
 }
 
+.p-timer__time {
+  font-size: 60px;
+  color: #B0673E;
+  margin-bottom: 20px;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
