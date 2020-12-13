@@ -4,7 +4,9 @@
     position: relative;
     z-index: 2;
   }
-
+  &__menu {
+    width: 250px;
+  }
   &__checkbox {
     cursor: pointer;
     &:hover {

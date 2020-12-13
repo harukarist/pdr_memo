@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-task__menu d-flex col-auto m-0 p-0">
+    <div class="p-task__menu d-flex justify-content-end mr-3 p-0">
       <!-- 優先度 -->
       <div class="p-task__priority ml-1 mr-3">
         <small class="m-0 p-0">
@@ -133,6 +133,7 @@ export default {
           .then((res) => {
             console.log(taskId, " is deleted");
             this.isDeleted = true;
+            this.$emit("task-deleted");
           })
           .catch((error) => {
             console.log(error);

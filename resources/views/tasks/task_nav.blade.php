@@ -12,7 +12,7 @@
     <div class="form-group m-0">
       <input type="text" name="keyword" value="{{ $keyword }}" class="form-control" placeholder="タスクをキーワード検索">
     </div>
-    <input type="submit" value="検索" class="btn btn-primary">
+    <input type="submit" value="検索" class="btn btn-secondary">
     </form>
   </div>
 

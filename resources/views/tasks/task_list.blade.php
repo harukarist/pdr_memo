@@ -1,12 +1,9 @@
 @foreach($tasks as $task)
 
-<task-list task-id="{{ $task->id }}" task-status="{{ $task->status }}" task-name="{{ $task->task_name }}">
+<task-list task-id="{{ $task->id }}" task-status="{{ $task->status }}" task-name="{{ $task->task_name }}" priority="{{ $task->priority }}" due-date="{{ $task->due_date}}">
   
-  <template v-slot:task-action>
-    <div class="p-task__details d-flex ml-2">
-      <task-menu task-id="{{ $task->id }}" priority="{{ $task->priority }}" due-date="{{ $task->due_date}}">
-      </task-menu>
-      <div class="p-task__action col-auto text-right">
+     <template v-slot:task-action>
+      <div class="p-task__action text-right">
         {{-- <a href="{{ route('tasks.edit', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">
           <i class="p-task__icon fas fa-pencil-alt small px-2" aria-hidden="true"></i>
         </a> --}}
@@ -15,7 +12,7 @@
           <small>{{ $task->status > 1 ? 'Prep追加' : 'Prep !' }}</small>
         </a>
       </div>
-    </div>
+    
   </template>
 
   <template v-slot:prep-review>

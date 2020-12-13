@@ -2,9 +2,9 @@
   <transition name="slide-item" tag="div">
     <div class="p-tasklist__item mb-3" v-show="!isDeleted">
       <div
-        class="p-task__wrapper d-flex flex-column flex-md-row justify-content-between p-2 mx-0 bg-white"
+        class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white"
       >
-        <div class="p-task__main p-0 d-flex col-auto mx-0 px-0">
+        <div class="p-task__main p-0 d-flex mx-0 px-0">
           <!-- チェックボックス -->
           <div
             class="p-task__checkbox pr-2"
@@ -43,7 +43,17 @@
             </div>
           </div>
         </div>
-        <slot name="task-action"></slot>
+        <div class="p-task__details d-flex justify-content-end ml-2">
+          <!-- メニューアイコン -->
+          <task-menu
+            @task-deleted="deleteTask()"
+            :task-id="taskId"
+            :priority="priority"
+            :due-date="dueDate"
+          >
+          </task-menu>
+          <slot name="task-action"> </slot>
+        </div>
       </div>
       <slot name="prep-review"></slot>
     </div>
@@ -51,13 +61,19 @@
 </template>
 
 <script>
+import TaskMenu from '../components/TaskMenu.vue'
 export default {
   name: "TaskList",
+  components:{
+    TaskMenu
+  },
   // props: ["taskId", "taskStatus", "taskName"],
-    props: {
+  props: {
     taskId: { type: String },
     taskStatus: { type: String },
     taskName: { type: String },
+    priority: { type: String },
+    dueDate: { type: String },
   },
   data() {
     return {
@@ -79,7 +95,10 @@ export default {
   },
 
   methods: {
-    checkKeyUp: function (e) {
+    deleteTask() {
+      this.isDeleted = true;
+    },
+    checkKeyUp(e) {
       // Shift+Enterキーが押された時
       let text = e.currentTarget.value;
       if (text) {
@@ -87,7 +106,7 @@ export default {
       }
       this.showEditBox = false;
     },
-    editTaskName: function (text) {
+    editTaskName(text) {
       this.taskName_data = text;
       axios
         .put("/api/tasks/" + this.taskId + "/edit", {
