@@ -23,7 +23,7 @@
         <span class="badge badge-light">{{ $review->category->category_name ?? '' }}
         </span>
         @if($review->prep && $review->prep->task)
-          <a href="{{ route('reviews.edit', ['project_id' => $review->prep->task->project_id,'task_id' => $review->prep->task_id, 'prep_id' => $review->prep_id,'review_id'=>$review->id ]) }}" class="mr-2"><small><i class="p-task__icon fas fa-pencil-alt" aria-hidden="true"></i></small></a>
+          <a href="{{ route('records.edit', ['project_id' => $review->prep->task->project_id,'task_id' => $review->prep->task_id, 'prep_id' => $review->prep_id,'review_id'=>$review->id ]) }}" class="mr-2"><small><i class="p-task__icon fas fa-pencil-alt" aria-hidden="true"></i></small></a>
         @endif
       </div>
     </div>

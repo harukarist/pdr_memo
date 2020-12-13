@@ -22,7 +22,7 @@
         </div>
       </div>
       @else
-        @if($loop->last)
+        {{-- @if($loop->last)
         <div class="p-record__wrapper mb-4">
           <div class="p-record__date border-bottom mb-4 px-2 d-flex">
             <h5>{{ $startDay.' - '. $lastDay }}</h5>
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        @endif
+        @endif --}}
     @endif
   @endforeach
   </section>

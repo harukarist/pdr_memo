@@ -14,7 +14,7 @@ class AddFinishedAtToReviews extends Migration
     public function up()
     {
         Schema::table('reviews', function (Blueprint $table) {
-            $table->dateTime('finished_at')->nullable();
+            $table->dateTime('finished_at')->after('category_id')->nullable();
         });
     }
 

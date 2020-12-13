@@ -178,7 +178,6 @@
 
         {{-- タスクを完了に切り替え --}}
         <div class="form-check mb-4 ml-4">
-          <span class="d-flex">
           <input class="form-check-input align-self-center" type="checkbox" name="task_completed" id="task_completed" @if(old('task_completed') === 'on' || $current_task->status == 4 ) checked @endif>
           <label class="form-check-label align-self-center" for="task_completed">タスクを完了済みにする</label>
         </div>

@@ -286,6 +286,10 @@ mark {
   z-index: 2;
 }
 
+.p-task__menu {
+  width: 250px;
+}
+
 .p-task__checkbox {
   cursor: pointer;
 }

@@ -87,7 +87,9 @@ class ProjectController extends Controller
         // リクエストで受け取ったIDのプロジェクトを削除
         // Project::find($project_id)->delete();
         // Project::destroy($project_id);
-        Auth::user()->projects->find($project_id)->delete();
+        $deleting_project = Auth::user()->projects->find($project_id);
+        $deleting_project->tasks()->delete();
+        $deleting_project->delete();
 
 
         // 削除対象のプロジェクトが属するプロジェクトのプロジェクト一覧にリダイレクト

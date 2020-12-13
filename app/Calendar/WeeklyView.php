@@ -105,14 +105,13 @@ class WeeklyView extends CalendarView
    */
   public function getNext()
   {
-    // addWeeksNoOverflow()で翌月の情報を取得
-    return $this->carbon->copy()->addWeek()->format('Y-m-d');
+    return $this->carbon->copy()->addWeek()->startOfWeek()->format('Y-m-d');
   }
   /**
    * 前の月を取得
    */
   public function getPrevious()
   {
-    return $this->carbon->copy()->subWeek()->format('Y-m-d');
+    return $this->carbon->copy()->subWeek()->startOfWeek()->format('Y-m-d');
   }
 }

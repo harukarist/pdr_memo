@@ -100,6 +100,7 @@ class ReviewController extends Controller
         $current_task = Auth::user()->tasks()->find($task_id);
         $categories = Auth::user()->categories()->get();
 
+        // フォーム表示用に開始日時を日付と時刻に分ける
         if (!empty($editing_review->started_at)) {
             $sa = new Carbon($editing_review->started_at);
         } else {

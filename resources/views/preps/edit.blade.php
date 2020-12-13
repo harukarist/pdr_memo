@@ -96,7 +96,7 @@
           <label for="unit_time">単位時間</label>
           <select id="unit_time" class="form-control @error('unit_time') is-invalid @enderror" name="unit_time">
             @foreach(\App\Prep::UNIT_TIME as $unit_time)
-              <option value="{{ $unit_time }}" @if(old('unit_time') == $unit_time || $editing_prep->unit_time == $unit_time) selected @endif>{{ $unit_time }} 分</option>
+              <option value="{{ $unit_time }}" @if(old('unit_time') == $unit_time) selected @elseif($editing_prep->unit_time == $unit_time) selected @endif>{{ $unit_time }} 分</option>
             @endforeach
           </select>
         </div>
@@ -104,7 +104,7 @@
           <label for="estimated_steps">ステップ数</label>
           <select id="estimated_steps" class="form-control @error('estimated_steps') is-invalid @enderror" name="estimated_steps">
             @foreach(\App\Prep::ESTIMATED_STEPS as $step)
-            <option value="{{ $step }}" @if(old('estimated_steps')== $step || $editing_prep->estimated_steps == $step) selected @endif>{{ $step }}回</option>
+            <option value="{{ $step }}" @if(old('estimated_steps')== $step) selected @elseif($editing_prep->estimated_steps == $step) selected @endif>{{ $step }}回</option>
             @endforeach
           </select>
         </div>

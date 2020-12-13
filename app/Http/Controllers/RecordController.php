@@ -8,6 +8,7 @@ use App\Review;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddRecord;
+use App\Http\Requests\EditRecord;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,5 +88,94 @@ class RecordController extends Controller
     }
     // 一覧画面にリダイレクト
     return redirect()->route('reports.weekly')->with('flash_message', '記録を追加しました');
+  }
+
+
+  // 記録編集画面
+  public function showEditForm($project_id, $task_id, $prep_id, $review_id)
+  {
+    // パラメータが数字でない場合はリダイレクト
+    if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
+      return redirect('home')->with('flash_message', '不正な操作が行われました');
+    }
+    // ログインユーザーに紐づく該当IDのreviewを取得
+    $editing_task = Auth::user()->tasks()->find($task_id);
+    $editing_prep = $editing_task->preps()->find($prep_id);
+    $editing_review = $editing_prep->reviews()->find($review_id);
+    $categories = Auth::user()->categories()->get();
+    $projects = Auth::user()->projects()->get();
+
+    // フォーム表示用に開始日時を日付と時刻に分ける
+    if (!empty($editing_review->started_at)) {
+      $sa = new Carbon($editing_review->started_at);
+    } else {
+      // 記録がない場合は現在時刻から予定単位時間を引いた時間
+      $sa = Carbon::now()->subMinutes($editing_review->prep->unit_time);
+    }
+    $started_date = $sa->toDateString();
+    $started_time = $sa->format('H:i');
+
+    return view('records.edit', compact('editing_prep', 'editing_review', 'editing_task', 'categories', 'projects', 'started_date', 'started_time'));
+  }
+
+  // 編集処理
+  public function edit($project_id, $task_id, $prep_id, $review_id, EditRecord $request)
+  {
+    // パラメータが数字でない場合はリダイレクト
+    if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
+      return redirect('home')->with('flash_message', '不正な操作が行われました');
+    }
+
+    // リクエストのIDからデータを取得
+    $editing_task = Auth::user()->tasks()->find($task_id);
+    if ($project_id <> $request->project_id) {
+      $editing_task->project_id = $request->project_id;
+    }
+    // 完了済みチェックがonの場合はタスクのステータスを4（完了）に切り替え
+    if ($request->task_completed) {
+      $editing_task->status = 4;
+    }
+    // 該当のtaskデータをフォームの入力値で書き換えて保存
+    $editing_task->fill($request->all());
+    $editing_task->save();
+
+    // 該当のprepデータをフォームの入力値で書き換えて保存
+    $editing_prep = $editing_task->preps()->find($prep_id);
+    $editing_task->fill($request->all());
+    $editing_task->save();
+
+    $editing_review = $editing_prep->reviews()->find($review_id);
+
+    // 入力された日付、時刻からdateTimeを生成
+    $editing_review->started_at = Carbon::createFromFormat(
+      'Y-m-d H:i',
+      $request->started_date . ' ' . $request->started_time
+    );
+    // 実際にかかった時間を足して終了日時のdateTimeを生成
+    $dt = new Carbon($editing_review->started_at);
+    $editing_review->finished_at = $dt->addMinutes($request->actual_time);
+
+    // 該当のreviewデータをフォームの入力値で書き換えて保存
+    $editing_review->fill($request->all());
+    $editing_review->save();
+
+    // 一覧画面にリダイレクト
+    return redirect()->route('reports.weekly')->with('flash_message', '記録を変更しました');
+  }
+
+  // review削除処理
+  public function delete($project_id, $task_id, $prep_id, $review_id)
+  {
+    // パラメータが数字でない場合はリダイレクト
+    if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
+      return redirect('home')->with('flash_message', '不正な操作が行われました');
+    }
+    // リクエストで受け取ったIDのreviewを削除
+    Auth::user()->preps()->find($prep_id)->reviews()->find($review_id)->delete();
+    // review::find($review_id)->delete();
+    // review::destroy($review_id);
+
+    // 削除対象のreviewが属するreviewのreview一覧にリダイレクト
+    return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを削除しました');
   }
 }

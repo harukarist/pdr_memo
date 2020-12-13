@@ -37,9 +37,11 @@ Route::group(['middleware' => 'auth'], function () {
     // 記録の追加
     Route::get('/records/add', 'RecordController@showAddForm')->name('records.add');
     Route::post('/records/add', 'RecordController@add');
-    // 記録の追加
-    Route::get('/records/edit', 'RecordController@showEditForm')->name('records.edit');
-    Route::patch('/records/edit', 'RecordController@edit');
+    // 記録の編集
+    Route::get('/records/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/edit', 'RecordController@showEditForm')->name('records.edit');
+    Route::patch('/records/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/edit', 'RecordController@edit');
+    // 記録の削除
+    Route::delete('/records/projects/{project_id}/tasks/{task_id}/preps/{prep_id}/reviews/{review_id}/delete', 'RecordController@delete')->name('records.delete');
 
     // TaskController
     // タスク一覧

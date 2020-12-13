@@ -80,13 +80,16 @@ class CategoryController extends Controller
         if (!ctype_digit($category_id)) {
             return redirect('home')->with('flash_message', '不正な操作が行われました');
         }
-        // リクエストで受け取ったIDのカテゴリーを削除
+        // リクエストで受け取ったIDのカテゴリーと関連するプロジェクト、レビューを削除
         // Category::find($category_id)->delete();
         // Category::destroy($category_id);
-        Auth::user()->categories->find($category_id)->delete();
+        $deleting_category = Auth::user()->categories->find($category_id);
+        $deleting_category->projects()->delete();
+        $deleting_category->reviews()->delete();
+        $deleting_category->delete();
 
         // 削除対象のカテゴリーが属するカテゴリーのカテゴリー一覧にリダイレクト
-        return redirect()->route('categories.create')->with('flash_message', 'カテゴリーを削除しました');
+        return redirect()->route('categories.create')->with('flash_message', 'カテゴリーを削 除しました');
     }
 
     // カテゴリー作成
