@@ -33,12 +33,10 @@
           @endisset
         </div>
       </div>
-      <div class="p-task__action col-sm-3 text-right">
+      <div class="p-task__action text-right">
         <a href="{{ route('tasks.edit', ['project_id' => $task->project_id,'task_id' => $task->id]) }}">
           <i class="fas fa-pencil-alt small px-2" aria-hidden="true"></i>
         </a>
-      </div>
-      <div class="p-task__action text-right">
         <a href="{{ route('preps.create', ['project_id' => $task->project_id,'task_id' => $task->id]) }}" class="btn px-1 py-0 {{ $task->status > 1 ? 'btn-light' : 'btn-primary' }}">
           <i class="fas fa-caret-right" aria-hidden="true"></i>
           <small>{{ $task->status > 1 ? 'Prep追加' : 'Prep !' }}</small>
