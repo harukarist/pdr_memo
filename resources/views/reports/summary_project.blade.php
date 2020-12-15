@@ -18,7 +18,7 @@
         @if($category_item['total_hour'] )
           <div class="row m-0">
             <div class="col-12 p-0">
-              <span class="badge badge-light">{{ $category_name ? ''}}</span><br>
+              <span class="badge badge-light">{{ $category_name ?? ''}}</span><br>
             </div>
           </div>
           <div class="row mx-2 mb-1">
