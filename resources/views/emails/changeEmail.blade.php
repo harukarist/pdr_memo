@@ -1,5 +1,8 @@
 <a href="{{ config('app.url') }}">{{ config('app.name') }}</a>
 <p>
+    {{ __('PDR-memo運営者のharukaristです。いつもご利用いただきありがとうございます。') }}<br>
+</p>
+<p>
     {{ __('下記のURLをクリックして新しいメールアドレスを確定してください。') }}<br>
 </p>
 <p>
