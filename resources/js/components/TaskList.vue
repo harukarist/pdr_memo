@@ -1,10 +1,14 @@
 <template>
   <transition name="slide-item" tag="div">
-    <div class="p-tasklist__item mb-3" v-show="!isDeleted">
+    <div class="p-tasklist__item mb-3" v-show="!isDeleted" @click.self="showEditBox = false">
       <div
         class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white"
+        @click.self="showEditBox = false"
       >
-        <div class="p-task__main flex-grow-1 p-0 d-flex mx-0 px-0">
+        <div
+          class="p-task__main flex-grow-1 p-0 d-flex mx-0 px-0"
+          @click.self="showEditBox = false"
+        >
           <!-- チェックボックス -->
           <div
             class="p-task__checkbox px-2"
@@ -13,7 +17,7 @@
           >
             <i :class="classCheckBox" aria-hiden="true"></i>
           </div>
-          <div class="p-task__contents w-100">
+          <div class="p-task__contents w-100" @click.self="showEditBox = false">
             <!-- タスク名 -->
             <div
               v-show="!showEditBox"
@@ -44,7 +48,10 @@
             </div>
           </div>
         </div>
-        <div class="p-task__details d-flex justify-content-end ml-2">
+        <div
+          class="p-task__details d-flex justify-content-end ml-2"
+          @click.self="showEditBox = false"
+        >
           <!-- メニューアイコン -->
           <task-menu
             @task-deleted="deleteTask()"

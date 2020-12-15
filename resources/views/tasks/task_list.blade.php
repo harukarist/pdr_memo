@@ -3,10 +3,10 @@
 <task-list task-id="{{ $task->id }}" task-status="{{ $task->status }}" task-name="{{ $task->task_name }}" priority="{{ $task->priority }}" due-date="{{ $task->due_date}}">
   
     <template v-slot:task-action>
-      <div class="p-task__action text-right">
+      <div class="p-task__action text-center">
         <a href="{{ route('preps.create', ['project_id' => $task->project_id,'task_id' => $task->id]) }}" class="btn px-1 py-0 {{ $task->status > 1 ? 'btn-light' : 'btn-primary' }}">
           <i class="fas fa-caret-right" aria-hidden="true"></i>
-          <small>{{ $task->status > 1 ? 'Prepを追加' : 'Prep入力へ進む！' }}</small>
+          <small>{{ $task->status > 1 ? 'Prepを追加する' : 'Prep入力へ進む！' }}</small>
         </a>
       </div>
     </template>

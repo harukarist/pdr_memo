@@ -287,7 +287,11 @@ mark {
 }
 
 .p-task__menu {
-  width: 250px;
+  width: 200px;
+}
+
+.p-task__action {
+  width: 150px;
 }
 
 .p-task__checkbox {
@@ -320,28 +324,8 @@ mark {
   opacity: 1;
 }
 
-.p-task__taskName:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-}
-
 .p-task__editArea {
   overflow: hidden;
-}
-
-.p-task__editArea:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
 }
 
 .p-task__editBox {

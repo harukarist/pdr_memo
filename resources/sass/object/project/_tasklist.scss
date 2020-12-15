@@ -5,7 +5,10 @@
     z-index: 2;
   }
   &__menu {
-    width: 250px;
+    width: 200px;
+  }
+  &__action {
+    width: 150px;
   }
   &__checkbox {
     cursor: pointer;
@@ -29,27 +32,27 @@
         opacity: 1;
       }
     }
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: -1
-    }
+    // &:before {
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   right: 0;
+    //   bottom: 0;
+    //   left: 0;
+    //   z-index: -1
+    // }
   }
   &__editArea{
     overflow: hidden;
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: -1
-    }
+    // &:before {
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   right: 0;
+    //   bottom: 0;
+    //   left: 0;
+    //   z-index: -1
+    // }
   }
   &__editBox {
     width: 100%;
