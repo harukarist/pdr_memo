@@ -19,16 +19,10 @@
               v-show="!showEditBox"
               class="p-task__taskName"
               :class="{ active: isActiveText, isDone: isDone }"
-              @click="showEditBox = true"
-            >
-              <!-- <div
-              v-show="!showEditBox"
-              class="p-task__taskName"
-              :class="{ active: isActiveText, isDone: isDone }"
               @mouseover="isActiveText = true"
               @mouseleave="isActiveText = false"
               @click="showEditBox = true"
-            > -->
+            >
               {{ taskName_data }}
               <i
                 class="p-task__icon fas fa-pencil-alt"
@@ -42,7 +36,7 @@
                 type="text"
                 class="p-task__editBox w-100"
                 :value="taskName_data"
-                @keyup.shift.enter="editTaskName($event)"
+                @keydown.shift.enter.prevent="editTaskName($event)"
                 @blur="showEditBox = false"
               >
               </textarea>
@@ -116,19 +110,19 @@ export default {
     editTaskName(e) {
       let text = e.currentTarget.value;
       if (text) {
-      this.taskName_data = text;
-      axios
-        .put("/api/tasks/" + this.taskId + "/edit", {
-          task_name: text,
-        })
-        .then((response) => {
-          this.taskName_data = text;
-          this.showEditBox = false;
-          console.log("success", this.taskName_data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        this.taskName_data = text;
+        axios
+          .put("/api/tasks/" + this.taskId + "/edit", {
+            task_name: text,
+          })
+          .then((response) => {
+            this.taskName_data = text;
+            this.showEditBox = false;
+            console.log("success", this.taskName_data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     toggleDone() {
