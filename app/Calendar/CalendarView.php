@@ -28,6 +28,7 @@ class CalendarView
 
     // 今日の日付を取得
     $this->today = Carbon::today();
+    $this->today->subHours(2);
   }
 
   /**
