@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreateEmailChange;
 
+// メールアドレスの変更
 class ChangeEmailController extends Controller
 {
     public function showChangeEmailForm()
