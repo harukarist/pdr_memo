@@ -19,6 +19,7 @@ class Report
     $this->categories = Auth::user()->categories;
     $this->projects = Auth::user()->projects;
     $this->carbon = new Carbon($date, 'Asia/Tokyo');
+    $this->carbon->subHours(2);
   }
 
   //カレンダー上に表示する合計実績を取得
