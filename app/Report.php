@@ -36,13 +36,13 @@ class Report
       ->where('tasks.deleted_at', null)
       ->orderBy('started_at', 'ASC')
       ->get();
-      
 
-    if(count($records)){
+
+    if (count($records)) {
       $started_at = $records->first()->started_at;
       $dt = Carbon::tomorrow();
       $df = new Carbon($started_at);
-    }else{
+    } else {
       return '';
     }
 
@@ -116,7 +116,7 @@ class Report
   {
     $time = DB::table('reviews')
       ->select(
-        DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+        DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -2 HOUR),"%Y%m%d") as target_date'),
         DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
         DB::raw('ROUND(SUM(flow_level)/COUNT(flow_level),1) as flow_level')
       )
@@ -140,7 +140,7 @@ class Report
   //         ->join('preps', 'preps.id', '=', 'reviews.prep_id')
   //         ->join('tasks', 'tasks.id', '=', 'preps.task_id')
   //         ->select(
-  //           DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+  //           DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -2 HOUR),"%Y%m%d") as target_date'),
   //           DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
   //         )
   //         ->where('reviews.user_id', '=', $this->user_id)
@@ -167,7 +167,7 @@ class Report
       foreach ($this->categories as $category) {
         $time_by_category[$category->id] = DB::table('reviews')
           ->select(
-            DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+            DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -2 HOUR),"%Y%m%d") as target_date'),
             DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
           )
           ->where('user_id', '=', $this->user_id)
@@ -192,7 +192,7 @@ class Report
   {
     $actual_times = DB::table('reviews')
       ->select(
-        DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+        DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -2 HOUR),"%Y%m%d") as target_date'),
         DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
         DB::raw('ROUND(SUM(flow_level)/COUNT(flow_level),1) as flow_level')
       )
@@ -215,7 +215,7 @@ class Report
       foreach ($this->categories as $category) {
         $time_by_category[$category->id] = DB::table('reviews')
           ->select(
-            DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+            DB::raw('DATE_FORMAT(DATE_ADD(started_at,INTERVAL -2 HOUR),"%Y%m%d") as target_date'),
             DB::raw('ROUND(SUM(actual_time)/60,1) as hour'),
           )
           ->where('user_id', '=', $this->user_id)
@@ -246,7 +246,7 @@ class Report
   //           ->join('preps', 'preps.id', '=', 'reviews.prep_id')
   //           ->join('tasks', 'tasks.id', '=', 'preps.task_id')
   //           ->select(
-  //             DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y%m%d") as target_date'),
+  //             DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -2 HOUR),"%Y%m%d") as target_date'),
   //             DB::raw('ROUND(SUM(reviews.actual_time)/60,1) as hour'),
   //           )
   //           ->where('reviews.user_id', '=', $this->user_id)
@@ -362,7 +362,7 @@ class Report
   //     ->leftJoin('preps', 'preps.id', '=', 'reviews.prep_id')
   //     ->leftJoin('tasks', 'tasks.id', '=', 'preps.task_id')
   //     ->leftJoin('projects', 'projects.id', '=', 'tasks.project_id')
-  //     ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'status', 'review_text', 'actual_time', 'reviews.category_id')
+  //     ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -2 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'status', 'review_text', 'actual_time', 'reviews.category_id')
   //     ->orderBy('target_date', 'DESC')
   //     ->where('projects.user_id', $this->user_id)
   //     ->where('reviews.deleted_at', null)
@@ -379,7 +379,7 @@ class Report
   //     ->leftJoin('preps', 'preps.id', '=', 'reviews.prep_id')
   //     ->leftJoin('tasks', 'tasks.id', '=', 'preps.task_id')
   //     ->leftJoin('projects', 'projects.id', '=', 'tasks.project_id')
-  //     ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -3 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'status', 'review_text', 'actual_time', 'reviews.category_id')
+  //     ->select(DB::raw('DATE_FORMAT(DATE_ADD(reviews.started_at,INTERVAL -2 HOUR),"%Y/%m/%d (%a)") as target_date'), 'task_name', 'status', 'review_text', 'actual_time', 'reviews.category_id')
   //     ->orderBy('target_date', 'DESC')
   //     ->where('projects.user_id', $this->user_id)
   //     ->where('reviews.deleted_at', null)
