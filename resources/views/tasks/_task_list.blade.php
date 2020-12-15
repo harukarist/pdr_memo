@@ -39,7 +39,7 @@
         </a>
         <a href="{{ route('preps.create', ['project_id' => $task->project_id,'task_id' => $task->id]) }}" class="btn px-1 py-0 {{ $task->status > 1 ? 'btn-light' : 'btn-primary' }}">
           <i class="fas fa-caret-right" aria-hidden="true"></i>
-          <small>{{ $task->status > 1 ? 'Prep追加' : 'Prep !' }}</small>
+          <small>{{ $task->status > 1 ? 'Prepを追加' : 'Prepを入力!' }}</small>
         </a>
       </div>
     </div>

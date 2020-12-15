@@ -89,7 +89,7 @@ class CategoryController extends Controller
         $deleting_category->delete();
 
         // 削除対象のカテゴリーが属するカテゴリーのカテゴリー一覧にリダイレクト
-        return redirect()->route('categories.create')->with('flash_message', 'カテゴリーを削 除しました');
+        return redirect()->route('categories.create')->with('flash_message', 'カテゴリーを削除しました');
     }
 
     // カテゴリー作成
