@@ -15,15 +15,17 @@ use Illuminate\Support\Facades\Auth;
 class RecordController extends Controller
 {
   // 対象の日付を設定
-  public function getDate(Request $request)
+  public function getCarbon($date)
   {
-    //Requestのinput()でクエリーのdateを受け取る
-    $date = $request->input("date");
 
-    if ($date && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])$/", $date)) {
+    //dateがYYYY-MM-DDの場合は対象日付のCarbonを生成
+    if ($date && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/", $date)) {
+      $date = new Carbon($date);
+    } elseif ($date && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])$/", $date)) {
       //dateがYYYY-MMの場合はYYYY-MM-01に変換
       $date = $date . "-01";
-    } elseif (!($date && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/", $date))) {
+      $date = new Carbon($date);
+    } else {
       //dateがYYYY-MM-DDでない場合はnull
       $date = null;
     }
@@ -35,15 +37,26 @@ class RecordController extends Controller
   }
 
   // 記録追加画面を表示
-  public function showAddForm()
+  public function showAddForm(Request $request)
   {
     $projects = Auth::user()->projects()->get();
     $categories = Auth::user()->categories()->get();
 
-    $dt = Carbon::now();
-    // 開始時刻を日付と時刻に分ける
-    $started_date = $dt->toDateString();
-    $started_time = $dt->format('H:i');
+    // 日付のクエリパラメータがあれば取得
+    $date = $request->query('date');
+    $target_date = $this->getCarbon($date);
+
+    // 現在時刻の取得用Carbon
+    $target_time = new Carbon();
+
+    if ($target_date) {
+      // 開始時刻を日付と時刻に分ける
+      $started_date = $target_date->toDateString();
+      $started_time = $target_time->format('H:i');
+    } else {
+      $started_date = '';
+      $started_date = '';
+    }
 
     return view('records.add', compact('projects', 'categories', 'started_date', 'started_time'));
   }
@@ -51,6 +64,8 @@ class RecordController extends Controller
   // 記録追加処理
   public function add(AddRecord $request)
   {
+    $url = $request->url;
+
     // 選択されたプロジェクトに紐づくタスクを作成
     $project = Auth::user()->projects()->find($request->project_id);
     $task = new Task();
@@ -86,8 +101,8 @@ class RecordController extends Controller
     } else {
       $task->update(['status' => 3]);
     }
-    // 一覧画面にリダイレクト
-    return redirect()->route('reports.weekly')->with('flash_message', '記録を追加しました');
+    // フォーム遷移前のページにリダイレクト
+    return redirect($url)->with('flash_message', '記録を追加しました');
   }
 
 
@@ -125,6 +140,7 @@ class RecordController extends Controller
     if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
       return redirect('home')->with('flash_message', '不正な操作が行われました');
     }
+    $url = $request->url;
 
     // リクエストのIDからデータを取得
     $editing_task = Auth::user()->tasks()->find($task_id);
@@ -141,8 +157,8 @@ class RecordController extends Controller
 
     // 該当のprepデータをフォームの入力値で書き換えて保存
     $editing_prep = $editing_task->preps()->find($prep_id);
-    $editing_task->fill($request->all());
-    $editing_task->save();
+    $editing_prep->fill($request->all());
+    $editing_prep->save();
 
     $editing_review = $editing_prep->reviews()->find($review_id);
 
@@ -159,23 +175,25 @@ class RecordController extends Controller
     $editing_review->fill($request->all());
     $editing_review->save();
 
-    // 一覧画面にリダイレクト
-    return redirect()->route('reports.weekly')->with('flash_message', '記録を変更しました');
+    // フォーム遷移前のページにリダイレクト
+    return redirect($url)->with('flash_message', '記録を変更しました');
   }
 
   // review削除処理
-  public function delete($project_id, $task_id, $prep_id, $review_id)
+  public function delete(Request $request, $project_id, $task_id, $prep_id, $review_id)
   {
     // パラメータが数字でない場合はリダイレクト
     if (!ctype_digit($project_id . $task_id . $prep_id . $review_id)) {
       return redirect('home')->with('flash_message', '不正な操作が行われました');
     }
+    $url = $request->url;
+
     // リクエストで受け取ったIDのreviewを削除
     Auth::user()->preps()->find($prep_id)->reviews()->find($review_id)->delete();
     // review::find($review_id)->delete();
     // review::destroy($review_id);
 
-    // 削除対象のreviewが属するreviewのreview一覧にリダイレクト
-    return redirect()->route('tasks.index', ['project_id' => $project_id])->with('flash_message', '振り返りを削除しました');
+    // フォーム遷移前のページにリダイレクト
+    return redirect($url)->with('flash_message', '記録を削除しました');
   }
 }
