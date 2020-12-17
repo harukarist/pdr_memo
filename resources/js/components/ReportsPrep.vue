@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "RepoortsPrep",
+  name: "ReportsPrep",
   data() {
     return {
       showPrep: false,
