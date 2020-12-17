@@ -64,7 +64,8 @@
     @endif
 
     {{-- Review-Text --}}
-    <div class="p-report__review-text mx-2 px-2">
+    {{-- HTMLタグが挿入される可能性がある箇所を v-pre で囲む --}}
+    <div class="p-report__review-text mx-2 px-2" v-pre>
         <p class="mb-0">
         {!! nl2br(e($review->review_text)) !!}
         </p>
@@ -118,7 +119,7 @@
                 = {{ ($prep->unit_time)*($prep->estimated_steps) ?? '' }}分
               </div>
             </div>
-            <div class="p-report__prep-text mx-2 px-2 mb-4">
+            <div class="p-report__prep-text mx-2 px-2 mb-4" v-pre>
               <p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p>
             </div>
           @endif

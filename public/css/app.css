@@ -462,6 +462,8 @@ mark {
 .calendar table th {
   text-align: center;
   border: solid 1px #999;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .calendar table td {
@@ -521,15 +523,15 @@ mark {
 }
 
 .calendar table td.day-sun .day {
-  color: red;
+  color: #e3342f;
 }
 
 .calendar table td.day-sat .day {
-  color: blue;
+  color: #3490dc;
 }
 
 .calendar table td.day-holiday .day {
-  color: red;
+  color: #e3342f;
 }
 
 .calendar table td.day-holiday .day-name {

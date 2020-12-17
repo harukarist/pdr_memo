@@ -32,7 +32,7 @@
     </div>
 
     <div class="row justify-content-center">
-       @include('reports.lists_weekly',['lists'=>$lists,'startDay'=>$startDay, 'lastDay'=>$lastDay])
+       @include('reports.lists_weekly',['lists'=>$lists,'startDay'=>$startDay, 'lastDay'=>$lastDay,'date'=>$date])
     </div>
 </div>
 
