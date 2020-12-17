@@ -27,8 +27,13 @@ class CalendarView
     $this->path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
     // 今日の日付を取得
-    $this->today = Carbon::today();
-    $this->today->subHours(2);
+    $now = Carbon::now();
+    if ($now->hour <= 2) {
+      // 深夜2時まではその日に含める
+      $this->today = Carbon::yesterday();
+    } else {
+      $this->today = Carbon::today();
+    }
   }
 
   /**
