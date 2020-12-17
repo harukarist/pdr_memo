@@ -32,7 +32,7 @@ class ReportController extends Controller
     $lastDay = $dt->copy()->endOfWeek()->format("Y/m/d(D)");
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.weekly', compact('weekly', 'lists', 'summaries', 'startDay', 'lastDay'));
+    return view('reports.weekly', compact('weekly', 'lists', 'summaries', 'startDay', 'lastDay','date'));
   }
 
   public function showDaily(Request $request)
@@ -51,7 +51,7 @@ class ReportController extends Controller
     $summaries = $report->getSummaries();
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.daily', compact('weekly', 'lists', 'summaries'));
+    return view('reports.daily', compact('weekly', 'lists', 'summaries','date'));
   }
 
   public function showCalendar(Request $request)
@@ -68,7 +68,7 @@ class ReportController extends Controller
 
 
     // 作成したオブジェクトをViewに渡す
-    return view('reports.calendar', compact('calendar', 'lists'));
+    return view('reports.calendar', compact('calendar', 'lists','date'));
   }
 
   // 対象の日付を設定
