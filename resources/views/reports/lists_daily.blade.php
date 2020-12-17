@@ -1,7 +1,7 @@
 <div class="col-md-10">
   <section class="mb-5">
-    <a href="{{ route('records.add') }}" class="btn btn-outline-secondary btn-block mb-4">
-      記録を追加
+    <a href="{{ route('records.add',['date'=>$date]) }}" class="btn btn-outline-secondary btn-block mb-4">
+      <i class="fas fa-plus mr-1" aria-hidden="true"></i>記録を追加
     </a>
   </section>
   <section class="mb-5">

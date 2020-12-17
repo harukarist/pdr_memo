@@ -9,6 +9,7 @@
       <form action="{{ route('records.delete', ['project_id' => $editing_task->project_id, 'task_id'=> $editing_task->id,'prep_id'=>$editing_review->prep_id, 'review_id' => $editing_review->id]) }}" method="post">
         @method('DELETE')
         @csrf
+        <input type="hidden" name="url" value="{{ url()->previous() }}">
       <button type="button" class="btn btn-outline-secondary btn-sm mb-3 text-right" data-toggle="modal" data-target="#modal1">
         この記録を削除する
       </button>
@@ -41,6 +42,7 @@
     <form method="POST" action="{{ route('records.edit', ['project_id' => $editing_task->project_id, 'task_id'=> $editing_task->id,'prep_id'=>$editing_review->prep_id, 'review_id' => $editing_review->id ]) }}">
       @csrf
       @method('PATCH')
+      <input type="hidden" name="url" value="{{ url()->previous() }}">
 
       {{-- バリデーションエラー --}}
       @if($errors->any())

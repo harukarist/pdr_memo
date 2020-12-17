@@ -8,6 +8,8 @@
     <form method="POST" action="{{ route('records.add') }}">
     @csrf
 
+    <input type="hidden" name="url" value="{{ url()->previous() }}">
+
       {{-- バリデーションエラー --}}
       @if($errors->any())
       <div class="alert alert-danger">

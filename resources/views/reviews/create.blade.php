@@ -40,8 +40,8 @@
                   </mark>
                 </small>
               </div>
-              <div class="p-guide__prep-text">
-                {!! nl2br(e($prep->prep_text)) !!}
+              <div class="p-guide__prep-text" v-pre>
+                {!! nl2br(e($prep->prep_text))  !!}
               </div>
             @empty
             @endforelse

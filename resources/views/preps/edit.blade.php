@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container c-container">
+<div class="container c-container" v-pre>
 
   <h5 class="mb-4">計画を修正する</h5>
 

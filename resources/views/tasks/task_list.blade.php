@@ -36,8 +36,9 @@
               = {{ ($prep->unit_time)*($prep->estimated_steps) ?? '' }}分
             </mark>
           </div>
-          <div class="p-pdr__prep-text">
-              <p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p>
+          {{-- HTMLタグが挿入される可能性がある箇所を v-pre で囲む --}}
+          <div class="p-pdr__prep-text" v-pre>
+              <p class="mb-1">{!! nl2br(e($prep->prep_text)) ?? '' !!}</p>
           </div>
           <div class="p-pdr__do d-flex justify-content-center py-2">
             {{-- Do --}}
@@ -74,7 +75,7 @@
                 <a href="{{ route('reviews.edit', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $review->prep_id,'review_id'=>$review->id ]) }}" class="mr-2"><small><i class="p-task__icon fas fa-pencil-alt" aria-hidden="true"></i></small></a>
               </div>
             </div>
-            <div class="p-pdr__review-text">
+            <div class="p-pdr__review-text" v-pre>
                 <p class="mb-0">
                 {!! nl2br(e($review->review_text)) !!}
                 </p>

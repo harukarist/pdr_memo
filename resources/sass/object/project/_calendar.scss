@@ -3,6 +3,8 @@
 	th {
 		text-align: center;
 		border: solid 1px #999;
+		padding-top: 5px;
+		padding-bottom: 5px;
 	}
 	td {	
 		padding: 0px;
@@ -51,14 +53,14 @@
 			}
 		}
 		&.day-sun .day{
-			color:red;
+			color: $red;
 		}
 		&.day-sat .day{
-			color: blue;
+			color: $blue;
 		}
 		&.day-holiday {
 			.day{
-				color:red;
+				color: $red;
 			}
 			.day-name {
 				font-size: 8px;
