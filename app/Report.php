@@ -301,13 +301,17 @@ class Report
   public function getReviewsWithDay()
   {
     $day = $this->carbon->copy();
+    
     $reviews_with_day[$day->format('Y/m/d(D)')]
       = Review::with('prep.task.project')
       ->where('reviews.user_id', '=', $this->user_id)
       ->where('reviews.deleted_at', null)
-      ->whereDate('started_at', '=', $day->format("Y-m-d"))
+      // ->whereDate('started_at', '=', $day->format("Y-m-d"))
+      ->where('started_at', '>=', $day->addHours(2)->format("Y-m-d H:i:s"))
+      ->where('started_at', '<=', $day->addHours(26)->format("Y-m-d H:i:s"))
       ->orderBy('started_at', 'DESC')
       ->get();
+
 
     // dd($reviews_with_day);
     return $reviews_with_day;
