@@ -22,15 +22,16 @@
 		&.day-reviewed {
 			background-color: $bg-color--main;
 		}
+		&.day-target {
+			background-color: $bg-color--main-light;
+		}
 		&.day-today {
 			background-color: $bg-color--accent;
 			.day {
 				font-weight: bold;
 			}
 		}
-		&.day-target {
-			background-color: $bg-color--main-light;
-		}
+
 		&.day-blank {
 			background-color: #efefef;
 		}

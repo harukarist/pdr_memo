@@ -23,16 +23,15 @@ class ReportController extends Controller
     $report = new Report($date);
     $lists = $report->getReviewsWithWeek();
     $summaries = $report->getSummaries();
-    // dd($total_time);
-    // dd($records);
-
+    // dd($lists);
+    // dd($summaries);
 
     $dt = new Carbon($date);
     $startDay = $dt->copy()->startOfWeek()->format("Y/m/d(D)");
     $lastDay = $dt->copy()->endOfWeek()->format("Y/m/d(D)");
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.weekly', compact('weekly', 'lists', 'summaries', 'startDay', 'lastDay','date'));
+    return view('reports.weekly', compact('weekly', 'lists', 'summaries', 'startDay', 'lastDay', 'date'));
   }
 
   public function showDaily(Request $request)
@@ -51,7 +50,7 @@ class ReportController extends Controller
     $summaries = $report->getSummaries();
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.daily', compact('weekly', 'lists', 'summaries','date'));
+    return view('reports.daily', compact('weekly', 'lists', 'summaries', 'date'));
   }
 
   public function showCalendar(Request $request)
@@ -68,7 +67,7 @@ class ReportController extends Controller
 
 
     // 作成したオブジェクトをViewに渡す
-    return view('reports.calendar', compact('calendar', 'lists','date'));
+    return view('reports.calendar', compact('calendar', 'lists', 'date'));
   }
 
   // 対象の日付を設定
@@ -85,22 +84,18 @@ class ReportController extends Controller
       $date = null;
     }
 
-    //取得出来ない時は今日の日付を取得
-    if (!$date) $date = Carbon::today();
+    // 日付指定がない場合は今日の日付を取得
+    if (!$date) {
+      // 現在日時を取得
+      $now = Carbon::now();
+      if ($now->hour <= 2) {
+        // 深夜2時まではその日に含める
+        $date = Carbon::yesterday();
+      } else {
+        $date = Carbon::today();
+      }
+    }
 
     return $date;
-  }
-
-  // タスク検索処理
-  public function search(Request $request)
-  {
-    $keyword = $request->input('keyword');
-    $query = User::query();
-
-    if (!empty($keyword)) {
-      $query->where('task_name', 'like', '%' . $keyword . '&')->orWhere('status', 'like', '%' . $keyword . '&');
-    }
-    $data = $query->orderBy('priority', 'desc')->orderBy('due_date', 'desc')->orderBy('updated_at', 'desc')
-      ->paginate(15);
   }
 }

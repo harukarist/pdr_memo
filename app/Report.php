@@ -19,7 +19,6 @@ class Report
     $this->categories = Auth::user()->categories;
     $this->projects = Auth::user()->projects;
     $this->carbon = new Carbon($date, 'Asia/Tokyo');
-    $this->carbon->subHours(2);
   }
 
   //カレンダー上に表示する合計実績を取得
@@ -275,15 +274,16 @@ class Report
   // カレンダーの下に表示する1日ごとの１週間の実施タスクを取得
   public function getReviewsWithWeek()
   {
-    $startDay = $this->carbon->copy()->startOfWeek();
-    $lastDay = $this->carbon->copy()->endOfWeek();
-
+    $startDay = $this->carbon->copy()->startOfWeek(); //月曜日の0:00
+    $lastDay = $this->carbon->copy()->endOfWeek()->startOfDay(); //日曜日の23:59:59を0:00に修正
     for ($i = 0; true; $i++) {
       $reviews_with_week[$lastDay->format('Y/m/d(D)')]
         = Review::with('prep.task.project')
         ->where('reviews.user_id', '=', $this->user_id)
         ->where('reviews.deleted_at', null)
-        ->whereDate('started_at', '=', $lastDay->format("Y-m-d"))
+        // ->whereDate('started_at', '=', $lastDay->format("Y-m-d"))
+        ->where('started_at', '>', $lastDay->copy()->addHours(2)->format("Y-m-d H:i:s"))
+        ->where('started_at', '<=', $lastDay->copy()->addHours(26)->format("Y-m-d H:i:s"))
         ->orderBy('started_at', 'DESC')
         ->get();
 
@@ -301,13 +301,12 @@ class Report
   public function getReviewsWithDay()
   {
     $day = $this->carbon->copy();
-    
     $reviews_with_day[$day->format('Y/m/d(D)')]
       = Review::with('prep.task.project')
       ->where('reviews.user_id', '=', $this->user_id)
       ->where('reviews.deleted_at', null)
       // ->whereDate('started_at', '=', $day->format("Y-m-d"))
-      ->where('started_at', '>=', $day->addHours(2)->format("Y-m-d H:i:s"))
+      ->where('started_at', '>', $day->addHours(2)->format("Y-m-d H:i:s"))
       ->where('started_at', '<=', $day->addHours(26)->format("Y-m-d H:i:s"))
       ->orderBy('started_at', 'DESC')
       ->get();
