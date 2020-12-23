@@ -40,16 +40,23 @@
           <div class="p-pdr__prep-text" v-pre>
               <p class="mb-1">{!! nl2br(e($prep->prep_text)) ?? '' !!}</p>
           </div>
-          <div class="p-pdr__do d-flex justify-content-center py-2">
-            {{-- Do --}}
-            <a href="{{ route('preps.do', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $prep->id]) }}" class="btn px-1 py-0 my-2 {{ $task->status == 4 ? 'btn-secondary' : 'btn-primary' }}">
-            <i class="fas fa-caret-right mx-1" aria-hidden="true"></i>Do !</a>
+          <div class="p-pdr__prep-action d-flex justify-content-center py-2">
+            <div class="d-inline-flex flex-column justify-content-center">
+              {{-- Do --}}
+              <a href="{{ route('preps.do', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $prep->id]) }}" class="btn px-1 py-0 my-2 {{ $task->status == 4 ? 'btn-secondary' : 'btn-primary' }}">
+              <i class="fas fa-caret-right mx-1" aria-hidden="true"></i>Do !</a>
   
+              {{-- Review追加 --}}
+              <a href="{{ route('reviews.create', ['project_id' => $task->project_id,'task_id' => $task->id, 'prep_id' => $prep->id]) }}" class="btn px-1 py-0 my-2 btn-light">
+                <i class="fas fa-caret-right" aria-hidden="true"></i>
+                <small>Reviewを追加する</small>
+              </a>
+            </div>
           </div>
         </div>
         {{-- Review --}}
-        @if(count($prep->reviews))
         <div class="p-pdr__review-reviews col-md p-1">
+          @if(count($prep->reviews))
           @foreach($prep->reviews()->orderBy('started_at','asc')->get() as $review)
           <div class="p-pdr__review-wrapper mb-2">
             <div class="p-pdr__review-header d-flex justify-content-between mb-2 border-bottom">
@@ -111,8 +118,8 @@
             </div>
           </div>   
           @endforeach
+          @endif
         </div>
-        @endif
       </div>
       @endforeach
     </div>
