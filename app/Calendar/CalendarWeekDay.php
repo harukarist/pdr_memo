@@ -28,7 +28,6 @@ class CalendarWeekDay
   {
     // 引数で指定された日付のオブジェクトを生成
     $this->carbon = new Carbon($date);
-    $this->carbon->subHours(2);
     $this->categories = Category::getUsersCategories();
   }
 
