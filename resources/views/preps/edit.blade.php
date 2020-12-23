@@ -16,15 +16,8 @@
 
   <!-- ガイド -->
   <section class="mb-4">
-    {{-- タスク名 --}}
-    <div class="border p-3 mb-3">
-      <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
-      <h6 class="p-guide__task-name d-inline mb-0 align-middle">
-        {{ $current_task->task_name }}</h6>
-        <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
-    </div>
+    @include('components.pdr_guide',['current_task'=>$current_task])
   </section>
-
 
   {{-- 削除ボタン --}}
   <div class="p-delete text-right">

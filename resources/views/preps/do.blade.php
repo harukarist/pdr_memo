@@ -14,13 +14,10 @@
 
   <!-- ガイド -->
   <section class="mb-4">
-    {{-- タスク名 --}}
-    <div class="bg-white border p-3 mb-3">
-      <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
-      <h6 class="p-guide__task-name d-inline mb-0 align-middle">
-        {{ $current_task->task_name }}</h6>
-        <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
-    </div>
+    @include('components.pdr_guide',['current_task'=>$current_task])
+  </section>
+
+  <section class="mb-4">
     <div class="text-center">
       <p><span class="p-counter__number">
         <i class="fas fa-stopwatch mr-1"></i>{{ $current_task->done_count + 1 }}回目
@@ -31,8 +28,6 @@
       <countdown-timer unit-time="{{ $do_prep->unit_time }}"></countdown-timer>
     </div>
   </section>
-
-
 
   <section class="mb-5">
     <!-- Doneボタン -->

@@ -14,37 +14,7 @@
 
   <!-- ガイド -->
   <section class="mb-4">
-    {{-- タスク名 --}}
-    <div class="border bg-white p-3 mb-3">
-      <div class="p-guide__wrapper d-flex">
-        <div class="p-guide__checkbox mr-2">
-          @if($current_task->status == 4)
-          <i class="far fa-check-square icon-checkbox" aria-hidden="true"></i>
-          @else
-          <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
-          @endif
-        </div>
-        <div class="p-guide__contents text-justify p-0">
-          <div class="p-guide__taskname">
-            <h6 class="d-inline align-middle">
-              {{ $current_task->task_name }}</h6>
-            <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
-          </div>
-          <div class="p-guide__prep-detail py-2">
-            <small>
-              <mark class="mr-2">
-              {{ $editing_review->prep->unit_time }}分 × 
-              {{ $editing_review->prep->estimated_steps }}ステップ
-              </mark>
-              <span class="badge badge-light">{{ $editing_review->category->category_name }}</span>
-            </small>
-          </div>
-          <div class="p-guide__prep-text">
-              {{ $editing_review->prep->prep_text }}
-          </div>
-        </div>
-      </div>
-    </div>
+    @include('components.pdr_guide',['current_task'=>$current_task])
   </section>
 
    {{-- 削除ボタン --}}

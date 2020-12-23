@@ -11,33 +11,16 @@
         <li class="">Review</li>
       </ul>
     </div>
+
     <!-- ガイド -->
     <section class="mb-4">
-      {{-- タスク名 --}}
-      <div class="border bg-white p-3 mb-3">
-        <div class="p-guide__wrapper d-flex">
-          <div class="p-guide__checkbox mr-2">
-            @if($current_task->status == 4)
-            <i class="far fa-check-square icon-checkbox" aria-hidden="true"></i>
-            @else
-            <i class="far fa-square icon-checkbox" aria-hidden="true"></i>
-            @endif
-          </div>
-          <div class="p-guide__contents text-justify p-0">
-            <div class="p-guide__taskname">
-              <h6 class="d-inline align-middle">
-                {{ $current_task->task_name }}</h6>
-              <small class="pl-2"> - {{ $current_task->project->project_name }}</small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
-      <p class="p-guide__text">タスク実行の準備をしましょう！</p>
-      </div>
+      @include('components.pdr_guide',['current_task'=>$current_task])
     </section>
 
     <section>
+      <div class="text-center mb-5">
+        <p class="p-form__guide">タスク実行の準備をしましょう！</p>
+      </div>
       <!-- Prep入力フォーム -->
       <form method="POST" action="{{ route('preps.create', ['project_id' => $current_task->project_id,'task_id' => $current_task->id]) }}">
         @csrf
