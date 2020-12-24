@@ -33,6 +33,7 @@
         "express": "^4.17.1",
         "flatpickr": "^4.6.6",
         "moment": "^2.29.1",
+        "push.js": "^1.0.12",
         "spectrum-colorpicker": "^1.8.1",
         "vue-router": "^3.4.9",
         "vuejs-datepicker": "^1.6.2"
