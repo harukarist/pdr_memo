@@ -43,7 +43,8 @@
       </div>
       <div class="p-report__task-taskname">
         {{ $task->task_name ?? '' }}
-        @if($task->status != 4 && $task->priority > 0)
+        
+        @if($task->priority)
         <div class="p-report__task-priority d-inline-block">
           <small class="ml-2 {{ $task->priority_class ?? '' }}">
             @forelse(range(1,$task->priority) as $num)
@@ -53,6 +54,7 @@
           </small>
         </div>
         @endif
+
         @isset($task->formatted_due_date)
         <span class="badge badge-light">
           <i class="fas fa-calendar-day" aria-hidden="true"></i>
