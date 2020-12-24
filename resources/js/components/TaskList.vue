@@ -1,13 +1,13 @@
 <template>
   <transition name="slide-item" tag="div">
-    <div class="p-tasklist__item mb-3" v-show="!isDeleted" @click.self="showEditBox = false">
+    <div class="p-tasklist__item mb-3" v-show="!isDeleted" @click.self="editTaskName($event)">
       <div
         class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white"
-        @click.self="showEditBox = false"
+        @click.self="editTaskName($event)"
       >
         <div
           class="p-task__main flex-grow-1 p-0 d-flex mx-0 px-0"
-          @click.self="showEditBox = false"
+          @click.self="editTaskName($event)"
         >
           <!-- チェックボックス -->
           <div
@@ -17,7 +17,7 @@
           >
             <i :class="classCheckBox" aria-hiden="true"></i>
           </div>
-          <div class="p-task__contents w-100" @click.self="showEditBox = false">
+          <div class="p-task__contents w-100" @click.self="editTaskName($event)">
             <!-- タスク名 -->
             <div
               v-show="!showEditBox"
@@ -41,7 +41,7 @@
                 class="p-task__editBox w-100"
                 :value="taskName_data"
                 @keydown.shift.enter.prevent="editTaskName($event)"
-                @blur="showEditBox = false"
+                @blur="editTaskName($event)"
               >
               </textarea>
               <p class="text-muted small">Shift+Enterで変更</p>
@@ -50,7 +50,7 @@
         </div>
         <div
           class="p-task__details d-flex justify-content-end ml-2"
-          @click.self="showEditBox = false"
+          @click.self="editTaskName($event)"
         >
           <!-- メニューアイコン -->
           <task-menu
@@ -106,14 +106,6 @@ export default {
     deleteTask() {
       this.isDeleted = true;
     },
-    checkKeyUp(e) {
-      // Shift+Enterキーが押された時
-      let text = e.currentTarget.value;
-      if (text) {
-        this.editTaskName(text);
-      }
-      this.showEditBox = false;
-    },
     editTaskName(e) {
       let text = e.currentTarget.value;
       if (text) {
@@ -125,10 +117,11 @@ export default {
           .then((response) => {
             this.taskName_data = text;
             this.showEditBox = false;
-            console.log("success", this.taskName_data);
+            // console.log("success", this.taskName_data);
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
+            this.showEditBox = false;
           });
       }
     },
@@ -145,20 +138,20 @@ export default {
       axios
         .put("/api/tasks/" + taskId + "/done")
         .then((response) => {
-          console.log("success");
+          // console.log("success");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
     changeToUndone(taskId) {
       axios
         .put("/api/tasks/" + taskId + "/undone")
         .then((response) => {
-          console.log("success");
+          // console.log("success");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
   },

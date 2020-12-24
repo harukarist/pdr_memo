@@ -114,11 +114,11 @@ export default {
         })
         .then((response) => {
           this.dueDate_data = inputDueDate;
-          console.log("success", this.dueDate_data, this.taskId);
+          // console.log("success", this.dueDate_data, this.taskId);
           this.showDatePicker = !this.showDatePicker;
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
     // 削除
@@ -131,12 +131,12 @@ export default {
         axios
           .delete("/api/tasks/" + taskId + "/delete")
           .then((res) => {
-            console.log(taskId, " is deleted");
+            // console.log(taskId, " is deleted");
             this.isDeleted = true;
             this.$emit("task-deleted");
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
     },
     changePriority(taskId, scale) {
@@ -147,11 +147,11 @@ export default {
         .put("/api/tasks/" + taskId + "/priority/" + scale)
         .then((response) => {
           this.priority_level = scale;
-          console.log(this.priority_level, "success");
+          // console.log(this.priority_level, "success");
           this.scale = 0; //scaleを0に戻す
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
   },
