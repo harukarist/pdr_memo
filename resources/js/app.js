@@ -24,6 +24,7 @@ Vue.component('task-list', require('./components/TaskList.vue').default);
 Vue.component('task-menu', require('./components/TaskMenu.vue').default);
 Vue.component('countdown-timer', require('./components/CountdownTimer.vue').default);
 Vue.component('reports-prep', require('./components/ReportsPrep.vue').default);
+Vue.component('test', require('./components/test.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

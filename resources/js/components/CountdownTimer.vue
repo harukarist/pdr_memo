@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Push from "push.js";
 export default {
   name: "CountdownTimer",
   props: {
@@ -36,6 +37,7 @@ export default {
   },
   created() {
     this.min = this.unitTime;
+    Push.Permission.request();
   },
   computed: {
     formatTime() {
@@ -89,14 +91,29 @@ export default {
       this.isFinished = true;
       // clearIntervalでカウントダウンの処理を解除
       clearInterval(this.timerObj);
+      // プッシュ通知を表示
+      this.createPush();
 
+      // カウントアップの処理を開始
       this.min = this.unitTime;
       this.sec = 0;
-      // カウントアップの処理を開始
       this.timerObj = setInterval(function () {
         self.countUp();
       }, 1000);
       this.isStarted = true;
+    },
+    createPush() {
+      Push.create("タイマー終了", {
+        body: this.unitTime + "分が経過しました",
+        icon: "/images/icons-medal-50px.png",
+        // timeout: 10000,
+        requireInteraction: true, // 通知を表示し続ける
+        onClick: function () {
+          // 通知クリックで画面表示、通知を閉じる
+          window.focus();
+          this.close();
+        },
+      });
     },
   },
 };

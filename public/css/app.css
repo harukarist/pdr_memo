@@ -485,16 +485,16 @@ mark {
   background-color: #A09791;
 }
 
+.calendar table td.day-target {
+  background-color: #BEB7B3;
+}
+
 .calendar table td.day-today {
   background-color: #DEA585;
 }
 
 .calendar table td.day-today .day {
   font-weight: bold;
-}
-
-.calendar table td.day-target {
-  background-color: #BEB7B3;
 }
 
 .calendar table td.day-blank {
