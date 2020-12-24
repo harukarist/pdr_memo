@@ -35,4 +35,12 @@ class CreateReview extends FormRequest
             'started_time' =>  'required|date_format:H:i',
         ];
     }
+
+        
+    public function messages()
+    {
+        return [
+            'started_time.date_format' => ':attribute には時刻を指定してください。（例）09:00', //日本語メッセージ
+        ];
+    }
 }
