@@ -56,7 +56,8 @@ class TaskController extends Controller
         if (!empty($keyword)) {
             $tasks = $query
                 ->where('task_name', 'LIKE', '%' . $keyword . '%')
-                ->orderBy('updated_at', 'desc')->paginate(15);
+                ->orderBy('updated_at', 'desc')
+                ->paginate(15);
             $active_status = 'ALL';
         } else {
             if ($request->is('projects/*/tasks/all')) {
@@ -68,13 +69,15 @@ class TaskController extends Controller
             } elseif ($request->is('projects/*/tasks/done')) {
                 // 完了タスクにチェックがある場合は完了タスクを表示
                 $tasks = $query->where('status', '=', '4')
-                    ->orderBy('updated_at', 'desc')->paginate(15);
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate(15);
                 $active_status = 'DONE';
             } else {
                 // 未完了タスクにチェックがある場合は未完了タスクを表示
                 $tasks = $query->where('status', '<', '4')
-                    ->orderBy('priority', 'desc')->orderBy('due_date', 'desc')
                     ->orderBy('updated_at', 'desc')
+                    ->orderBy('priority', 'desc')
+                    ->orderBy('due_date', 'desc')
                     ->paginate(15);
                 $active_status = 'UNDONE';
             }
@@ -183,12 +186,12 @@ class TaskController extends Controller
         $records = DB::table('reviews')
             ->join('preps', 'preps.id', '=', 'reviews.prep_id')
             ->join('tasks', 'tasks.id', '=', 'preps.task_id')
-            ->select('actual_time', 'started_at')
+            ->select('reviews.actual_time', 'reviews.started_at')
             ->where('preps.user_id', '=', $user_id)
             ->where('reviews.deleted_at', null)
             ->where('tasks.deleted_at', null)
             ->where('tasks.project_id', '=', $current_project->id)
-            ->orderBy('started_at', 'ASC')
+            ->orderBy('reviews.started_at', 'ASC')
             ->get();
 
         // 達成時間の合計と回数、タスク件数を取得
