@@ -20,7 +20,7 @@
   <section class="mb-4">
     <div class="text-center">
       <p><span class="p-counter__number">
-        <i class="fas fa-stopwatch mr-1"></i>{{ $current_task->done_count + 1 }}回目
+        <i class="fas fa-stopwatch mr-1"></i>{{ $done_count + 1 }}回目
       </span></p>
       <p>開始日時：
         <span class="p-counter__number">{{ $temp_started_at->format("m/d H:i") }}</span></p>

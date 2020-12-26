@@ -49,6 +49,7 @@ class ReviewController extends Controller
 
         // タスク実行回数を取得（該当タスクに紐づく既存レビュー数+今回分1件）
         $done_count = $current_task->reviews()->count();
+        $done_count += 1;
 
         return view('reviews.create', compact('done_prep', 'current_task', 'categories', 'started_date', 'started_time', 'done_count', 'actual_time'));
     }

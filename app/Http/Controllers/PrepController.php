@@ -114,17 +114,21 @@ class PrepController extends Controller
         $current_task = Auth::user()->tasks()->find($task_id);
         $do_prep = $current_task->preps()->find($prep_id);
 
-        // 該当タスクのステータスを着手中に変更
-        // $current_task->update(['status' => 3]);
-        $current_task->status = 3;
-        $current_task->save();
+        // 該当タスクのステータスが完了以外の場合は着手中に変更
+        if ($current_task->status < 3) {
+            $current_task->status = 3;
+            $current_task->save();
+        }
 
         // 開始日時をセッションに記録
         $temp_started_at = Carbon::now();
         session(['temp_started_at' => $temp_started_at]);
 
+        // タスクの実行回数を取得（該当タスクに紐づく既存レビュー数）
+        $done_count = $current_task->reviews()->count();
+
         // ログインユーザーに紐づくタスク、カテゴリーを入力フォーム用に取得
-        return view('preps.do', compact('do_prep', 'current_task', 'temp_started_at'));
+        return view('preps.do', compact('do_prep', 'current_task', 'done_count', 'temp_started_at'));
     }
 
     // Do完了処理
