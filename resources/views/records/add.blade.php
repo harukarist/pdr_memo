@@ -37,7 +37,7 @@
 
       <div class="form-group">
         <label for="prep_text">行った準備</label>
-        <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text">{{ old('prep_text') }}</textarea>
+        <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text" rows="6">{{ old('prep_text') }}</textarea>
       </div>
 
       <!-- 予定時間・ステップ数 -->
@@ -96,7 +96,7 @@
 
       <div class="form-group">
         <label for="review_text">振り返り</label>
-        <textarea id="review_text" class="form-control @error('review_text') is-invalid @enderror" name="review_text">{{ old('review_text') }}</textarea>
+        <textarea id="review_text" class="form-control @error('review_text') is-invalid @enderror" name="review_text" rows="6">{{ old('review_text') }}</textarea>
         <span id="help-review" class="form-text text-muted">
           <ul>
             <li>何を実行した？</li>

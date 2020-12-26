@@ -33,6 +33,8 @@ Route::delete('/tasks/{task_id}/delete', 'Api\TaskListController@delete');
 Route::put('/tasks/{task_id}/priority/{priority_level}', 'Api\TaskListController@changePriority');
 Route::put('/tasks/{task_id}/edit', 'Api\TaskListController@edit');
 Route::put('/tasks/{task_id}/changeDueDate', 'Api\TaskListController@changeDueDate');
+// 作業中のメモを保存
+Route::post('/tasks/{task_id}/memo', 'Api\DoController@postMemo');
 
 
 // Route::get('/projects/{project_id}/tasks', 'TaskListController@index');

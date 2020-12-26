@@ -38,7 +38,7 @@
         <!-- Prepテキストエリア -->
         <div class="form-group">
           <label for="prep_text">必要な準備をする</label>
-          <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text">{{ old('prep_text') }}</textarea>
+          <textarea id="prep_text" class="form-control @error('prep_text') is-invalid @enderror" name="prep_text" rows="6">{{ old('prep_text') }}</textarea>
           <span id="help-prep" class="form-text text-muted">
             <ul>
               <li>これから何をする？</li>

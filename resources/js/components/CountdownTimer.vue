@@ -1,10 +1,10 @@
 <template>
   <div class="p-timer w-60">
     <div class="p-timer__form mb-4">
-      <p class="p-timer__guide alert alert-primary" v-show="!isFinished">
+      <p class="p-timer__guide alert alert-primary d-inline" v-show="!isFinished">
         {{ unitTime }}分間、集中して取り組みましょう！
       </p>
-      <div class="p-timer__time">{{ formatTime }}</div>
+      <div class="p-timer__time my-2">{{ formatTime }}</div>
       <button v-on:click="doStart" v-if="!isStarted" class="btn btn-primary">
         <i class="fas fa-caret-right mr-2"></i>Start
       </button>

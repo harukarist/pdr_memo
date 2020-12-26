@@ -17,7 +17,7 @@
     @include('components.pdr_guide',['current_task'=>$current_task])
   </section>
 
-  <section class="mb-4">
+  <section class="mb-4 px-5">
     <div class="text-center">
       <p><span class="p-counter__number">
         <i class="fas fa-stopwatch mr-1"></i>{{ $done_count + 1 }}回目
@@ -27,16 +27,25 @@
       {{-- タイマー --}}
       <countdown-timer unit-time="{{ $do_prep->unit_time }}"></countdown-timer>
     </div>
+
+    <!-- Doneボタン -->
+    <div class="text-center">
+      <div class="mb-4">
+        <form method="POST" action="{{ route('preps.done', ['project_id' => $current_task->project_id,'task_id' => $current_task->id, 'prep_id' => $do_prep->id ]) }}">
+        @csrf
+          <input type="hidden" name="temp_started_at" value="{{ $temp_started_at }}">
+          <input type="submit" class="btn btn-primary" value="完了！">
+        </form>
+      </div>
+      <doing-memo task-id="{{ $current_task->id }}" memo-text="{{ $current_task->memo_text ?? '' }}"></doing-memo>
+    </div>
+
+
   </section>
 
   <section class="mb-5">
-    <!-- Doneボタン -->
-      <div class="text-center">
-        <form method="POST" action="{{ route('preps.done', ['project_id' => $current_task->project_id,'task_id' => $current_task->id, 'prep_id' => $do_prep->id ]) }}">
-          @csrf
-        <input type="hidden" name="temp_started_at" value="{{ $temp_started_at }}">
-        <input type="submit" class="btn btn-primary" value="完了！">
-      </div>
+
+
   </section>
 
 </div>

@@ -103,7 +103,7 @@
 
       <div class="form-group">
         <label for="review_text">振り返り</label>
-        <textarea id="review_text" class="form-control @error('review_text') is-invalid @enderror" name="review_text">{{ old('review_text') ?? $editing_review->review_text }}</textarea>
+        <textarea id="review_text" class="form-control @error('review_text') is-invalid @enderror" name="review_text" rows="6">{{ old('review_text') ?? $editing_review->review_text }}</textarea>
         <span id="help-review" class="form-text text-muted">
           <ul>
             <li>何を実行した？</li>
