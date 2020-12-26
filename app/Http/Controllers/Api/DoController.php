@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateMemo;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class DoController extends Controller
 {
     // メモ保存処理
-    public function postMemo(int $task_id, Request $request)
+    public function postMemo(int $task_id, CreateMemo $request)
     {
         // リクエストのIDからタスクデータを取得
         $task = Auth::user()->tasks()->find($task_id);

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="memo_text">- Memo -</label><br>
+    <label for="memo_text">- Memo -</label><br />
     <textarea
       type="text"
       id="memo_text"
@@ -9,7 +9,7 @@
       rows="6"
       class="w-100"
       autofocus
-      placeholder="メモ欄としてご自由にご利用ください。入力された内容は振り返りフォームに引き継がれます。"
+      placeholder="メモ欄としてご自由にご利用ください。入力された内容は振り返りフォームに引き継がれます"
     ></textarea>
   </div>
 </template>
