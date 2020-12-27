@@ -24,8 +24,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
-    <link rel="shortcut icon" href="https://harukarist.sakura.ne.jp/pdr-memo/favicon.ico">
-    <link rel="icon" href="https://harukarist.sakura.ne.jp/pdr-memo/favicon.ico">
+    <link rel="shortcut icon" href="https://pdr-memo.sakuraweb.com/favicon.ico">
+    <link rel="icon" href="https://pdr-memo.sakuraweb.com/favicon.ico">
 </head>
 <body>
     <div id="app">
