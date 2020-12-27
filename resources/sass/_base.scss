@@ -1,9 +1,7 @@
 // ==================================
 // googleフォント
 // ==================================
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;500&display=swap');
 // ==============================
 // 変数
 // ==============================
@@ -53,7 +51,7 @@ $space--xxl: 30px;
 $space--xxxl: 40px;
 
 $font-family--theme: 'Nunito Sans', sans-serif;
-$font-family--default: 'Nunito Sans','Noto Sans JP', "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro W3", Meiryo, sans-serif;
+$font-family--default: 'Nunito Sans','Noto Sans JP', 游ゴシック, YuGothic, ヒラギノ角ゴ Pro W3, Meiryo, sans-serif;
 
 // ==================================
 // base
