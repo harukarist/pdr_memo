@@ -34,6 +34,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reports/weekly', 'ReportController@showWeekly')->name('reports.weekly');
     Route::get('/reports/daily', 'ReportController@showDaily')->name('reports.daily');
     Route::get('/reports/calendar', 'ReportController@showCalendar')->name('reports.calendar');
+    // サマリー
+    Route::get('/reports/summary', 'ReportController@showSummary')->name('reports.summary');
+    // 合計時間のカスタマイズ入力
+    Route::get('/reports/custom', 'TotalController@showCustomForm')->name('totals.custom');
+    Route::post('/reports/custom', 'TotalController@custom');
+
     // 記録の追加
     Route::get('/records/add', 'RecordController@showAddForm')->name('records.add');
     Route::post('/records/add', 'RecordController@add');

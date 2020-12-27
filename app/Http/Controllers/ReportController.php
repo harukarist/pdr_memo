@@ -11,10 +11,26 @@ use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
 {
+  public function showSummary(Request $request)
+  {
+    // 対象の日付を取得
+    $date = $this->getDate($request);
+
+    // 対象日までの合計時間、完了タスク数を取得
+    $report = new Report($date);
+    $summaries = $report->getSummaries();
+    // dd($summaries);
+
+    return view('reports.summary', compact('summaries'));
+  }
+
   public function showWeekly(Request $request)
   {
     // 対象の日付を取得
     $date = $this->getDate($request);
+
+    // 記録入力フォーム用のクエリパラメータ
+    $url_date = $date;
 
     //WeeklyViewクラスで指定週のカレンダーを生成
     $weekly = new WeeklyView($date);
@@ -22,16 +38,17 @@ class ReportController extends Controller
     // タスク一覧を取得
     $report = new Report($date);
     $lists = $report->getReviewsWithWeek();
-    $summaries = $report->getSummaries();
+    $summaries = $report->getTotals();
     // dd($lists);
     // dd($summaries);
 
     $dt = new Carbon($date);
     $startDay = $dt->copy()->startOfWeek()->format("Y/m/d(D)");
     $lastDay = $dt->copy()->endOfWeek()->format("Y/m/d(D)");
+    $targetDay = $dt->format("Y/m/d(D)");
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.weekly', compact('weekly', 'lists', 'summaries', 'startDay', 'lastDay', 'date'));
+    return view('reports.weekly', compact('weekly', 'lists', 'summaries', 'startDay', 'lastDay', 'targetDay', 'url_date'));
   }
 
   public function showDaily(Request $request)
@@ -39,24 +56,32 @@ class ReportController extends Controller
     // 対象の日付を取得
     $date = $this->getDate($request);
 
+    // 記録入力フォーム用のクエリパラメータ
+    $url_date = $date;
+
     //WeeklyViewクラスで指定週のカレンダーを生成
     $weekly = new WeeklyView($date);
 
     // タスク一覧を取得
     $report = new Report($date);
     $lists = $report->getReviewsWithDay();
-    $summaries = $report->getSummaries();
+    $summaries = $report->getTotals();
     // dd($lists);
     // dd($summaries);
 
+    $dt = new Carbon($date);
+    $targetDay = $dt->format("Y/m/d(D)");
+
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
-    return view('reports.daily', compact('weekly', 'lists', 'summaries', 'date'));
+    return view('reports.daily', compact('weekly', 'lists', 'summaries', 'targetDay', 'url_date'));
   }
 
   public function showCalendar(Request $request)
   {
     // 対象の日付を取得
     $date = $this->getDate($request);
+    // 記録入力フォーム用のクエリパラメータ
+    $url_date = $date;
 
     // 指定月のカレンダーを生成
     $calendar = new CalendarView($date);
@@ -64,10 +89,13 @@ class ReportController extends Controller
     // タスク一覧を取得
     $report = new Report($date);
     $lists = $report->getReviewsWithDay();
+    $summaries = $report->getTotals();
 
+    $dt = new Carbon($date);
+    $targetDay = $dt->format("Y/m/d(D)");
 
     // 作成したオブジェクトをViewに渡す
-    return view('reports.calendar', compact('calendar', 'lists', 'date'));
+    return view('reports.calendar', compact('calendar', 'lists', 'summaries', 'targetDay', 'url_date'));
   }
 
   // 対象の日付を設定

@@ -1,6 +1,6 @@
 <div class="col-md-10">
   <section class="mb-5">
-    <a href="{{ route('records.add',['date'=>$date]) }}" class="btn btn-outline-secondary btn-block mb-4">
+    <a href="{{ route('records.add',['date'=>$url_date]) }}" class="btn btn-outline-secondary btn-block mb-4">
       <i class="fas fa-plus mr-1" aria-hidden="true"></i>記録を追加
     </a>
   </section>
@@ -17,7 +17,7 @@
             <h5>{{ $date ?? '' }}</h5>
           </div>
           <div class="p-record__contents">
-            @component('reports.item')
+            @component('components.lists_item')
             @slot('reviews',$reviews)
             @endcomponent
           </div>

@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <div class="container c-container">
+    <h5 class="mb-4 text-center">これまでの記録</h5>
+    
+    @if(isset($summaries))
+        @include('components.summary_total',['summaries'=>$summaries,'targetDay'=>$targetDay])
+    @endif
+
     <div class="row justify-content-center mb-2">
         <div class="col-md-10">
             <div class="card">
@@ -25,7 +31,7 @@
     </div>
 
     <div class="row justify-content-center">
-        @include('reports.lists_daily',['lists'=>$lists,'date'=>$date])
+        @include('components.lists_daily',['lists'=>$lists,'url_date'=>$url_date])
     </div>
 </div>
 
