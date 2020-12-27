@@ -20,9 +20,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 
+    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
+    <link rel="shortcut icon" href="https://harukarist.sakura.ne.jp/pdr-memo/favicon.ico">
+    <link rel="icon" href="https://harukarist.sakura.ne.jp/pdr-memo/favicon.ico">
 </head>
 <body>
     <div id="app">
@@ -30,7 +33,7 @@
             {{-- スマホではハンバーガーアイコン表示 navbar-expand-sm--}}
             <nav class="navbar navbar-expand-sm navbar-light bg-white">
                 {{-- サイト名 --}}
-                <a class="navbar-brand mr-5 p-0" href="/">PDR-memo</a>
+                <a class="navbar-brand mr-5 p-0" href="{{ config('app.url', 'https://harukarist.sakura.ne.jp/pdr-memo') }}">PDR-memo</a>
 
                 {{-- ハンバーガーメニュー --}}
                 <button class="navbar-toggler"
@@ -47,10 +50,10 @@
                     <div class="navbar-nav">
                         @guest
                         {{-- 未ログイン --}}
-                            <a class="c-navbar__item nav-item nav-link text-dark" href="{{ route('login') }}">
-                                <i class="fas fa-sign-in-alt mr-1" aria-hidden="true"></i>ログイン</a>
                             <a class="c-navbar__item nav-item nav-link text-dark" href="{{ route('register') }}">
                                 <i class="fas fa-user-plus mr-1" aria-hidden="true"></i>ユーザー登録</a>
+                            <a class="c-navbar__item nav-item nav-link text-dark" href="{{ route('login') }}">
+                                <i class="fas fa-sign-in-alt mr-1" aria-hidden="true"></i>ログイン</a>
                         @else
                         {{-- ログイン後 --}}
                             {{-- <p class="c-navbar__item nav-item">こんにちは, {{ Auth::user()->name }}さん</p> --}}
