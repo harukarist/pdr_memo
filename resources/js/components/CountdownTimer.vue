@@ -1,7 +1,10 @@
 <template>
   <div class="p-timer w-60">
     <div class="p-timer__form mb-4">
-      <p class="p-timer__guide alert alert-primary d-inline" v-show="!isFinished">
+      <p
+        class="p-timer__guide alert alert-primary d-inline"
+        v-show="!isFinished"
+      >
         {{ unitTime }}分間、集中して取り組みましょう！
       </p>
       <div class="p-timer__time my-2">{{ formatTime }}</div>
@@ -62,6 +65,8 @@ export default {
         self.countDown();
       }, 1000); // 1秒ごとのsetIntervalをObjに格納
       this.isStarted = true;
+      // プッシュ通知を表示
+      this.createPush();
     },
     doStop() {
       this.isStarted = false;
