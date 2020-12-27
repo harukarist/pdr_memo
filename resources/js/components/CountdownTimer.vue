@@ -65,8 +65,6 @@ export default {
         self.countDown();
       }, 1000); // 1秒ごとのsetIntervalをObjに格納
       this.isStarted = true;
-      // プッシュ通知を表示
-      this.createPush();
     },
     doStop() {
       this.isStarted = false;
