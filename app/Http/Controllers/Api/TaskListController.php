@@ -66,17 +66,18 @@ class TaskListController extends Controller
         $deleting_task->delete();
     }
 
-    // public function list()
-    // {
-    //     $user_id = Auth::id();
-    //     $tasks = Project::with('tasks.preps.reviews')->where('projects.user_id', $user_id)->get();
-    //     return response()->json(
-    //         [
-    //             'tasks' => $tasks,
-    //         ],
-    //         200,
-    //         [],
-    //         JSON_UNESCAPED_UNICODE
-    //     );
-    // }
+    // タスク一覧を取得
+    public function list()
+    {
+        $user_id = Auth::id();
+        $tasks = Project::with('tasks.preps.reviews')->where('projects.user_id', $user_id)->get();
+        return response()->json(
+            [
+                'tasks' => $tasks,
+            ],
+            200,
+            [],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
 }
