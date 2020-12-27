@@ -11,10 +11,10 @@
         仕事や勉強を楽しく集中して続けられるアプリです。</p>
   
       <div class="py-3">
-        <a href="register" class="btn btn-dark">ユーザー登録</a>
+        <a href="{{ route('register') }}" class="btn btn-dark">ユーザー登録</a>
       </div>
       <div class="py-3">
-        <a href="login" class="btn btn-dark">ログイン</a>
+        <a href="{{ route('login') }}" class="btn btn-dark">ログイン</a>
       </div>
     </div>
   </div>
