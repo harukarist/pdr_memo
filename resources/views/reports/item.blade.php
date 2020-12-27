@@ -68,7 +68,7 @@
     {{-- Review-Text --}}
     {{-- HTMLタグが挿入される可能性がある箇所を v-pre で囲む --}}
     <div class="p-report__review-text mx-2 px-2" v-pre>
-        <p class="mb-0">
+        <p class="mb-0 text-break">
         {!! nl2br(e($review->review_text)) !!}
         </p>
         <small class="text-muted mb-1">
@@ -122,7 +122,7 @@
               </div>
             </div>
             <div class="p-report__prep-text mx-2 px-2 mb-4" v-pre>
-              <p class="mb-1">{!! nl2br(e($prep->prep_text)) !!}</p>
+              <p class="mb-1 text-break">{!! nl2br(e($prep->prep_text)) !!}</p>
             </div>
           @endif
       </template>

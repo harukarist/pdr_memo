@@ -1,6 +1,10 @@
 <template>
   <transition name="slide-item" tag="div">
-    <div class="p-tasklist__item mb-3" v-show="!isDeleted" @click.self="editTaskName($event)">
+    <div
+      class="p-tasklist__item mb-3"
+      v-show="!isDeleted"
+      @click.self="editTaskName($event)"
+    >
       <div
         class="p-task__wrapper d-flex flex-column flex-lg-row justify-content-between p-2 mx-0 bg-white"
         @click.self="editTaskName($event)"
@@ -17,7 +21,10 @@
           >
             <i :class="classCheckBox" aria-hiden="true"></i>
           </div>
-          <div class="p-task__contents w-100" @click.self="editTaskName($event)">
+          <div
+            class="p-task__contents w-100"
+            @click.self="editTaskName($event)"
+          >
             <!-- タスク名 -->
             <div
               v-show="!showEditBox"

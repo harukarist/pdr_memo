@@ -8,7 +8,7 @@
       <i class="far fa-circle {{ $current_task->priority_class ?? '' }}" aria-hidden="true"></i>
       @endif
     </div>
-    <div class="p-guide__contents text-justify p-0">
+    <div class="p-guide__contents p-0">
       <div class="p-guide__taskname">
         <h6 class="d-inline align-middle">
           {{ $current_task->task_name ?? '' }}</h6>

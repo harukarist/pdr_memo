@@ -38,7 +38,7 @@
           </div>
           {{-- HTMLタグが挿入される可能性がある箇所を v-pre で囲む --}}
           <div class="p-pdr__prep-text" v-pre>
-              <p class="mb-1">{!! nl2br(e($prep->prep_text)) ?? '' !!}</p>
+              <p class="mb-1 text-break">{!! nl2br(e($prep->prep_text)) ?? '' !!}</p>
           </div>
           <div class="p-pdr__prep-action d-flex justify-content-center py-2">
             <div class="d-inline-flex flex-column justify-content-center">
@@ -83,7 +83,7 @@
               </div>
             </div>
             <div class="p-pdr__review-text" v-pre>
-                <p class="mb-0">
+                <p class="mb-0 text-break">
                 {!! nl2br(e($review->review_text)) !!}
                 </p>
                 <small class="text-muted mb-1">
