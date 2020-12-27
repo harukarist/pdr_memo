@@ -24,8 +24,8 @@ class Report
   //カレンダー上に表示する合計実績を取得
   public function getSummaries()
   {
-    // プロジェクト作成済みの場合はデータを集計
-    // プロジェクトが未作成の場合、$this->projectsはnull
+    // 対象の日付を取得
+    $day = $this->carbon->copy();
 
     $records = DB::table('reviews')
       ->join('preps', 'preps.id', '=', 'reviews.prep_id')
@@ -34,18 +34,26 @@ class Report
       ->where('reviews.user_id', '=', $this->user_id)
       ->where('reviews.deleted_at', null)
       ->where('tasks.deleted_at', null)
+      ->where('started_at', '<=', $day->addHours(26)->format("Y-m-d H:i:s"))
       ->orderBy('started_at', 'ASC')
       ->get();
 
 
+    // 最初の達成日を取得
     if (count($records)) {
       $started_at = $records->first()->started_at;
-      $dt = Carbon::tomorrow();
       $df = new Carbon($started_at);
+      $total_time['total'] =
+        [
+          'days_count' => $df->diffInDays($day) + 1,
+          'started_at' => $df->format('Y/m/d(D)'),
+        ];
     } else {
       return '';
     }
 
+    // プロジェクト作成済みの場合はデータを集計
+    // プロジェクトが未作成の場合、$this->projectsはnull
     if ($this->projects) {
       foreach ($this->projects as $project) {
         // プロジェクト別
@@ -56,22 +64,21 @@ class Report
         if (count($project_records)) {
           $started_at = $project_records->first()->started_at;
           // dd($started_at);
-          $dt = Carbon::tomorrow();
+          // $dt = Carbon::tomorrow();
           $df = new Carbon($started_at);
 
           $total_time['projects'][$project->project_name] =
             [
               'total_hour' => round(($project_records->sum('actual_time')) / 60, 1),
               'total_count' => $project_records->count('actual_time'),
-              'total_count' => $project_records->count('actual_time'),
               'completed_count' => $project_records->where('status', '=', 4)->count(),
-              'days_count' => $df->diffInDays($dt) + 1,
+              'days_count' => $df->diffInDays($day) + 1,
               'started_at' => $df->format('Y/m/d(D)'),
             ];
 
+          // 各プロジェクトの中で、カテゴリーごとの内訳を取得
           if ($this->categories) {
             foreach ($this->categories as $category) {
-              // プロジェクト・カテゴリー別
               $total_time['projects'][$project->project_name]['categories'][$category->category_name] =
                 [
                   'total_hour' => round(($project_records->where('category_id', '=', $category->id)->sum('actual_time')) / 60, 1),
@@ -91,7 +98,7 @@ class Report
         if (count($category_records)) {
           $started_at = $category_records->first()->started_at;
           // dd($started_at);
-          $dt = Carbon::tomorrow();
+          // $dt = Carbon::tomorrow();
           $df = new Carbon($started_at);
 
           $total_time['categories'][$category->category_name] =
@@ -99,7 +106,7 @@ class Report
               'total_hour' => round(($category_records->sum('actual_time')) / 60, 1),
               'total_count' => $category_records->count('actual_time'),
               'completed_count' => $category_records->where('status', '=', 4)->count(),
-              'days_count' => $df->diffInDays($dt) + 1,
+              'days_count' => $df->diffInDays($day) + 1,
               'started_at' => $df->format('Y/m/d'),
             ];
         }

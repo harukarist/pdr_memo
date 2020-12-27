@@ -45,9 +45,9 @@ class ReportController extends Controller
     // タスク一覧を取得
     $report = new Report($date);
     $lists = $report->getReviewsWithDay();
-    // dd($lists);
-
     $summaries = $report->getSummaries();
+    // dd($lists);
+    // dd($summaries);
 
     // 作成したオブジェクトをViewに渡し、View上でrenderメソッドを実行
     return view('reports.daily', compact('weekly', 'lists', 'summaries', 'date'));

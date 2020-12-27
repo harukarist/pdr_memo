@@ -2,6 +2,39 @@
 @section('content')
 <div class="container c-container">
 <h5 class="mb-4 text-center">これまでの記録</h5>
+<div class="row justify-content-center mb-2">
+        @if(isset($summaries['categories']))
+        <span class="badge badge-secondary">カテゴリー別 Total</span><br>
+            @forelse($summaries['categories'] as $category_name=>$summary)  
+                @if($summary['total_hour'])
+                    <span class="badge badge-light">{{ $category_name }}</span>
+                    <span class="p-counter__number">
+                        {{ $summary['total_hour'] ?? 0 }}
+                    </span>
+                    h
+                @endif
+            @empty
+            @endforelse
+        @endif
+    </div>
+    <div class="row justify-content-center mb-2">
+        @if(isset($summaries['projects']))
+        <span class="badge badge-secondary">プロジェクト別 Total</span><br>
+            @forelse($summaries['projects'] as $project_name=>$summary)  
+                @if($summary['total_hour'])
+                    <span class="badge badge-light">{{ $project_name }}</span>
+                    <span class="p-counter__number">
+                        {{ $summary['total_hour'] ?? 0 }}
+                    </span>
+                    h
+                @endif
+            @empty
+            @endforelse
+        @endif
+    </div>
+
+    
+
     @if(isset($summaries['projects'])&&isset($summaries['categories']))
     <div class="row justify-content-center mb-2">
         @include('reports.summary_project',['summaries'=>$summaries['projects']])
