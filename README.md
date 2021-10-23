@@ -14,8 +14,8 @@
      
      
 ![image](https://user-images.githubusercontent.com/60970610/138560846-74ee3435-fdcc-4882-ac14-55cd591d2507.png)
-![image](https://user-images.githubusercontent.com/60970610/138560946-2f32c203-cb6f-402a-adf0-4941a35f7aa1.png)
 ![image](https://user-images.githubusercontent.com/60970610/138560958-78dbedb4-b032-4729-9911-8b5635829b4c.png)
+![image](https://user-images.githubusercontent.com/60970610/138561018-c402e185-748b-449d-b73f-4c7af425cdc8.png)
 
 
 ## 使用言語など
